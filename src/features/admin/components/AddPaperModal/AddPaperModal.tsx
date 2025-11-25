@@ -35,7 +35,7 @@ const AddPaperModal = ({ isOpen, onClose }: ResearchModalProps) => {
     e.preventDefault();
 
     // Create a new paper object
-    const newPaper: Omit<ResearchPaper, "paperId" | "isArchived" | "fileUrl"> = {
+    const newPaper: Omit<ResearchPaper, "paperId" | "archivedAt"> = {
       title,
       authorName: author,
       abstractText: abstract,

@@ -12,12 +12,14 @@ import style from "./Header.module.css";
 
 const GENERAL_ROLE_LABEL: Record<Role, string> = {
   STUDENT: "Student",
+  TEACHER: "Teacher",
   DEPARTMENT_ADMIN: "Admin",
   SUPER_ADMIN: "Admin",
 };
 
 const REQUEST_PATH: Record<Role, string> = {
   STUDENT: "/student/requests",
+  TEACHER: "/teacher/requests",
   DEPARTMENT_ADMIN: "/department-admin/requests",
   SUPER_ADMIN: "/super-admin/requests",
 };

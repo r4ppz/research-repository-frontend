@@ -31,7 +31,7 @@ export function useActivePaperFilter(
       const matchesYear = !selectedYear || paper.submissionDate.startsWith(selectedYear);
 
       // Only show non-archived papers for this filter by default
-      return matchesSearch && matchesDepartment && matchesYear && !paper.isArchived;
+      return matchesSearch && matchesDepartment && matchesYear && !paper.archived;
     });
   }, [papers, searchQuery, selectedDepartment, selectedYear, user]);
 }

@@ -9,8 +9,8 @@ export interface ResearchPaper {
   abstractText: string;
   department: Department;
   submissionDate: string; // YYYY-MM-DD
-  filePath: string; // relative file path, e.g. '2023/dept_cs/paper_123.pdf'
-  archived: boolean;
+  filePath?: string; // relative file path, e.g. '2023/dept_cs/paper_123.pdf'
+  archived?: boolean;
   archivedAt?: string | null; // ISO datetime when archived (optional)
 }
 

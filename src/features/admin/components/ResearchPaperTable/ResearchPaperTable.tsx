@@ -58,9 +58,9 @@ const ResearchPaperTable = ({
       title: "Status",
       render: (paper: ResearchPaper) => (
         <span
-          className={clsx(styles.statusBadge, paper.isArchived ? styles.archived : styles.active)}
+          className={clsx(styles.statusBadge, paper.archived ? styles.archived : styles.active)}
         >
-          {paper.isArchived ? "Archived" : "Active"}
+          {paper.archived ? "Archived" : "Active"}
         </span>
       ),
     },
@@ -87,7 +87,7 @@ const ResearchPaperTable = ({
           >
             <Pencil className={styles.iconEdit} />
           </Button>
-          {paper.isArchived ? (
+          {paper.archived ? (
             <Button
               className={styles.actionButton}
               onClick={() => {
