@@ -8,9 +8,15 @@ interface GoogleButtonProps {
   clientId: string;
   onSuccess: (code: string) => void;
   onError: () => void;
+  disabled?: boolean;
 }
 
-export default function GoogleButton({ clientId, onSuccess, onError }: GoogleButtonProps) {
+export default function GoogleButton({
+  clientId,
+  onSuccess,
+  onError,
+  disabled,
+}: GoogleButtonProps) {
   const [initialized, setInitialized] = useState(false);
   const [loading, setLoading] = useState(false);
   const [googleClient, setGoogleClient] = useState<google.accounts.oauth2.CodeClient | null>(null);
@@ -54,7 +60,7 @@ export default function GoogleButton({ clientId, onSuccess, onError }: GoogleBut
       className={styles.googleButton}
       variant="secondary"
       onClick={handleClick}
-      disabled={!initialized || loading}
+      disabled={disabled || !initialized || loading}
     >
       <FcGoogle className={styles.googleIcon} />
       {loading ? "Signing in..." : "Sign In with Google"}

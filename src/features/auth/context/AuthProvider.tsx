@@ -1,68 +1,42 @@
-import { ReactNode, useReducer } from "react";
+import { ReactNode, useState, useCallback } from "react";
 import { User } from "@/types";
-import { AuthAction, AuthContext, AuthContextValue, AuthState } from "./AuthContext";
+import { AuthContext, AuthContextValue } from "./AuthContext";
 
-const initialState: AuthState = {
-  user: null,
-  token: null,
-  isAuthenticated: false,
-  isLoading: false,
+const getUserFromStorage = (): User | null => {
+  const userJson = localStorage.getItem("user");
+  if (!userJson) return null;
+  try {
+    return JSON.parse(userJson) as User;
+  } catch {
+    localStorage.removeItem("user");
+    return null;
+  }
 };
 
-function authReducer(state: AuthState, action: AuthAction): AuthState {
-  switch (action.type) {
-    case "LOGIN_START":
-      return { ...state, isLoading: true };
-
-    case "LOGIN_SUCCESS":
-      return {
-        ...state,
-        token: action.token,
-        user: action.user,
-        isAuthenticated: true,
-        isLoading: false,
-      };
-
-    case "LOGOUT":
-      return initialState;
-
-    case "SET_LOADING":
-      return { ...state, isLoading: action.loading };
-
-    default:
-      return state;
-  }
-}
-
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(authReducer, initialState);
+  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
+  const [user, setUser] = useState<User | null>(getUserFromStorage());
+  const [isLoading, setLoading] = useState<boolean>(false);
 
-  const loginWithToken = (token: string, user: User) => {
-    localStorage.setItem("token", token);
-    dispatch({ type: "LOGIN_SUCCESS", token, user });
-  };
+  const login = useCallback((newToken: string, newUser: User) => {
+    localStorage.setItem("token", newToken);
+    localStorage.setItem("user", JSON.stringify(newUser));
+    setToken(newToken);
+    setUser(newUser);
+  }, []);
 
-  // For development/testing purposes - generates a temporary token
-  const login = (user: User) => {
-    const tempToken = `temp_token_${Date.now().toString()}_${Math.random().toString()}`;
-    localStorage.setItem("token", tempToken);
-    dispatch({ type: "LOGIN_SUCCESS", token: tempToken, user });
-  };
-
-  const logout = () => {
+  const logout = useCallback(() => {
     localStorage.removeItem("token");
-    dispatch({ type: "LOGOUT" });
-  };
-
-  const setLoading = (loading: boolean) => {
-    dispatch({ type: "SET_LOADING", loading });
-  };
+    localStorage.removeItem("user");
+    setToken(null);
+    setUser(null);
+  }, []);
 
   const value: AuthContextValue = {
-    state,
-    user: state.user,
-    isAuthenticated: state.isAuthenticated,
-    loginWithToken,
+    token,
+    user,
+    isAuthenticated: !!token,
+    isLoading,
     login,
     logout,
     setLoading,
