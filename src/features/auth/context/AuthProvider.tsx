@@ -1,5 +1,7 @@
-import { ReactNode, useState, useCallback } from "react";
+import { ReactNode, useState, useCallback, useEffect } from "react";
 import { User } from "@/types";
+import { logout as logoutUser } from "../api/auth";
+import { clearAccessToken, setAccessToken } from "../tokenStore";
 import { AuthContext, AuthContextValue } from "./AuthContext";
 
 const getUserFromStorage = (): User | null => {
@@ -14,28 +16,35 @@ const getUserFromStorage = (): User | null => {
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
   const [user, setUser] = useState<User | null>(getUserFromStorage());
-  const [isLoading, setLoading] = useState<boolean>(false);
+  const [isLoading, setLoading] = useState<boolean>(true);
 
-  const login = useCallback((newToken: string, newUser: User) => {
-    localStorage.setItem("token", newToken);
+  useEffect(() => {
+    // On initial load, we just check for the user in storage.
+    // The interceptor will handle any required token refreshes.
+    setLoading(false);
+  }, []);
+
+  const login = useCallback((newAccessToken: string, newUser: User) => {
     localStorage.setItem("user", JSON.stringify(newUser));
-    setToken(newToken);
+    setAccessToken(newAccessToken);
     setUser(newUser);
   }, []);
 
-  const logout = useCallback(() => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    setToken(null);
-    setUser(null);
+  const logout = useCallback(async () => {
+    try {
+      await logoutUser();
+    } catch (error) {
+      console.error("Logout failed", error);
+    } finally {
+      localStorage.removeItem("user");
+      clearAccessToken();
+      setUser(null);
+    }
   }, []);
 
   const value: AuthContextValue = {
-    token,
     user,
-    isAuthenticated: !!token,
     isLoading,
     login,
     logout,

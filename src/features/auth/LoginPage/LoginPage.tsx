@@ -4,7 +4,7 @@ import schoolLogo from "@/assets/school-logo.svg";
 import Modal from "@/components/common/Modal/Modal";
 import { AuthResponse } from "@/types";
 import style from "./LoginPage.module.css";
-import { loginWithGoogle } from "../api/google";
+import { loginWithGoogle } from "../api/auth";
 import GoogleButton from "../components/GoogleButton/GoogleButton";
 import { useAuth } from "../context/useAuth";
 
@@ -28,7 +28,7 @@ const LoginPage = () => {
       setError(null);
 
       const data: AuthResponse = await loginWithGoogle(code);
-      login(data.jwt, data.user);
+      login(data.accessToken, data.user);
       void navigate("/", { replace: true });
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "An error occurred during login";

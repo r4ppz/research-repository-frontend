@@ -9,7 +9,7 @@ export interface Page<T> {
 }
 
 export interface AuthResponse {
-  jwt: string;
+  accessToken: string;
   user: User;
 }
 

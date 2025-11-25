@@ -9,15 +9,15 @@ export interface ResearchPaper {
   abstractText: string;
   department: Department;
   submissionDate: string; // YYYY-MM-DD
-  fileUrl: string; // API path (gated), e.g. /api/files/uuid.pdf
-  isArchived: boolean;
+  filePath: string; // relative file path, e.g. '2023/dept_cs/paper_123.pdf'
+  archived: boolean;
   archivedAt?: string | null; // ISO datetime when archived (optional)
 }
 
 export interface DocumentRequest {
   requestId: number;
   status: RequestStatus;
-  requestDate: string; // ISO datetime
+  requestDate: string; // YYYY-MM-DD
   paper: ResearchPaper;
   requester: User;
 }

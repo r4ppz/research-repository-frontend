@@ -44,7 +44,7 @@ const Header = ({ className, ...props }: ComponentProps) => {
   const researchPath = RESEARCH_PATH[role];
 
   const handleLogout = () => {
-    logout();
+    void logout();
     void navigate("/login");
   };
 
