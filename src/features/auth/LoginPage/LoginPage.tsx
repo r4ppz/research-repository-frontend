@@ -22,22 +22,21 @@ const LoginPage = () => {
     }
   }, [error]);
 
-  const handleGoogleLogin = async (code: string) => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data: AuthResponse = await loginWithGoogle(code);
-      login(data.accessToken, data.user);
-      void navigate("/", { replace: true });
-    } catch (err) {
-      const errorMessage: string = getError(err);
-      setError(errorMessage);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const handleGoogleSuccess = (code: string) => {
+    const handleGoogleLogin = async (code: string) => {
+      try {
+        setLoading(true);
+        setError(null);
+        const data: AuthResponse = await loginWithGoogle(code);
+        login(data.accessToken, data.user);
+        void navigate("/", { replace: true });
+      } catch (err) {
+        const errorMessage: string = getError(err);
+        setError(errorMessage);
+      } finally {
+        setLoading(false);
+      }
+    };
     void handleGoogleLogin(code);
   };
 
