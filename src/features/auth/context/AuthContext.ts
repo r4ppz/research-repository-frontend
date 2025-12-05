@@ -3,9 +3,9 @@ import { User } from "@/types";
 
 export interface AuthContextValue {
   user: User | null;
-  isLoading: boolean;
   login: (accessToken: string, user: User) => void;
   logout: () => Promise<void>;
+  isLoading: boolean;
   setLoading: (loading: boolean) => void;
 }
 

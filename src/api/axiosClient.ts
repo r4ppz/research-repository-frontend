@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { refreshAccessToken } from "@/features/auth/api/auth";
-import { getAccessToken, setAccessToken } from "@/util/tokenUtil";
+import { setAccessToken, getAccessToken } from "@/features/auth/context/tokenStore";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
 

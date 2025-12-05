@@ -11,9 +11,8 @@ import { useAuth } from "../context/useAuth";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
+  const { login, isLoading, setLoading } = useAuth();
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
 
@@ -70,7 +69,7 @@ const LoginPage = () => {
             clientId={googleClientId}
             onSuccess={handleGoogleSuccess}
             onError={handleGoogleError}
-            disabled={loading}
+            disabled={isLoading}
           />
         </div>
 
