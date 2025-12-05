@@ -15,6 +15,7 @@ const ProtectedRoute = ({ children, allowedRoles }: ProtectedRouteProps) => {
     return <Navigate to="/login" replace />;
   }
 
+  // TODO: add proper unauthorized component
   if (!allowedRoles.includes(user.role)) {
     return <Navigate to="/" replace />;
   }

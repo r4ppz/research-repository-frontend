@@ -1,8 +1,8 @@
 import { ReactNode, useState, useCallback, useEffect } from "react";
 import { User } from "@/types";
-import { logout as logoutUser } from "../api/auth";
-import { clearAccessToken, setAccessToken } from "../tokenStore";
+import { clearAccessToken, setAccessToken } from "@/util/tokenUtil";
 import { AuthContext, AuthContextValue } from "./AuthContext";
+import { logout as logoutUser } from "../api/auth";
 
 const getUserFromStorage = (): User | null => {
   const userJson = localStorage.getItem("user");
@@ -20,8 +20,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // On initial load, we just check for the user in storage.
-    // The interceptor will handle any required token refreshes.
     setLoading(false);
   }, []);
 

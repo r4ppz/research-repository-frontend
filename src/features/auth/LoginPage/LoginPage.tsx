@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import schoolLogo from "@/assets/school-logo.svg";
 import Modal from "@/components/common/Modal/Modal";
 import { AuthResponse } from "@/types";
+import getError from "@/util/getError";
 import style from "./LoginPage.module.css";
 import { loginWithGoogle } from "../api/auth";
 import GoogleButton from "../components/GoogleButton/GoogleButton";
@@ -26,15 +27,12 @@ const LoginPage = () => {
     try {
       setLoading(true);
       setError(null);
-
       const data: AuthResponse = await loginWithGoogle(code);
       login(data.accessToken, data.user);
       void navigate("/", { replace: true });
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : "An error occurred during login";
-
+      const errorMessage: string = getError(err);
       setError(errorMessage);
-      console.error("Login failed:", errorMessage);
     } finally {
       setLoading(false);
     }
