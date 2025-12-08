@@ -1,102 +1,119 @@
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { refreshApi } from "@/features/auth/api/auth";
 import { setAccessToken, getAccessToken } from "@/features/auth/context/tokenStore";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
-
-export const refreshClient = axios.create({
-  baseURL: BASE_URL,
-  withCredentials: true,
-});
-
-let isRefreshing = false;
-let failedQueue: Array<{
-  resolve: (value: string | null) => void;
-  reject: (error: unknown) => void;
-}> = [];
-
-const processQueue = (error: unknown, token: string | null = null) => {
-  failedQueue.forEach((prom) => {
-    if (error) {
-      prom.reject(error);
-    } else {
-      prom.resolve(token);
-    }
-  });
-
-  failedQueue = [];
-};
 
 const axiosClient = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
 });
 
+export const refreshClient = axios.create({
+  baseURL: BASE_URL,
+  withCredentials: true,
+});
+
+function normalizeError(err: unknown): Error {
+  if (err instanceof Error) return err;
+  if (typeof err === "string") return new Error(err);
+
+  try {
+    return new Error(JSON.stringify(err));
+  } catch {
+    return new Error("Unknown error");
+  }
+}
+
+let isRefreshing = false;
+
+type QueueItem = {
+  resolve: (token: string) => void;
+  reject: (err: Error) => void;
+};
+
+let failedQueue: QueueItem[] = [];
+
+function processQueue(err: Error | null, token?: string): void {
+  for (const item of failedQueue) {
+    if (err) {
+      item.reject(err);
+    } else if (token) {
+      item.resolve(token);
+    }
+  }
+  failedQueue = [];
+}
+
 axiosClient.interceptors.request.use(
   (config) => {
     const token = getAccessToken();
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.set("Authorization", `Bearer ${token}`);
     }
     return config;
   },
-  (error: AxiosError) => {
-    return Promise.reject(error);
-  },
+  (error) => Promise.reject(normalizeError(error)),
 );
 
 axiosClient.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
 
-  async (error: AxiosError) => {
-    const originalRequest = error.config;
+  async (error: unknown) => {
+    const normalized = normalizeError(error);
 
-    if (
-      error.response?.status === 401 &&
-      originalRequest &&
-      !originalRequest.url?.endsWith("/refresh") &&
-      !originalRequest.url?.endsWith("/login")
-    ) {
-      if (isRefreshing) {
-        return new Promise<string | null>((resolve, reject) => {
-          failedQueue.push({ resolve, reject });
-        })
-          .then((token) => {
-            originalRequest.headers.Authorization = `Bearer ${token || ""}`;
-            return axiosClient(originalRequest);
-          })
-          .catch((err: unknown) => {
-            const error =
-              err instanceof Error ? err : new Error(JSON.stringify(err) || "Unknown error");
-            return Promise.reject(error);
-          });
-      }
-
-      isRefreshing = true;
-
-      try {
-        const { accessToken } = await refreshApi();
-        setAccessToken(accessToken);
-        processQueue(null, accessToken);
-        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
-        return await axiosClient(originalRequest);
-      } catch (refreshError: unknown) {
-        setAccessToken(null);
-        processQueue(refreshError, null);
-
-        window.location.href = "/login";
-        const error =
-          refreshError instanceof Error
-            ? refreshError
-            : new Error(JSON.stringify(refreshError) || "Unknown error");
-        return void Promise.reject(error);
-      } finally {
-        isRefreshing = false;
-      }
+    if (!axios.isAxiosError(error)) {
+      return Promise.reject(normalized);
     }
-    return Promise.reject(error);
+
+    const original = error.config;
+    const status = error.response?.status;
+
+    if (!original) {
+      return Promise.reject(normalized);
+    }
+
+    const url = original.url ?? "";
+
+    const shouldRefresh = status === 401 && !url.endsWith("/refresh") && !url.endsWith("/login");
+
+    if (!shouldRefresh) {
+      return Promise.reject(normalized);
+    }
+
+    if (isRefreshing) {
+      return new Promise<string>((resolve, reject) => {
+        failedQueue.push({ resolve, reject });
+      })
+        .then((token) => {
+          original.headers.set("Authorization", `Bearer ${token}`);
+          return axiosClient(original);
+        })
+        .catch((queueErr: unknown) => Promise.reject(normalizeError(queueErr)));
+    }
+
+    isRefreshing = true;
+
+    try {
+      const { accessToken } = await refreshApi();
+
+      setAccessToken(accessToken);
+      processQueue(null, accessToken);
+
+      original.headers.set("Authorization", `Bearer ${accessToken}`);
+
+      return await axiosClient(original);
+    } catch (err: unknown) {
+      const normalizedErr = normalizeError(err);
+
+      setAccessToken(null);
+      processQueue(normalizedErr);
+
+      window.location.href = "/login";
+      return await Promise.reject(normalizedErr);
+    } finally {
+      isRefreshing = false;
+    }
   },
 );
 

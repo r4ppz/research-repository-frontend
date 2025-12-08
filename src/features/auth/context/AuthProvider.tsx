@@ -1,16 +1,12 @@
 import { ReactNode, useState, useEffect } from "react";
 import { AuthResponse, User } from "@/types";
 import { AuthContext, AuthContextValue } from "./AuthContext";
-import { removeAccessToken, setAccessToken } from "./tokenStore";
+import { getAccessToken, removeAccessToken, setAccessToken } from "./tokenStore";
 import { loginApi, logoutApi } from "../api/auth";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setLoading] = useState<boolean>(true);
-
-  useEffect(() => {
-    setLoading(false);
-  }, []);
 
   const login = async (authCode: string) => {
     setLoading(true);
@@ -30,6 +26,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUser(null);
     }
   };
+
+  useEffect(() => {
+    const initializeAuth = () => {
+      const hasStoredToken = getAccessToken() !== null;
+      if (!hasStoredToken) {
+        setLoading(false);
+      }
+    };
+    initializeAuth();
+  }, []);
 
   const value: AuthContextValue = {
     user,
