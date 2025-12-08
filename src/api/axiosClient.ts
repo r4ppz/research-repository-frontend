@@ -1,8 +1,13 @@
 import axios, { AxiosError } from "axios";
-import { refreshAccessToken } from "@/features/auth/api/auth";
+import { refreshApi } from "@/features/auth/api/auth";
 import { setAccessToken, getAccessToken } from "@/features/auth/context/tokenStore";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
+
+export const refreshClient = axios.create({
+  baseURL: BASE_URL,
+  withCredentials: true,
+});
 
 const axiosClient = axios.create({
   baseURL: BASE_URL,
@@ -36,7 +41,7 @@ axiosClient.interceptors.response.use(
       !originalRequest.url?.endsWith("/refresh")
     ) {
       try {
-        const { accessToken } = await refreshAccessToken();
+        const { accessToken } = await refreshApi();
         setAccessToken(accessToken);
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         return await axiosClient(originalRequest);

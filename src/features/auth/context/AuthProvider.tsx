@@ -1,8 +1,8 @@
 import { ReactNode, useState, useEffect } from "react";
 import { User } from "@/types";
 import { AuthContext, AuthContextValue } from "./AuthContext";
-import { setAccessToken } from "./tokenStore";
-import { logout as logoutUser } from "../api/auth";
+import { removeAccessToken, setAccessToken } from "./tokenStore";
+import { logoutApi } from "../api/auth";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -19,11 +19,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = async () => {
     try {
-      await logoutUser();
+      await logoutApi();
     } catch (error) {
       console.error("Logout failed", error);
     } finally {
-      setAccessToken(null);
+      removeAccessToken();
       setUser(null);
     }
   };

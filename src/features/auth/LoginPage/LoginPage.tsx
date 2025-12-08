@@ -5,7 +5,7 @@ import Modal from "@/components/common/Modal/Modal";
 import { AuthResponse } from "@/types";
 import getError from "@/util/getError";
 import style from "./LoginPage.module.css";
-import { loginWithGoogle } from "../api/auth";
+import { loginApi } from "../api/auth";
 import GoogleButton from "../components/GoogleButton/GoogleButton";
 import { useAuth } from "../context/useAuth";
 
@@ -27,7 +27,7 @@ const LoginPage = () => {
       try {
         setLoading(true);
         setError(null);
-        const data: AuthResponse = await loginWithGoogle(code);
+        const data: AuthResponse = await loginApi(code);
         login(data.accessToken, data.user);
         void navigate("/", { replace: true });
       } catch (err) {
