@@ -1,8 +1,8 @@
 import { ReactNode, useState, useEffect } from "react";
-import { User } from "@/types";
+import { AuthResponse, User } from "@/types";
 import { AuthContext, AuthContextValue } from "./AuthContext";
 import { removeAccessToken, setAccessToken } from "./tokenStore";
-import { logoutApi } from "../api/auth";
+import { loginApi, logoutApi } from "../api/auth";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
@@ -12,9 +12,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setLoading(false);
   }, []);
 
-  const login = (accessToken: string, newUser: User) => {
-    setAccessToken(accessToken);
-    setUser(newUser);
+  const login = async (authCode: string) => {
+    setLoading(true);
+    const data: AuthResponse = await loginApi(authCode);
+    setAccessToken(data.accessToken);
+    setUser(data.user);
+    setLoading(false);
   };
 
   const logout = async () => {
@@ -30,6 +33,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const value: AuthContextValue = {
     user,
+    setUser,
     login,
     logout,
     isLoading,

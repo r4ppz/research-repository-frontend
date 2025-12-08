@@ -2,16 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import schoolLogo from "@/assets/school-logo.svg";
 import Modal from "@/components/common/Modal/Modal";
-import { AuthResponse } from "@/types";
 import getError from "@/util/getError";
 import style from "./LoginPage.module.css";
-import { loginApi } from "../api/auth";
 import GoogleButton from "../components/GoogleButton/GoogleButton";
 import { useAuth } from "../context/useAuth";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login, isLoading, setLoading } = useAuth();
+  const { login, isLoading } = useAuth();
   const [error, setError] = useState<string | null>(null);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
@@ -22,22 +20,18 @@ const LoginPage = () => {
     }
   }, [error]);
 
-  const handleGoogleSuccess = (code: string) => {
-    const handleGoogleLogin = async (code: string) => {
+  const handleGoogleSuccess = (authCode: string): void => {
+    const performLogin = async () => {
       try {
-        setLoading(true);
         setError(null);
-        const data: AuthResponse = await loginApi(code);
-        login(data.accessToken, data.user);
+        await login(authCode);
         void navigate("/", { replace: true });
       } catch (err) {
         const errorMessage: string = getError(err);
         setError(errorMessage);
-      } finally {
-        setLoading(false);
       }
     };
-    void handleGoogleLogin(code);
+    void performLogin();
   };
 
   const handleGoogleError = () => {

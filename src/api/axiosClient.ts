@@ -9,6 +9,24 @@ export const refreshClient = axios.create({
   withCredentials: true,
 });
 
+let isRefreshing = false;
+let failedQueue: Array<{
+  resolve: (value: string | null) => void;
+  reject: (error: unknown) => void;
+}> = [];
+
+const processQueue = (error: unknown, token: string | null = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+
+  failedQueue = [];
+};
+
 const axiosClient = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
@@ -38,21 +56,44 @@ axiosClient.interceptors.response.use(
     if (
       error.response?.status === 401 &&
       originalRequest &&
-      !originalRequest.url?.endsWith("/refresh")
+      !originalRequest.url?.endsWith("/refresh") &&
+      !originalRequest.url?.endsWith("/login")
     ) {
+      if (isRefreshing) {
+        return new Promise<string | null>((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then((token) => {
+            originalRequest.headers.Authorization = `Bearer ${token || ""}`;
+            return axiosClient(originalRequest);
+          })
+          .catch((err: unknown) => {
+            const error =
+              err instanceof Error ? err : new Error(JSON.stringify(err) || "Unknown error");
+            return Promise.reject(error);
+          });
+      }
+
+      isRefreshing = true;
+
       try {
         const { accessToken } = await refreshApi();
         setAccessToken(accessToken);
+        processQueue(null, accessToken);
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
         return await axiosClient(originalRequest);
-      } catch (refreshError) {
+      } catch (refreshError: unknown) {
         setAccessToken(null);
+        processQueue(refreshError, null);
 
-        // FIX: this might be wrong
         window.location.href = "/login";
-        return Promise.reject(
-          refreshError instanceof Error ? refreshError : new Error(String(refreshError)),
-        );
+        const error =
+          refreshError instanceof Error
+            ? refreshError
+            : new Error(JSON.stringify(refreshError) || "Unknown error");
+        return void Promise.reject(error);
+      } finally {
+        isRefreshing = false;
       }
     }
     return Promise.reject(error);
