@@ -1,12 +1,20 @@
-const getError = (err: unknown): string => {
-  if (err instanceof Error) {
-    if (err.message.includes("401")) return "Invalid credentials. Please use your school email.";
-    if (err.message.includes("network"))
-      return "Network error. Check your connection and try again.";
-    return err.message;
-  }
-  if (typeof err === "string") return err;
-  return "An unexpected error occurred. :(";
+/**
+ * @deprecated This function is deprecated. Consider using normalizeError for consistent error handling.
+ */
+export const getError = (err: unknown): string => {
+  return getErrorMessage(err);
 };
 
-export default getError;
+export function getErrorMessage(err: unknown): string {
+  if (err instanceof Error) return err.message;
+  if (typeof err === "string") return err;
+  try {
+    return JSON.stringify(err);
+  } catch {
+    return String(err);
+  }
+}
+
+export function normalizeError(err: unknown): Error {
+  return new Error(getErrorMessage(err));
+}

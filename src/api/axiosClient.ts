@@ -1,6 +1,7 @@
 import axios from "axios";
 import { refreshApi } from "@/features/auth/api/auth";
 import { setAccessToken, getAccessToken } from "@/features/auth/context/tokenStore";
+import { normalizeError } from "@/util/getError";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
 
@@ -13,17 +14,6 @@ export const refreshClient = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
 });
-
-function normalizeError(err: unknown): Error {
-  if (err instanceof Error) return err;
-  if (typeof err === "string") return new Error(err);
-
-  try {
-    return new Error(JSON.stringify(err));
-  } catch {
-    return new Error("Unknown error");
-  }
-}
 
 let isRefreshing = false;
 
