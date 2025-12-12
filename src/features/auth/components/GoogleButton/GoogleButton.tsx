@@ -11,12 +11,7 @@ interface GoogleButtonProps {
   disabled?: boolean;
 }
 
-export default function GoogleButton({
-  clientId,
-  onSuccess,
-  onError,
-  disabled,
-}: GoogleButtonProps) {
+export default function GoogleButton({ clientId, onSuccess, onError }: GoogleButtonProps) {
   const [initialized, setInitialized] = useState(false);
   const [loading, setLoading] = useState(false);
   const [googleClient, setGoogleClient] = useState<google.accounts.oauth2.CodeClient | null>(null);
@@ -51,17 +46,11 @@ export default function GoogleButton({
       console.log("Google OAuth client not initialized");
       return;
     }
-    setLoading(true);
     googleClient.requestCode();
   };
 
   return (
-    <Button
-      className={styles.googleButton}
-      variant="secondary"
-      onClick={handleClick}
-      disabled={disabled || !initialized || loading}
-    >
+    <Button className={styles.googleButton} variant="secondary" onClick={handleClick}>
       <FcGoogle className={styles.googleIcon} />
       {loading ? "Signing in..." : "Sign In with Google"}
     </Button>

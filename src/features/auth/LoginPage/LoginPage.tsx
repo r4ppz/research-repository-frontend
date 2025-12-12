@@ -2,14 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import schoolLogo from "@/assets/school-logo.svg";
 import Modal from "@/components/common/Modal/Modal";
-import getError from "@/util/getError";
+import { getErrorMessage } from "@/util/getError";
 import style from "./LoginPage.module.css";
 import GoogleButton from "../components/GoogleButton/GoogleButton";
 import { useAuth } from "../context/useAuth";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login, isLoading } = useAuth();
+  const { login } = useAuth();
   const [error, setError] = useState<string | null>(null);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
@@ -21,13 +21,13 @@ const LoginPage = () => {
   }, [error]);
 
   const handleGoogleSuccess = (authCode: string): void => {
-    const performLogin = async () => {
+    const performLogin = async (): Promise<void> => {
       try {
         setError(null);
         await login(authCode);
         void navigate("/", { replace: true });
-      } catch (err) {
-        const errorMessage: string = getError(err);
+      } catch (err: unknown) {
+        const errorMessage: string = getErrorMessage(err);
         setError(errorMessage);
       }
     };
@@ -62,7 +62,6 @@ const LoginPage = () => {
             clientId={googleClientId}
             onSuccess={handleGoogleSuccess}
             onError={handleGoogleError}
-            disabled={isLoading}
           />
         </div>
 
