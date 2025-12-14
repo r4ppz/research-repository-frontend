@@ -1,55 +1,20 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import schoolLogo from "@/assets/school-logo.svg";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import Modal from "@/components/common/Modal/Modal";
-import { getErrorMessage } from "@/util/getError";
 import style from "./LoginPage.module.css";
-import { getUserApi, refreshApi } from "../api/auth";
 import GoogleButton from "../components/GoogleButton/GoogleButton";
-import { getAccessToken, removeAccessToken, setAccessToken } from "../context/tokenStore";
 import { useAuth } from "../context/useAuth";
+import { useAutoLogin } from "../hooks/useAutoLogin";
+import { useGoogleLogin } from "../hooks/useGoogleLogin";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-  const { user, setUser, login, authError, setAuthError } = useAuth();
+  const { authError, setAuthError } = useAuth();
   const [showErrorModal, setShowErrorModal] = useState(!!authError);
   const [isLoading, setIsLoading] = useState(true);
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
 
-  useEffect(() => {
-    const autoLogin = async () => {
-      setIsLoading(true);
-      setAuthError(null);
-
-      const token = getAccessToken();
-      if (token && !user) {
-        try {
-          const data = await refreshApi();
-          removeAccessToken();
-          setAccessToken(data.accessToken);
-          console.log("Access token received from refreshApi call");
-
-          const userData = await getUserApi();
-          console.log("User object received from getUserApi call");
-
-          setUser(userData);
-          void navigate("/", { replace: true });
-        } catch (error) {
-          const errorMessage = getErrorMessage(error);
-          console.error("Error message: ", errorMessage);
-          setAuthError(errorMessage);
-          removeAccessToken();
-          setShowErrorModal(true);
-        }
-      }
-      setIsLoading(false);
-    };
-
-    if (isLoading) {
-      void autoLogin();
-    }
-  }, [user, navigate, isLoading, setAuthError, setUser]);
+  useAutoLogin(isLoading, setIsLoading, setShowErrorModal);
 
   useEffect(() => {
     if (authError && !isLoading) {
@@ -57,23 +22,7 @@ const LoginPage = () => {
     }
   }, [authError, isLoading]);
 
-  const handleGoogleSuccess = (authCode: string): void => {
-    const performLogin = async (): Promise<void> => {
-      setIsLoading(true);
-      setAuthError(null);
-      try {
-        await login(authCode);
-        void navigate("/", { replace: true });
-      } catch (err: unknown) {
-        const errorMessage: string = getErrorMessage(err);
-        setAuthError(errorMessage);
-        setShowErrorModal(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    void performLogin();
-  };
+  const handleGoogleSuccess = useGoogleLogin(setIsLoading, setShowErrorModal);
 
   const handleGoogleError = () => {
     setAuthError("Google authentication failed. Please try again.");
