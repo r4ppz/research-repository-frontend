@@ -1,47 +1,97 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import schoolLogo from "@/assets/school-logo.svg";
+import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import Modal from "@/components/common/Modal/Modal";
 import { getErrorMessage } from "@/util/getError";
 import style from "./LoginPage.module.css";
+import { getUserApi, refreshApi } from "../api/auth";
 import GoogleButton from "../components/GoogleButton/GoogleButton";
+import { getAccessToken, removeAccessToken, setAccessToken } from "../context/tokenStore";
 import { useAuth } from "../context/useAuth";
 
 const LoginPage = () => {
   const navigate = useNavigate();
-  const { login } = useAuth();
-  const [error, setError] = useState<string | null>(null);
-  const [showErrorModal, setShowErrorModal] = useState(false);
+  const { user, setUser, login, authError, setAuthError } = useAuth();
+  const [showErrorModal, setShowErrorModal] = useState(!!authError);
+  const [isLoading, setIsLoading] = useState(true);
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
 
   useEffect(() => {
-    if (error) {
+    const autoLogin = async () => {
+      setIsLoading(true);
+      setAuthError(null);
+
+      const token = getAccessToken();
+      if (token && !user) {
+        try {
+          const data = await refreshApi();
+          removeAccessToken();
+          setAccessToken(data.accessToken);
+          console.log("Access token received from refreshApi call");
+
+          const userData = await getUserApi();
+          console.log("User object received from getUserApi call");
+
+          setUser(userData);
+          void navigate("/", { replace: true });
+        } catch (error) {
+          const errorMessage = getErrorMessage(error);
+          console.error("Error message: ", errorMessage);
+          setAuthError(errorMessage);
+          removeAccessToken();
+          setShowErrorModal(true);
+        }
+      }
+      setIsLoading(false);
+    };
+
+    if (isLoading) {
+      void autoLogin();
+    }
+  }, [user, navigate, isLoading, setAuthError, setUser]);
+
+  useEffect(() => {
+    if (authError && !isLoading) {
       setShowErrorModal(true);
     }
-  }, [error]);
+  }, [authError, isLoading]);
 
   const handleGoogleSuccess = (authCode: string): void => {
     const performLogin = async (): Promise<void> => {
+      setIsLoading(true);
+      setAuthError(null);
       try {
-        setError(null);
         await login(authCode);
         void navigate("/", { replace: true });
       } catch (err: unknown) {
         const errorMessage: string = getErrorMessage(err);
-        setError(errorMessage);
+        setAuthError(errorMessage);
+        setShowErrorModal(true);
+      } finally {
+        setIsLoading(false);
       }
     };
     void performLogin();
   };
 
   const handleGoogleError = () => {
-    setError("Google authentication failed. Please try again.");
+    setAuthError("Google authentication failed. Please try again.");
+    setShowErrorModal(true);
   };
 
   const handleCloseModal = () => {
     setShowErrorModal(false);
-    setError(null);
+    setAuthError(null);
   };
+
+  if (isLoading && !authError) {
+    return (
+      <div className={style.page}>
+        <LoadingSpinner message="Auto-signing in..." />
+      </div>
+    );
+  }
 
   return (
     <div className={style.page}>
@@ -71,7 +121,7 @@ const LoginPage = () => {
       <Modal className={style.errorModal} isOpen={showErrorModal} onClose={handleCloseModal}>
         <h2 className={style.modalTitle}>Login Error</h2>
         <div className={style.descriptionContainer}>
-          <p className={style.modalDescription}>{error}</p>
+          <p className={style.modalDescription}>{authError}</p>
         </div>
       </Modal>
     </div>

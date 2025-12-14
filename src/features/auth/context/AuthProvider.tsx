@@ -1,12 +1,14 @@
 import { ReactNode, useState, useEffect } from "react";
 import { AuthResponse, User } from "@/types";
+import { getErrorMessage } from "@/util/getError";
 import { AuthContext, AuthContextValue } from "./AuthContext";
-import { getAccessToken, removeAccessToken, setAccessToken } from "./tokenStore";
+import { removeAccessToken, setAccessToken } from "./tokenStore";
 import { loginApi, logoutApi } from "../api/auth";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setLoading] = useState<boolean>(true);
+  const [authError, setAuthError] = useState<string | null>(null);
 
   const login = async (authCode: string) => {
     setLoading(true);
@@ -20,7 +22,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await logoutApi();
     } catch (error) {
-      console.error("Logout failed", error);
+      const errorMessage = getErrorMessage(error);
+      console.error("Logout failed");
+      console.error("Error message", errorMessage);
     } finally {
       removeAccessToken();
       setUser(null);
@@ -28,13 +32,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    const initializeAuth = () => {
-      const hasStoredToken = getAccessToken() !== null;
-      if (!hasStoredToken) {
-        setLoading(false);
-      }
-    };
-    initializeAuth();
+    setLoading(false);
   }, []);
 
   const value: AuthContextValue = {
@@ -44,6 +42,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     logout,
     isLoading,
     setLoading,
+    authError,
+    setAuthError,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
