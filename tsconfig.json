@@ -1,34 +1,35 @@
 {
   "compilerOptions": {
-    /* === Output & Module Resolution === */
+    /* Output & Module Resolution */
     "module": "ESNext",
     "target": "ESNext",
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    /* === React & JSX === */
+    /* React & JSX */
     "jsx": "react-jsx",
-    /* === Strictness === */
+    /* Strictness */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    /* === Path Aliases === */
+    /* Path Aliases */
     "baseUrl": ".",
     "paths": {
       "@/*": [
         "src/*"
       ]
     },
-    /* === Type Checking Behavior === */
+    /* Type Checking Behavior */
     "skipLibCheck": true,
     "isolatedModules": true,
-    /* === Emission === */
+    /* Emission */
     "noEmit": true
   },
   "include": [
-    "src"
+    "src",
+    "vite.config.ts"
   ],
   "exclude": [
     "node_modules",

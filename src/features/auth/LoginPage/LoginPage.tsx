@@ -16,6 +16,7 @@ const LoginPage = () => {
 
   useAutoLogin(isLoading, setIsLoading, setShowErrorModal);
 
+  // To show modal
   useEffect(() => {
     if (authError && !isLoading) {
       setShowErrorModal(true);
