@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import Button from "@/components/common/Button/Button";
+import { useAuth } from "@/features/auth/context/useAuth";
 import { loadGoogleScript } from "@/util/googleAuth";
 import styles from "./GoogleButton.module.css";
 
@@ -12,6 +13,7 @@ interface GoogleButtonProps {
 }
 
 export default function GoogleButton({ clientId, onSuccess, onError }: GoogleButtonProps) {
+  const { setAuthError } = useAuth();
   const [initialized, setInitialized] = useState(false);
   const [loading, setLoading] = useState(false);
   const [googleClient, setGoogleClient] = useState<google.accounts.oauth2.CodeClient | null>(null);
@@ -44,6 +46,7 @@ export default function GoogleButton({ clientId, onSuccess, onError }: GoogleBut
   const handleClick = () => {
     if (!initialized || !googleClient) {
       console.log("Google OAuth client not initialized");
+      setAuthError("Check your internet connection");
       return;
     }
     googleClient.requestCode();

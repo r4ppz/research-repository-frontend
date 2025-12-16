@@ -2,11 +2,11 @@ import { useState, useEffect } from "react";
 import schoolLogo from "@/assets/school-logo.svg";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import Modal from "@/components/common/Modal/Modal";
+import GoogleButton from "@/features/auth/components/GoogleButton/GoogleButton";
+import { useAuth } from "@/features/auth/context/useAuth";
+import { useAutoLogin } from "@/features/auth/hooks/useAutoLogin";
+import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
 import style from "./LoginPage.module.css";
-import GoogleButton from "../components/GoogleButton/GoogleButton";
-import { useAuth } from "../context/useAuth";
-import { useAutoLogin } from "../hooks/useAutoLogin";
-import { useGoogleLogin } from "../hooks/useGoogleLogin";
 
 const LoginPage = () => {
   const { authError, setAuthError } = useAuth();
