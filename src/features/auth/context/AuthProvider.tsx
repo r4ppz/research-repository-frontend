@@ -1,6 +1,6 @@
 import { ReactNode, useState, useEffect } from "react";
 import { AuthResponse, User } from "@/types";
-import { getErrorMessage } from "@/util/getError";
+import { extractApiError, getErrorMessage } from "@/util/getError";
 import { AuthContext, AuthContextValue } from "./AuthContext";
 import { removeAccessToken, setAccessToken } from "./tokenStore";
 import { loginApi, logoutApi } from "../api/auth";
@@ -22,10 +22,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       await logoutApi();
     } catch (error) {
+      // Extract API error for better logging
+      const apiError = extractApiError(error);
       const errorMessage = getErrorMessage(error);
+
       console.error("Logout failed");
-      console.error("Error message", errorMessage);
+
+      if (apiError) {
+        console.error(`Error code: ${apiError.code}, Message: ${errorMessage}`);
+        if (apiError.traceId) {
+          console.error(`Trace ID: ${apiError.traceId}`);
+        }
+      } else {
+        console.error("Error message", errorMessage);
+      }
     } finally {
+      // Always clear local state even if logout API fails
       removeAccessToken();
       setUser(null);
     }

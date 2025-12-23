@@ -1,7 +1,7 @@
 import axios from "axios";
 import { refreshApi } from "@/features/auth/api/auth";
 import { setAccessToken, getAccessToken } from "@/features/auth/context/tokenStore";
-import { normalizeError } from "@/util/getError";
+import { normalizeError, extractApiError } from "@/util/getError";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
 
@@ -65,9 +65,19 @@ axiosClient.interceptors.response.use(
 
     const url = original.url ?? "";
 
-    const shouldRefresh = status === 401 && !url.endsWith("/refresh") && !url.endsWith("/login");
+    // Check if this is an auth error that needs token refresh
+    // Only try to refresh if it's a 401 and not already a refresh/login endpoint
+    const shouldRefresh = status === 401 && !url.endsWith("/refresh") && !url.endsWith("/google");
 
     if (!shouldRefresh) {
+      return Promise.reject(normalized);
+    }
+
+    // Check if the error is REFRESH_TOKEN_REVOKED - don't try to refresh in that case
+    const apiError = extractApiError(error);
+    if (apiError?.code === "REFRESH_TOKEN_REVOKED") {
+      setAccessToken(null);
+      window.location.href = "/login";
       return Promise.reject(normalized);
     }
 

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getErrorMessage } from "@/util/getError";
+import { extractApiError, getErrorMessage } from "@/util/getError";
 import { getUserApi, refreshApi } from "../api/auth";
 import { getAccessToken, removeAccessToken, setAccessToken } from "../context/tokenStore";
 import { useAuth } from "../context/useAuth";
@@ -29,9 +29,21 @@ export function useAutoLogin(
           setUser(userData);
           void navigate("/", { replace: true });
         } catch (error) {
-          setAuthError(getErrorMessage(error));
-          removeAccessToken();
-          setShowErrorModal(true);
+          // Extract API error for better handling
+          const apiError = extractApiError(error);
+
+          // For auth errors, just clear tokens and don't show modal
+          // The user will see the login page
+          if (apiError?.code === "REFRESH_TOKEN_REVOKED" || apiError?.code === "UNAUTHENTICATED") {
+            removeAccessToken();
+            // Don't show error modal for expected auth failures
+            setAuthError(null);
+          } else {
+            // For other errors, show the error
+            setAuthError(getErrorMessage(error));
+            removeAccessToken();
+            setShowErrorModal(true);
+          }
         }
       }
       setIsLoading(false);
