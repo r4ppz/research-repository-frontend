@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import schoolLogo from "@/assets/school-logo.svg";
 import Modal from "@/components/common/Modal/Modal";
-import { getErrorMessage } from "@/util/getError";
+import { getErrorMessage, getErrorCode, ERROR_CODES } from "@/util/getError";
 import style from "./LoginPage.module.css";
 import GoogleButton from "../components/GoogleButton/GoogleButton";
 import { useAuth } from "../context/useAuth";
@@ -27,7 +27,16 @@ const LoginPage = () => {
         await login(authCode);
         void navigate("/", { replace: true });
       } catch (err: unknown) {
-        const errorMessage: string = getErrorMessage(err);
+        const errorCode = getErrorCode(err);
+        let errorMessage = getErrorMessage(err);
+
+        // Handle specific auth error codes according to API contract
+        if (errorCode === ERROR_CODES.INVALID_TOKEN) {
+          errorMessage = "Authentication failed. Please try again.";
+        } else if (errorCode === ERROR_CODES.DOMAIN_NOT_ALLOWED) {
+          errorMessage = "Email domain not allowed. Please use your official Assumption College of Davao email address.";
+        }
+
         setError(errorMessage);
       }
     };

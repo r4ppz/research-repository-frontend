@@ -1,7 +1,7 @@
 import axios from "axios";
 import { refreshApi } from "@/features/auth/api/auth";
 import { setAccessToken, getAccessToken } from "@/features/auth/context/tokenStore";
-import { normalizeError } from "@/util/getError";
+import { normalizeError, isAuthError, ERROR_CODES, getErrorCode } from "@/util/getError";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
 
@@ -64,10 +64,21 @@ axiosClient.interceptors.response.use(
     }
 
     const url = original.url ?? "";
+    const errorCode = getErrorCode(error);
 
-    const shouldRefresh = status === 401 && !url.endsWith("/refresh") && !url.endsWith("/login");
+    // Don't attempt refresh for certain auth endpoints or if error is refresh token revoked
+    const shouldRefresh =
+      status === 401 &&
+      !url.endsWith("/refresh") &&
+      !url.endsWith("/login") &&
+      errorCode !== ERROR_CODES.REFRESH_TOKEN_REVOKED;
 
     if (!shouldRefresh) {
+      // If it's an auth error (UNAUTHENTICATED or REFRESH_TOKEN_REVOKED), clear tokens and redirect
+      if (isAuthError(error)) {
+        setAccessToken(null);
+        window.location.href = "/login";
+      }
       return Promise.reject(normalized);
     }
 
