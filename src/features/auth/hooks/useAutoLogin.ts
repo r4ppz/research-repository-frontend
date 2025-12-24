@@ -6,7 +6,6 @@ import { getAccessToken, removeAccessToken, setAccessToken } from "../context/to
 import { useAuth } from "../context/useAuth";
 
 export function useAutoLogin(
-  isLoading: boolean,
   setIsLoading: (v: boolean) => void,
   setShowErrorModal: (v: boolean) => void,
 ) {

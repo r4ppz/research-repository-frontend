@@ -16,7 +16,7 @@ const LoginPage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
 
-  useAutoLogin(isLoading, setIsLoading, setShowErrorModal);
+  useAutoLogin(setIsLoading, setShowErrorModal);
 
   // To show modal
   useEffect(() => {
