@@ -12,7 +12,7 @@ import style from "./LoginPage.module.css";
 
 const LoginPage = () => {
   const { authError, setAuthError } = useAuth();
-  const [showErrorModal, setShowErrorModal] = useState(!!authError);
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
 
