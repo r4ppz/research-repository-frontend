@@ -2,6 +2,7 @@ import axios from "axios";
 import { refreshApi } from "@/features/auth/api/auth";
 import { setAccessToken, getAccessToken } from "@/features/auth/context/tokenStore";
 import { extractApiError, isAuthError } from "@/util/errorHandler";
+import { ApiError } from "@/types/api";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
 
@@ -19,12 +20,12 @@ let isRefreshing = false;
 
 type QueueItem = {
   resolve: (token: string) => void;
-  reject: (err: Error) => void;
+  reject: (err: ApiError) => void;
 };
 
 let failedQueue: QueueItem[] = [];
 
-function processQueue(err: Error | null, token?: string): void {
+function processQueue(err: ApiError | null, token?: string): void {
   for (const item of failedQueue) {
     if (err) {
       item.reject(err);
@@ -109,7 +110,7 @@ axiosClient.interceptors.response.use(
       const refreshApiError = extractApiError(err);
 
       setAccessToken(null);
-      processQueue(new Error(refreshApiError.message));
+      processQueue(refreshApiError);
 
       // Redirect to login for auth errors
       if (isAuthError(refreshApiError)) {
