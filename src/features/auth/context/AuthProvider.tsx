@@ -17,7 +17,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const data: AuthResponse = await loginApi(authCode);
       setAccessToken(data.accessToken);
       setUser(data.user);
-      setAuthError(null); // Ensure error is cleared on success
     } catch (error) {
       const apiError = extractApiError(error);
       setAuthError(apiError);

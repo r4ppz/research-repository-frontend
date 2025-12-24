@@ -70,13 +70,13 @@ axiosClient.interceptors.response.use(
     const url = original.url ?? "";
 
     // Handle 401 errors with token refresh, except for auth endpoints
-    const shouldRefresh = status === 401 && !url.endsWith("/refresh") && !url.endsWith("/google") && !url.endsWith("/logout");
+    const isAuthEndpoint = url.includes("/api/auth/refresh") || url.includes("/api/auth/google") || url.includes("/api/auth/logout");
+    const shouldRefresh = status === 401 && !isAuthEndpoint;
 
     if (!shouldRefresh) {
-      // For auth errors on auth endpoints, redirect to login
-      if (isAuthError(apiError) && (url.endsWith("/refresh") || url.endsWith("/google"))) {
+      // For auth errors on auth endpoints, clear token (user will be redirected by route protection)
+      if (isAuthError(apiError) && isAuthEndpoint) {
         setAccessToken(null);
-        window.location.href = "/login";
       }
       return Promise.reject(apiError);
     }
@@ -112,12 +112,8 @@ axiosClient.interceptors.response.use(
       setAccessToken(null);
       processQueue(refreshApiError);
 
-      // Redirect to login for auth errors
-      if (isAuthError(refreshApiError)) {
-        window.location.href = "/login";
-      }
-
-      return await Promise.reject(refreshApiError);
+      // Clear token for auth errors (user will be redirected by route protection)
+      return Promise.reject(refreshApiError);
     } finally {
       isRefreshing = false;
     }

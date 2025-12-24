@@ -3,13 +3,8 @@ import { AuthResponse, User } from "@/types";
 import { extractApiError } from "@/util/errorHandler";
 
 export const loginApi = async (code: string): Promise<AuthResponse> => {
-  try {
-    const response = await axiosClient.post<AuthResponse>("/api/auth/google", { code });
-    return response.data;
-  } catch (error) {
-    // Re-throw the properly formatted API error
-    throw extractApiError(error);
-  }
+  const response = await axiosClient.post<AuthResponse>("/api/auth/google", { code });
+  return response.data;
 };
 
 let isRefreshInProgress = false;
@@ -37,21 +32,11 @@ export const refreshApi = async (): Promise<{ accessToken: string }> => {
 };
 
 export const logoutApi = async (): Promise<{ message: string }> => {
-  try {
-    const response = await axiosClient.post<{ message: string }>("/api/auth/logout");
-    return response.data;
-  } catch (error) {
-    // Re-throw the properly formatted API error
-    throw extractApiError(error);
-  }
+  const response = await axiosClient.post<{ message: string }>("/api/auth/logout");
+  return response.data;
 };
 
 export const getUserApi = async (): Promise<User> => {
-  try {
-    const response = await axiosClient.get<User>("/api/auth/me");
-    return response.data;
-  } catch (error) {
-    // Re-throw the properly formatted API error
-    throw extractApiError(error);
-  }
+  const response = await axiosClient.get<User>("/api/auth/me");
+  return response.data;
 };

@@ -8,7 +8,7 @@ import { ApiError, isApiError } from "@/types/api";
 export function extractApiError(error: unknown): ApiError {
   // If it's already a properly structured API error
   if (isApiError(error)) {
-    return error as ApiError;
+    return error;
   }
 
   // Handle Axios errors
