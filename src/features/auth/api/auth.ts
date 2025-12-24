@@ -24,7 +24,6 @@ export const refreshApi = async (): Promise<{ accessToken: string }> => {
     })
     .catch((error: unknown) => {
       isRefreshInProgress = false;
-      // Re-throw the properly formatted API error
       throw extractApiError(error);
     });
 

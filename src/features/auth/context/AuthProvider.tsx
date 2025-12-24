@@ -32,8 +32,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (error) {
       const apiError = extractApiError(error);
       const errorMessage = getUserErrorMessage(apiError);
+
       console.error("Logout failed:", errorMessage);
-      // Don't set authError for logout failures, just log them
     } finally {
       removeAccessToken();
       setUser(null);

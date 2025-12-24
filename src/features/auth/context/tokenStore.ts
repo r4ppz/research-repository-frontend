@@ -1,11 +1,7 @@
 const TOKEN_KEY = "accessToken";
 
-export const setAccessToken = (token: string | null): void => {
-  if (token) {
-    localStorage.setItem(TOKEN_KEY, token);
-  } else {
-    localStorage.removeItem(TOKEN_KEY);
-  }
+export const setAccessToken = (token: string): void => {
+  localStorage.setItem(TOKEN_KEY, token);
 };
 
 export const removeAccessToken = (): void => {

@@ -36,10 +36,10 @@ export function useAutoLogin(
         } catch (error) {
           const apiError = extractApiError(error);
 
-          // For auth errors, just clear token and don't show modal (expected flow)
+          // just clear token and don't show modal
           if (isAuthError(apiError)) {
             removeAccessToken();
-            setAuthError(null); // Don't show error for expected auth failures
+            setAuthError(null);
           } else {
             // For other errors, show the error modal
             setAuthError(apiError);

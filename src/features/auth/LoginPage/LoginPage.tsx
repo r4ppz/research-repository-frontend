@@ -28,7 +28,6 @@ const LoginPage = () => {
   const handleGoogleSuccess = useGoogleLogin(setIsLoading, setShowErrorModal);
 
   const handleGoogleError = () => {
-    // Set a generic error - the actual error will come from the API
     setAuthError(new ApiError("INTERNAL_ERROR", "Google authentication failed. Please try again."));
     setShowErrorModal(true);
   };
@@ -41,15 +40,12 @@ const LoginPage = () => {
   if (isLoading && !authError) {
     return (
       <div className={style.page}>
-        <LoadingSpinner message="Auto-signing in..." />
+        <LoadingSpinner message="Signing in..." />
       </div>
     );
   }
 
-  // Get user-friendly error message
   const errorMessage = authError ? getUserErrorMessage(authError) : "";
-
-  // Determine modal title based on error code
   const modalTitle = authError?.code === "DOMAIN_NOT_ALLOWED" ? "Access Denied" : "Login Error";
 
   return (

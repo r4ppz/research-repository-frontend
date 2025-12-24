@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { User, ApiError } from "@/types";
+import { User, TypedApiError, ApiError } from "@/types";
 
 export interface AuthContextValue {
   user: User | null;
@@ -8,8 +8,8 @@ export interface AuthContextValue {
   logout: () => Promise<void>;
   isLoading: boolean;
   setIsLoading: (loading: boolean) => void;
-  authError: ApiError | null;
-  setAuthError: (authError: ApiError | null) => void;
+  authError: TypedApiError | ApiError | null;
+  setAuthError: (authError: TypedApiError | ApiError | null) => void;
 }
 
 export const AuthContext = createContext<AuthContextValue | undefined>(undefined);

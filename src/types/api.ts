@@ -20,7 +20,7 @@ export interface ApiErrorDetail {
 
 export class ApiError extends Error {
   code: string; // Will be narrowed to specific codes
-  details?: ApiErrorDetail[] | Record<string, unknown>; // Array for VALIDATION_ERROR, object for others like RATE_LIMIT_EXCEEDED
+  details?: ApiErrorDetail[] | Record<string, unknown>;
   traceId?: string;
 
   constructor(

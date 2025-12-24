@@ -1,6 +1,10 @@
 import axios from "axios";
 import { refreshApi } from "@/features/auth/api/auth";
-import { setAccessToken, getAccessToken } from "@/features/auth/context/tokenStore";
+import {
+  setAccessToken,
+  getAccessToken,
+  removeAccessToken,
+} from "@/features/auth/context/tokenStore";
 import { ApiError } from "@/types/api";
 import { extractApiError, isAuthError } from "@/util/errorHandler";
 
@@ -74,12 +78,13 @@ axiosClient.interceptors.response.use(
       url.includes("/api/auth/refresh") ||
       url.includes("/api/auth/google") ||
       url.includes("/api/auth/logout");
+
     const shouldRefresh = status === 401 && !isAuthEndpoint;
 
     if (!shouldRefresh) {
-      // For auth errors on auth endpoints, clear token (user will be redirected by route protection)
+      // For auth errors on auth endpoints, clear token
       if (isAuthError(apiError) && isAuthEndpoint) {
-        setAccessToken(null);
+        removeAccessToken();
       }
       return Promise.reject(apiError);
     }
@@ -112,10 +117,10 @@ axiosClient.interceptors.response.use(
     } catch (err: unknown) {
       const refreshApiError = extractApiError(err);
 
-      setAccessToken(null);
+      removeAccessToken();
       processQueue(refreshApiError);
 
-      // Clear token for auth errors (user will be redirected by route protection)
+      // Clear token for auth errors
       throw refreshApiError;
     } finally {
       isRefreshing = false;
