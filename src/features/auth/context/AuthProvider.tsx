@@ -1,6 +1,6 @@
 import { ReactNode, useState, useEffect } from "react";
-import { AuthResponse, User } from "@/types";
-import { getErrorMessage } from "@/util/getError";
+import { AuthResponse, User, ApiError } from "@/types";
+import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 import { AuthContext, AuthContextValue } from "./AuthContext";
 import { removeAccessToken, setAccessToken } from "./tokenStore";
 import { loginApi, logoutApi } from "../api/auth";
@@ -8,26 +8,36 @@ import { loginApi, logoutApi } from "../api/auth";
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setLoading] = useState<boolean>(true);
-  const [authError, setAuthError] = useState<string | null>(null);
+  const [authError, setAuthError] = useState<ApiError | null>(null);
 
   const login = async (authCode: string) => {
     setLoading(true);
-    const data: AuthResponse = await loginApi(authCode);
-    setAccessToken(data.accessToken);
-    setUser(data.user);
-    setLoading(false);
+    setAuthError(null);
+    try {
+      const data: AuthResponse = await loginApi(authCode);
+      setAccessToken(data.accessToken);
+      setUser(data.user);
+    } catch (error) {
+      const apiError = extractApiError(error);
+      setAuthError(apiError);
+      throw apiError;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const logout = async () => {
     try {
       await logoutApi();
     } catch (error) {
-      const errorMessage = getErrorMessage(error);
-      console.error("Logout failed");
-      console.error("Error message", errorMessage);
+      const apiError = extractApiError(error);
+      const errorMessage = getUserErrorMessage(apiError);
+      console.error("Logout failed:", errorMessage);
+      // Don't set authError for logout failures, just log them
     } finally {
       removeAccessToken();
       setUser(null);
+      setAuthError(null);
     }
   };
 

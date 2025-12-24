@@ -1,9 +1,15 @@
 import axiosClient, { refreshClient } from "@/api/axiosClient";
 import { AuthResponse, User } from "@/types";
+import { extractApiError } from "@/util/errorHandler";
 
 export const loginApi = async (code: string): Promise<AuthResponse> => {
-  const response = await axiosClient.post<AuthResponse>("/api/auth/google", { code });
-  return response.data;
+  try {
+    const response = await axiosClient.post<AuthResponse>("/api/auth/google", { code });
+    return response.data;
+  } catch (error) {
+    // Re-throw the properly formatted API error
+    throw extractApiError(error);
+  }
 };
 
 let isRefreshInProgress = false;
@@ -23,18 +29,29 @@ export const refreshApi = async (): Promise<{ accessToken: string }> => {
     })
     .catch((error: unknown) => {
       isRefreshInProgress = false;
-      throw error;
+      // Re-throw the properly formatted API error
+      throw extractApiError(error);
     });
 
   return refreshPromise;
 };
 
 export const logoutApi = async (): Promise<{ message: string }> => {
-  const response = await axiosClient.post<{ message: string }>("/api/auth/logout");
-  return response.data;
+  try {
+    const response = await axiosClient.post<{ message: string }>("/api/auth/logout");
+    return response.data;
+  } catch (error) {
+    // Re-throw the properly formatted API error
+    throw extractApiError(error);
+  }
 };
 
 export const getUserApi = async (): Promise<User> => {
-  const response = await axiosClient.get<User>("/api/auth/me");
-  return response.data;
+  try {
+    const response = await axiosClient.get<User>("/api/auth/me");
+    return response.data;
+  } catch (error) {
+    // Re-throw the properly formatted API error
+    throw extractApiError(error);
+  }
 };

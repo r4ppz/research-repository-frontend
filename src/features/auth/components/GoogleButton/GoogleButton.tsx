@@ -29,6 +29,10 @@ export default function GoogleButton({ clientId, onSuccess, onError }: GoogleBut
             if (response.code) {
               onSuccess(response.code);
             } else {
+              setAuthError({
+                code: "INTERNAL_ERROR",
+                message: "Failed to authenticate with Google",
+              });
               onError();
             }
             setLoading(false);
@@ -39,21 +43,28 @@ export default function GoogleButton({ clientId, onSuccess, onError }: GoogleBut
         setInitialized(true);
       })
       .catch(() => {
+        setAuthError({
+          code: "INTERNAL_ERROR",
+          message: "Failed to load Google authentication. Please check your internet connection.",
+        });
         onError();
       });
-  }, [clientId, onSuccess, onError]);
+  }, [clientId, onSuccess, onError, setAuthError]);
 
   const handleClick = () => {
     if (!initialized || !googleClient) {
-      console.log("Google OAuth client not initialized");
-      setAuthError("Check your internet connection");
+      setAuthError({
+        code: "INTERNAL_ERROR",
+        message: "Google OAuth client not initialized. Please refresh the page.",
+      });
       return;
     }
+    setLoading(true);
     googleClient.requestCode();
   };
 
   return (
-    <Button className={styles.googleButton} variant="secondary" onClick={handleClick}>
+    <Button className={styles.googleButton} variant="secondary" onClick={handleClick} disabled={!initialized || loading}>
       <FcGoogle className={styles.googleIcon} />
       {loading ? "Signing in..." : "Sign In with Google"}
     </Button>

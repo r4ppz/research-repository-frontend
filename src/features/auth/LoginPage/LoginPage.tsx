@@ -6,6 +6,7 @@ import GoogleButton from "@/features/auth/components/GoogleButton/GoogleButton";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { useAutoLogin } from "@/features/auth/hooks/useAutoLogin";
 import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
+import { getUserErrorMessage } from "@/util/errorHandler";
 import style from "./LoginPage.module.css";
 
 const LoginPage = () => {
@@ -26,7 +27,11 @@ const LoginPage = () => {
   const handleGoogleSuccess = useGoogleLogin(setIsLoading, setShowErrorModal);
 
   const handleGoogleError = () => {
-    setAuthError("Google authentication failed. Please try again.");
+    // Set a generic error - the actual error will come from the API
+    setAuthError({
+      code: "INTERNAL_ERROR",
+      message: "Google authentication failed. Please try again.",
+    });
     setShowErrorModal(true);
   };
 
@@ -42,6 +47,14 @@ const LoginPage = () => {
       </div>
     );
   }
+
+  // Get user-friendly error message
+  const errorMessage = authError ? getUserErrorMessage(authError) : "";
+  
+  // Determine modal title based on error code
+  const modalTitle = authError?.code === "DOMAIN_NOT_ALLOWED" 
+    ? "Access Denied" 
+    : "Login Error";
 
   return (
     <div className={style.page}>
@@ -69,9 +82,12 @@ const LoginPage = () => {
       </div>
 
       <Modal className={style.errorModal} isOpen={showErrorModal} onClose={handleCloseModal}>
-        <h2 className={style.modalTitle}>Login Error</h2>
+        <h2 className={style.modalTitle}>{modalTitle}</h2>
         <div className={style.descriptionContainer}>
-          <p className={style.modalDescription}>{authError}</p>
+          <p className={style.modalDescription}>{errorMessage}</p>
+          {authError?.traceId && (
+            <p className={style.traceId}>Trace ID: {authError.traceId}</p>
+          )}
         </div>
       </Modal>
     </div>

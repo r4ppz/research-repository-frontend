@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getErrorMessage } from "@/util/getError";
+import { extractApiError, isAuthError } from "@/util/errorHandler";
 import { getUserApi, refreshApi } from "../api/auth";
 import { getAccessToken, removeAccessToken, setAccessToken } from "../context/tokenStore";
 import { useAuth } from "../context/useAuth";
@@ -29,9 +29,18 @@ export function useAutoLogin(
           setUser(userData);
           void navigate("/", { replace: true });
         } catch (error) {
-          setAuthError(getErrorMessage(error));
-          removeAccessToken();
-          setShowErrorModal(true);
+          const apiError = extractApiError(error);
+          
+          // For auth errors, just clear token and don't show modal (expected flow)
+          if (isAuthError(apiError)) {
+            removeAccessToken();
+            setAuthError(null); // Don't show error for expected auth failures
+          } else {
+            // For other errors, show the error modal
+            setAuthError(apiError);
+            removeAccessToken();
+            setShowErrorModal(true);
+          }
         }
       }
       setIsLoading(false);

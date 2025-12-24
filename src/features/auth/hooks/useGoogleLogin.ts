@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { getErrorMessage } from "@/util/getError";
+import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 import { useAuth } from "../context/useAuth";
 
 export function useGoogleLogin(
@@ -17,7 +17,8 @@ export function useGoogleLogin(
         await login(authCode);
         void navigate("/", { replace: true });
       } catch (err: unknown) {
-        setAuthError(getErrorMessage(err));
+        const apiError = extractApiError(err);
+        setAuthError(apiError);
         setShowErrorModal(true);
       } finally {
         setIsLoading(false);

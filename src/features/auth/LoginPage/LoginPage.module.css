@@ -99,3 +99,10 @@
   margin: 0 0 var(--space-xl) 0;
   font-size: var(--font-size-md);
 }
+
+.traceId {
+  margin: 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-family: monospace;
+}
