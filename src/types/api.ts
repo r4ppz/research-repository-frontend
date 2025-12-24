@@ -18,11 +18,23 @@ export interface ApiErrorDetail {
   message: string;
 }
 
-export interface ApiError {
+export class ApiError extends Error {
   code: string; // Will be narrowed to specific codes
-  message: string;
   details?: ApiErrorDetail[] | Record<string, unknown>; // Array for VALIDATION_ERROR, object for others like RATE_LIMIT_EXCEEDED
   traceId?: string;
+
+  constructor(
+    code: string,
+    message: string,
+    details?: ApiErrorDetail[] | Record<string, unknown>,
+    traceId?: string,
+  ) {
+    super(message);
+    this.name = "ApiError";
+    this.code = code;
+    this.details = details;
+    this.traceId = traceId;
+  }
 }
 
 // Error Code Registry
@@ -50,11 +62,21 @@ export interface TypedApiError extends ApiError {
   code: ErrorCode;
 }
 
-// Type guard to check if error conforms to API contract
+// Type guard to check if error is an ApiError instance
 export function isApiError(error: unknown): error is ApiError {
-  if (typeof error !== "object" || error === null) return false;
+  return error instanceof ApiError;
+}
 
-  const err = error as Record<string, unknown>;
+// Type guard to check if an object has API error structure (for parsing responses)
+export function hasApiErrorStructure(obj: unknown): obj is {
+  code: string;
+  message: string;
+  details?: ApiErrorDetail[] | Record<string, unknown>;
+  traceId?: string;
+} {
+  if (typeof obj !== "object" || obj === null) return false;
+
+  const err = obj as Record<string, unknown>;
   return (
     typeof err.code === "string" &&
     typeof err.message === "string" &&

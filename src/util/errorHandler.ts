@@ -1,48 +1,37 @@
 import axios, { AxiosError } from "axios";
-import { ApiError, isApiError } from "@/types/api";
+import { ApiError, hasApiErrorStructure, isApiError } from "@/types/api";
 
 /**
  * Extracts and normalizes API error from various error types
  * Conforms to the canonical error response structure from API contract
  */
 export function extractApiError(error: unknown): ApiError {
-  // If it's already a properly structured API error
+  // If it's already an ApiError instance
   if (isApiError(error)) {
     return error;
   }
 
   // Handle Axios errors
   if (axios.isAxiosError(error)) {
-    const axiosError = error as AxiosError<ApiError>;
+    const axiosError = error as AxiosError;
 
-    // If response data conforms to API error structure
-    if (axiosError.response?.data && isApiError(axiosError.response.data)) {
-      return axiosError.response.data;
+    // If response data has API error structure
+    if (axiosError.response?.data && hasApiErrorStructure(axiosError.response.data)) {
+      const data = axiosError.response.data;
+      return new ApiError(data.code, data.message, data.details, data.traceId);
     }
 
     // Fallback for Axios errors without proper error structure
-    return {
-      code: "INTERNAL_ERROR",
-      message: axiosError.message || "An unexpected error occurred",
-      traceId: undefined,
-    };
+    return new ApiError("INTERNAL_ERROR", axiosError.message || "An unexpected error occurred");
   }
 
   // Handle standard Error objects
   if (error instanceof Error) {
-    return {
-      code: "INTERNAL_ERROR",
-      message: error.message || "An unexpected error occurred",
-      traceId: undefined,
-    };
+    return new ApiError("INTERNAL_ERROR", error.message || "An unexpected error occurred");
   }
 
   // Handle unknown error types
-  return {
-    code: "INTERNAL_ERROR",
-    message: "An unexpected error occurred",
-    traceId: undefined,
-  };
+  return new ApiError("INTERNAL_ERROR", "An unexpected error occurred");
 }
 
 /**

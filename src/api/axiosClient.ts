@@ -116,7 +116,7 @@ axiosClient.interceptors.response.use(
       processQueue(refreshApiError);
 
       // Clear token for auth errors (user will be redirected by route protection)
-      return Promise.reject(refreshApiError);
+      throw refreshApiError;
     } finally {
       isRefreshing = false;
     }
