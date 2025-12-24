@@ -7,11 +7,11 @@ import { loginApi, logoutApi } from "../api/auth";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [authError, setAuthError] = useState<ApiError | null>(null);
 
   const login = async (authCode: string) => {
-    setLoading(true);
+    setIsLoading(true);
     setAuthError(null);
     try {
       const data: AuthResponse = await loginApi(authCode);
@@ -22,7 +22,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setAuthError(apiError);
       throw apiError;
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -42,7 +42,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   useEffect(() => {
-    setLoading(false);
+    setIsLoading(false);
   }, []);
 
   const value: AuthContextValue = {
@@ -51,7 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     login,
     logout,
     isLoading,
-    setLoading,
+    setIsLoading,
     authError,
     setAuthError,
   };

@@ -7,7 +7,7 @@ export interface AuthContextValue {
   login: (authCode: string) => Promise<void>;
   logout: () => Promise<void>;
   isLoading: boolean;
-  setLoading: (loading: boolean) => void;
+  setIsLoading: (loading: boolean) => void;
   authError: ApiError | null;
   setAuthError: (authError: ApiError | null) => void;
 }
