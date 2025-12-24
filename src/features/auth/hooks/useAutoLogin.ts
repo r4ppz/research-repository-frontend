@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { extractApiError, isAuthError } from "@/util/errorHandler";
 import { getUserApi, refreshApi } from "../api/auth";
@@ -12,8 +12,14 @@ export function useAutoLogin(
 ) {
   const { user, setUser, setAuthError } = useAuth();
   const navigate = useNavigate();
+  const hasAttemptedAutoLogin = useRef(false);
 
   useEffect(() => {
+    // Only attempt auto-login once on mount
+    if (hasAttemptedAutoLogin.current) {
+      return;
+    }
+
     const autoLogin = async () => {
       setIsLoading(true);
       setAuthError(null);
@@ -46,8 +52,7 @@ export function useAutoLogin(
       setIsLoading(false);
     };
 
-    if (isLoading) {
-      void autoLogin();
-    }
-  }, [user, navigate, isLoading, setAuthError, setUser, setIsLoading, setShowErrorModal]);
+    hasAttemptedAutoLogin.current = true;
+    void autoLogin();
+  }, [user, navigate, setAuthError, setUser, setIsLoading, setShowErrorModal]);
 }
