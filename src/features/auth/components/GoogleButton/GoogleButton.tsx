@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import Button from "@/components/common/Button/Button";
 import { useAuth } from "@/features/auth/context/useAuth";
+import { ApiError } from "@/types";
 import { loadGoogleScript } from "@/util/googleAuth";
 import styles from "./GoogleButton.module.css";
 
@@ -29,10 +30,7 @@ export default function GoogleButton({ clientId, onSuccess, onError }: GoogleBut
             if (response.code) {
               onSuccess(response.code);
             } else {
-              setAuthError({
-                code: "INTERNAL_ERROR",
-                message: "Failed to authenticate with Google",
-              });
+              setAuthError(new ApiError("INTERNAL_ERROR", "Failed to authenticate with Google"));
               onError();
             }
             setLoading(false);
@@ -43,20 +41,24 @@ export default function GoogleButton({ clientId, onSuccess, onError }: GoogleBut
         setInitialized(true);
       })
       .catch(() => {
-        setAuthError({
-          code: "INTERNAL_ERROR",
-          message: "Failed to load Google authentication. Please check your internet connection.",
-        });
+        setAuthError(
+          new ApiError(
+            "INTERNAL_ERROR",
+            "Failed to load Google authentication. Please check your internet connection.",
+          ),
+        );
         onError();
       });
   }, [clientId, onSuccess, onError, setAuthError]);
 
   const handleClick = () => {
     if (!initialized || !googleClient) {
-      setAuthError({
-        code: "INTERNAL_ERROR",
-        message: "Google OAuth client not initialized. Please refresh the page.",
-      });
+      setAuthError(
+        new ApiError(
+          "INTERNAL_ERROR",
+          "Google OAuth client not initialized. Please refresh the page.",
+        ),
+      );
       return;
     }
     setLoading(true);

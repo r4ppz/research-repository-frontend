@@ -6,6 +6,7 @@ import GoogleButton from "@/features/auth/components/GoogleButton/GoogleButton";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { useAutoLogin } from "@/features/auth/hooks/useAutoLogin";
 import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
+import { ApiError } from "@/types";
 import { getUserErrorMessage } from "@/util/errorHandler";
 import style from "./LoginPage.module.css";
 
@@ -28,10 +29,7 @@ const LoginPage = () => {
 
   const handleGoogleError = () => {
     // Set a generic error - the actual error will come from the API
-    setAuthError({
-      code: "INTERNAL_ERROR",
-      message: "Google authentication failed. Please try again.",
-    });
+    setAuthError(new ApiError("INTERNAL_ERROR", "Google authentication failed. Please try again."));
     setShowErrorModal(true);
   };
 
