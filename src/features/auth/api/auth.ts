@@ -1,5 +1,6 @@
 import axiosClient, { refreshClient } from "@/api/axiosClient";
 import { AuthResponse, User } from "@/types";
+import { extractApiError } from "@/util/errorHandler";
 
 export const loginApi = async (code: string): Promise<AuthResponse> => {
   const response = await axiosClient.post<AuthResponse>("/api/auth/google", { code });
@@ -23,7 +24,8 @@ export const refreshApi = async (): Promise<{ accessToken: string }> => {
     })
     .catch((error: unknown) => {
       isRefreshInProgress = false;
-      throw error;
+      // Re-throw the properly formatted API error
+      throw extractApiError(error);
     });
 
   return refreshPromise;

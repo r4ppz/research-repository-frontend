@@ -29,7 +29,7 @@ interface TableProps<T extends object> {
 }
 
 const Table = <T extends object>({
-  data = [],
+  data,
   columns,
   rowKey,
   pagination,

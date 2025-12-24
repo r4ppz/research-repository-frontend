@@ -7,7 +7,7 @@ import prettierPlugin from "eslint-plugin-prettier";
 
 export default [
   {
-    ignores: ["dist", "node_modules", "*.env", "*.d.ts", "vite.config.ts"],
+    ignores: ["dist", "node_modules", "*.env", "*.d.ts", "eslint.config.js", "vite.config.ts"],
   },
 
   // Type-aware TypeScript rules
@@ -20,7 +20,7 @@ export default [
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
-        projectService: true,
+        project: "./tsconfig.json",
         tsconfigRootDir: new URL(".", import.meta.url).pathname,
       },
       globals: globals.browser,

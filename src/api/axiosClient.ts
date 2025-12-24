@@ -1,7 +1,8 @@
 import axios from "axios";
 import { refreshApi } from "@/features/auth/api/auth";
 import { setAccessToken, getAccessToken } from "@/features/auth/context/tokenStore";
-import { normalizeError } from "@/util/getError";
+import { ApiError } from "@/types/api";
+import { extractApiError, isAuthError } from "@/util/errorHandler";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
 
@@ -19,12 +20,12 @@ let isRefreshing = false;
 
 type QueueItem = {
   resolve: (token: string) => void;
-  reject: (err: Error) => void;
+  reject: (err: ApiError) => void;
 };
 
 let failedQueue: QueueItem[] = [];
 
-function processQueue(err: Error | null, token?: string): void {
+function processQueue(err: ApiError | null, token?: string): void {
   for (const item of failedQueue) {
     if (err) {
       item.reject(err);
@@ -43,32 +44,44 @@ axiosClient.interceptors.request.use(
     }
     return config;
   },
-  (error) => Promise.reject(normalizeError(error)),
+  (error) => {
+    const apiError = extractApiError(error);
+    return Promise.reject(apiError);
+  },
 );
 
 axiosClient.interceptors.response.use(
   (response) => response,
 
   async (error: unknown) => {
-    const normalized = normalizeError(error);
+    const apiError = extractApiError(error);
 
     if (!axios.isAxiosError(error)) {
-      return Promise.reject(normalized);
+      return Promise.reject(apiError);
     }
 
     const original = error.config;
     const status = error.response?.status;
 
     if (!original) {
-      return Promise.reject(normalized);
+      return Promise.reject(apiError);
     }
 
     const url = original.url ?? "";
 
-    const shouldRefresh = status === 401 && !url.endsWith("/refresh") && !url.endsWith("/login");
+    // Handle 401 errors with token refresh, except for auth endpoints
+    const isAuthEndpoint =
+      url.includes("/api/auth/refresh") ||
+      url.includes("/api/auth/google") ||
+      url.includes("/api/auth/logout");
+    const shouldRefresh = status === 401 && !isAuthEndpoint;
 
     if (!shouldRefresh) {
-      return Promise.reject(normalized);
+      // For auth errors on auth endpoints, clear token (user will be redirected by route protection)
+      if (isAuthError(apiError) && isAuthEndpoint) {
+        setAccessToken(null);
+      }
+      return Promise.reject(apiError);
     }
 
     if (isRefreshing) {
@@ -79,7 +92,10 @@ axiosClient.interceptors.response.use(
           original.headers.set("Authorization", `Bearer ${token}`);
           return axiosClient(original);
         })
-        .catch((queueErr: unknown) => Promise.reject(normalizeError(queueErr)));
+        .catch((queueErr: unknown) => {
+          const queueApiError = extractApiError(queueErr);
+          return Promise.reject(queueApiError);
+        });
     }
 
     isRefreshing = true;
@@ -94,13 +110,13 @@ axiosClient.interceptors.response.use(
 
       return await axiosClient(original);
     } catch (err: unknown) {
-      const normalizedErr = normalizeError(err);
+      const refreshApiError = extractApiError(err);
 
       setAccessToken(null);
-      processQueue(normalizedErr);
+      processQueue(refreshApiError);
 
-      window.location.href = "/login";
-      return await Promise.reject(normalizedErr);
+      // Clear token for auth errors (user will be redirected by route protection)
+      throw refreshApiError;
     } finally {
       isRefreshing = false;
     }

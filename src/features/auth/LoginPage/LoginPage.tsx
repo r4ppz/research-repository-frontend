@@ -1,47 +1,56 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import schoolLogo from "@/assets/school-logo.svg";
+import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import Modal from "@/components/common/Modal/Modal";
-import { getErrorMessage } from "@/util/getError";
+import GoogleButton from "@/features/auth/components/GoogleButton/GoogleButton";
+import { useAuth } from "@/features/auth/context/useAuth";
+import { useAutoLogin } from "@/features/auth/hooks/useAutoLogin";
+import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
+import { ApiError } from "@/types";
+import { getUserErrorMessage } from "@/util/errorHandler";
 import style from "./LoginPage.module.css";
-import GoogleButton from "../components/GoogleButton/GoogleButton";
-import { useAuth } from "../context/useAuth";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-  const { login } = useAuth();
-  const [error, setError] = useState<string | null>(null);
+  const { authError, setAuthError } = useAuth();
   const [showErrorModal, setShowErrorModal] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
 
+  useAutoLogin(isLoading, setIsLoading, setShowErrorModal);
+
+  // To show modal
   useEffect(() => {
-    if (error) {
+    if (authError && !isLoading) {
       setShowErrorModal(true);
     }
-  }, [error]);
+  }, [authError, isLoading]);
 
-  const handleGoogleSuccess = (authCode: string): void => {
-    const performLogin = async (): Promise<void> => {
-      try {
-        setError(null);
-        await login(authCode);
-        void navigate("/", { replace: true });
-      } catch (err: unknown) {
-        const errorMessage: string = getErrorMessage(err);
-        setError(errorMessage);
-      }
-    };
-    void performLogin();
-  };
+  const handleGoogleSuccess = useGoogleLogin(setIsLoading, setShowErrorModal);
 
   const handleGoogleError = () => {
-    setError("Google authentication failed. Please try again.");
+    // Set a generic error - the actual error will come from the API
+    setAuthError(new ApiError("INTERNAL_ERROR", "Google authentication failed. Please try again."));
+    setShowErrorModal(true);
   };
 
   const handleCloseModal = () => {
     setShowErrorModal(false);
-    setError(null);
+    setAuthError(null);
   };
+
+  if (isLoading && !authError) {
+    return (
+      <div className={style.page}>
+        <LoadingSpinner message="Auto-signing in..." />
+      </div>
+    );
+  }
+
+  // Get user-friendly error message
+  const errorMessage = authError ? getUserErrorMessage(authError) : "";
+
+  // Determine modal title based on error code
+  const modalTitle = authError?.code === "DOMAIN_NOT_ALLOWED" ? "Access Denied" : "Login Error";
 
   return (
     <div className={style.page}>
@@ -69,9 +78,10 @@ const LoginPage = () => {
       </div>
 
       <Modal className={style.errorModal} isOpen={showErrorModal} onClose={handleCloseModal}>
-        <h2 className={style.modalTitle}>Login Error</h2>
+        <h2 className={style.modalTitle}>{modalTitle}</h2>
         <div className={style.descriptionContainer}>
-          <p className={style.modalDescription}>{error}</p>
+          <p className={style.modalDescription}>{errorMessage}</p>
+          {authError?.traceId && <p className={style.traceId}>Trace ID: {authError.traceId}</p>}
         </div>
       </Modal>
     </div>
