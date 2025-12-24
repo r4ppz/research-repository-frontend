@@ -87,6 +87,14 @@
   }
 }
 
+.emptyState {
+  grid-column: 1 / -1;
+  padding: var(--space-2xl);
+  text-align: center;
+  font-size: var(--font-size-lg);
+  color: var(--color-text-muted);
+}
+
 .paginationSection {
   display: flex;
   flex-direction: row;

@@ -130,9 +130,8 @@ const LibraryPage = () => {
 
           <section className={style.researchSection}>
             {pageData.content.length === 0 ? (
-              <div>
-                <p>No research paper found :(</p>
-                <p>CHATGIPITY center this text...</p>
+              <div className={style.emptyState}>
+                <p>No research papers found</p>
               </div>
             ) : (
               pageData.content.map((research) => (

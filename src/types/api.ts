@@ -21,7 +21,7 @@ export interface ApiErrorDetail {
 export interface ApiError {
   code: string; // Will be narrowed to specific codes
   message: string;
-  details?: ApiErrorDetail[] | Record<string, unknown>; // Handle both array and object forms
+  details?: ApiErrorDetail[] | Record<string, unknown>; // Array for VALIDATION_ERROR, object for others like RATE_LIMIT_EXCEEDED
   traceId?: string;
 }
 
