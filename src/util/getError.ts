@@ -1,5 +1,5 @@
-import { extractApiError, getUserErrorMessage } from "./errorHandler";
 import { isApiError } from "@/types/api";
+import { extractApiError, getUserErrorMessage } from "./errorHandler";
 
 /**
  * @deprecated Use extractApiError instead for API errors

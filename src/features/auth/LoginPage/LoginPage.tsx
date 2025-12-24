@@ -50,11 +50,9 @@ const LoginPage = () => {
 
   // Get user-friendly error message
   const errorMessage = authError ? getUserErrorMessage(authError) : "";
-  
+
   // Determine modal title based on error code
-  const modalTitle = authError?.code === "DOMAIN_NOT_ALLOWED" 
-    ? "Access Denied" 
-    : "Login Error";
+  const modalTitle = authError?.code === "DOMAIN_NOT_ALLOWED" ? "Access Denied" : "Login Error";
 
   return (
     <div className={style.page}>
@@ -85,9 +83,7 @@ const LoginPage = () => {
         <h2 className={style.modalTitle}>{modalTitle}</h2>
         <div className={style.descriptionContainer}>
           <p className={style.modalDescription}>{errorMessage}</p>
-          {authError?.traceId && (
-            <p className={style.traceId}>Trace ID: {authError.traceId}</p>
-          )}
+          {authError?.traceId && <p className={style.traceId}>Trace ID: {authError.traceId}</p>}
         </div>
       </Modal>
     </div>

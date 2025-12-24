@@ -30,7 +30,7 @@ export function useAutoLogin(
           void navigate("/", { replace: true });
         } catch (error) {
           const apiError = extractApiError(error);
-          
+
           // For auth errors, just clear token and don't show modal (expected flow)
           if (isAuthError(apiError)) {
             removeAccessToken();

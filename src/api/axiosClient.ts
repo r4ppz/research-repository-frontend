@@ -1,8 +1,8 @@
 import axios from "axios";
 import { refreshApi } from "@/features/auth/api/auth";
 import { setAccessToken, getAccessToken } from "@/features/auth/context/tokenStore";
-import { extractApiError, isAuthError } from "@/util/errorHandler";
 import { ApiError } from "@/types/api";
+import { extractApiError, isAuthError } from "@/util/errorHandler";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
 
@@ -70,7 +70,10 @@ axiosClient.interceptors.response.use(
     const url = original.url ?? "";
 
     // Handle 401 errors with token refresh, except for auth endpoints
-    const isAuthEndpoint = url.includes("/api/auth/refresh") || url.includes("/api/auth/google") || url.includes("/api/auth/logout");
+    const isAuthEndpoint =
+      url.includes("/api/auth/refresh") ||
+      url.includes("/api/auth/google") ||
+      url.includes("/api/auth/logout");
     const shouldRefresh = status === 401 && !isAuthEndpoint;
 
     if (!shouldRefresh) {

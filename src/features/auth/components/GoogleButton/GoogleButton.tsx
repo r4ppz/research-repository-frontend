@@ -64,7 +64,7 @@ export default function GoogleButton({ clientId, onSuccess, onError }: GoogleBut
   };
 
   return (
-    <Button className={styles.googleButton} variant="secondary" onClick={handleClick} disabled={!initialized || loading}>
+    <Button className={styles.googleButton} variant="secondary" onClick={handleClick}>
       <FcGoogle className={styles.googleIcon} />
       {loading ? "Signing in..." : "Sign In with Google"}
     </Button>
