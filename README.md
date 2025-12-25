@@ -1,14 +1,10 @@
-# Research Repository
+# Research Repository Frontend
 
-practicing web ;)
+This is the frontend codebase for the Research Repository System
 
-How to run locally
+#### Tech Stack :
 
-```bash
-git clone https://github.com/r4ppz/research-repository.git
-cd  research-repository
-npm install
-npm run build
-npm run dev
+- TypeScript
+- React
 
-```
+> Backend integration is in progress...
