@@ -1,17 +1,13 @@
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import { FilterConfig } from "@/components/layout/DynamicFilter/FilterTypes";
 import Footer from "@/components/layout/Footer/Footer";
 import Header from "@/components/layout/Header/Header";
 import SearchAndFilter from "@/components/layout/SearchAndFilter/SearchAndFilter";
-import { useAuth } from "@/features/auth/context/useAuth";
 import RequestTable from "@/features/student/components/RequestTable/RequestTable";
 import { useLoadingDelay } from "@/hooks/useLoadingDelay";
 import { useMultiFilterRequest } from "@/hooks/useMultiFilterRequest";
-import { MOCK_REQUESTS } from "@/mocks/requestMocks";
-import { getUserRequests, subscribeToRequests } from "@/temp/requestService";
-import { initializeTempRequests } from "@/temp/tempRequestStorage";
 import { DocumentRequest } from "@/types/";
 import { getRequestDepartmentOptions, getRequestDateOptions } from "@/util/requestFilterUtils";
 import style from "./RequestPage.module.css";
@@ -20,29 +16,9 @@ const RequestPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const [requests, setRequests] = useState<DocumentRequest[]>([]);
+  const [requests] = useState<DocumentRequest[]>([]);
 
-  const { user } = useAuth();
   const loading = useLoadingDelay();
-
-  useEffect(() => {
-    initializeTempRequests(MOCK_REQUESTS);
-  }, []);
-
-  useEffect(() => {
-    const updateRequests = () => {
-      const userRequests = user ? getUserRequests(user.userId) : [];
-      console.log("Subscription triggered - updating requests");
-      console.log("Current user ID:", user?.userId);
-      console.log("User requests count:", userRequests.length);
-      setRequests(userRequests);
-    };
-    updateRequests();
-    const unsubscribe = subscribeToRequests(updateRequests);
-    return () => {
-      unsubscribe();
-    };
-  }, [user]);
 
   const filteredRequests = useMultiFilterRequest(requests, {
     searchQuery,

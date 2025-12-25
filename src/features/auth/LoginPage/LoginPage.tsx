@@ -77,7 +77,6 @@ const LoginPage = () => {
         <h2 className={style.modalTitle}>{modalTitle}</h2>
         <div className={style.descriptionContainer}>
           <p className={style.modalDescription}>{errorMessage}</p>
-          {authError?.traceId && <p className={style.traceId}>Trace ID: {authError.traceId}</p>}
         </div>
       </Modal>
     </div>
