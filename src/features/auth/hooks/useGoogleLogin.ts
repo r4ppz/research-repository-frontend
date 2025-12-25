@@ -9,22 +9,23 @@ export function useGoogleLogin(
   const { login, setAuthError } = useAuth();
   const navigate = useNavigate();
 
+  const performLogin = async (authCode: string) => {
+    setIsLoading(true);
+    setAuthError(null);
+    try {
+      await login(authCode);
+      void navigate("/", { replace: true });
+    } catch (err: unknown) {
+      const apiError = extractApiError(err);
+      setAuthError(apiError);
+      setShowErrorModal(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleGoogleSuccess = (authCode: string) => {
-    const performLogin = async () => {
-      setIsLoading(true);
-      setAuthError(null);
-      try {
-        await login(authCode);
-        void navigate("/", { replace: true });
-      } catch (err: unknown) {
-        const apiError = extractApiError(err);
-        setAuthError(apiError);
-        setShowErrorModal(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    void performLogin();
+    void performLogin(authCode);
   };
 
   return handleGoogleSuccess;

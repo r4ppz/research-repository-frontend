@@ -27,6 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   const logout = async () => {
+    setIsLoading(true);
     try {
       await logoutApi();
     } catch (error) {
@@ -38,6 +39,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       removeAccessToken();
       setUser(null);
       setAuthError(null);
+      setIsLoading(false);
     }
   };
 

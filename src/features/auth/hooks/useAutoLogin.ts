@@ -32,23 +32,22 @@ export function useAutoLogin(
 
           const userData = await getUserApi();
           setUser(userData);
+          setIsLoading(false);
           void navigate("/", { replace: true });
         } catch (error) {
           const apiError = extractApiError(error);
+          removeAccessToken();
 
-          // just clear token and don't show modal
           if (isAuthError(apiError)) {
-            removeAccessToken();
             setAuthError(null);
           } else {
-            // For other errors, show the error modal
             setAuthError(apiError);
-            removeAccessToken();
             setShowErrorModal(true);
           }
         }
+      } else {
+        setIsLoading(false);
       }
-      setIsLoading(false);
     };
 
     hasAttemptedAutoLogin.current = true;

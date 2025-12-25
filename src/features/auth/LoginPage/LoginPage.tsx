@@ -37,7 +37,7 @@ const LoginPage = () => {
     setAuthError(null);
   };
 
-  if (isLoading && !authError) {
+  if (isLoading) {
     return (
       <div className={style.page}>
         <LoadingSpinner message="Signing in..." />
@@ -45,7 +45,7 @@ const LoginPage = () => {
     );
   }
 
-  const errorMessage = authError ? getUserErrorMessage(authError) : "";
+  const errorMessage = authError && getUserErrorMessage(authError);
   const modalTitle = authError?.code === "DOMAIN_NOT_ALLOWED" ? "Access Denied" : "Login Error";
 
   return (

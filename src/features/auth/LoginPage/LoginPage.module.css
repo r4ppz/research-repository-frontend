@@ -79,9 +79,9 @@
 }
 
 .errorModal {
-  text-align: center;
   display: flex;
   flex-direction: column;
+  text-align: center;
 }
 
 .modalTitle {
@@ -90,9 +90,9 @@
 }
 
 .descriptionContainer {
-  margin-top: var(--space-xl);
   display: flex;
   flex-direction: column;
+  margin-top: var(--space-xl);
 }
 
 .modalDescription {
