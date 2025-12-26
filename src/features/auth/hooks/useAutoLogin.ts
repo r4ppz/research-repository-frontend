@@ -45,9 +45,8 @@ export function useAutoLogin(
             setShowErrorModal(true);
           }
         }
-      } else {
-        setIsLoading(false);
       }
+      setIsLoading(false);
     };
 
     hasAttemptedAutoLogin.current = true;

@@ -16,7 +16,6 @@ interface GoogleButtonProps {
 export default function GoogleButton({ clientId, onSuccess, onError }: GoogleButtonProps) {
   const { setAuthError } = useAuth();
   const [initialized, setInitialized] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [googleClient, setGoogleClient] = useState<google.accounts.oauth2.CodeClient | null>(null);
 
   useEffect(() => {
@@ -33,7 +32,6 @@ export default function GoogleButton({ clientId, onSuccess, onError }: GoogleBut
               setAuthError(new ApiError("INTERNAL_ERROR", "Failed to authenticate with Google"));
               onError();
             }
-            setLoading(false);
           },
         });
 
@@ -61,14 +59,13 @@ export default function GoogleButton({ clientId, onSuccess, onError }: GoogleBut
       );
       return;
     }
-    setLoading(true);
     googleClient.requestCode();
   };
 
   return (
     <Button className={styles.googleButton} variant="secondary" onClick={handleClick}>
       <FcGoogle className={styles.googleIcon} />
-      {loading ? "Signing in..." : "Sign In with Google"}
+      Sign In with Google
     </Button>
   );
 }
