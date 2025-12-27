@@ -8,22 +8,16 @@ import ResearchCard from "@/features/library/components/ResearchCard/ResearchCar
 import ResearchModal from "@/features/library/components/ResearchModal/ResearchModal";
 import { type ResearchPaper } from "@/types";
 import SearchNFilter from "../components/SearchNFilter/SearchNFilter";
-import { useDepartments } from "../hooks/apiCalls/useDepartments";
 import { usePapers } from "../hooks/apiCalls/usePapers";
-import { useYears } from "../hooks/apiCalls/useYears";
 import style from "./LibraryPage.module.css";
 
 const LibraryPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedDepartmentIds, setSelectedDepartmentIds] = useState<number[]>([]);
-  const [selectedYear, setSelectedYear] = useState<number | null>(null);
+  const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
+  const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [selectedResearch, setSelectedResearch] = useState<ResearchPaper | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // Fetch filter options
-  const { departments, loading: departmentsLoading, error: departmentsError } = useDepartments();
-  const { years, loading: yearsLoading, error: yearsError } = useYears();
 
   // Fetch papers with current filters
   const {
@@ -33,8 +27,8 @@ const LibraryPage = () => {
     pagination,
   } = usePapers({
     search: searchQuery,
-    departmentIds: selectedDepartmentIds,
-    year: selectedYear,
+    departmentIds: selectedDepartment ? [parseInt(selectedDepartment)] : [],
+    year: selectedYear ? parseInt(selectedYear) : null,
     page: currentPage,
     size: 12,
   });
@@ -45,13 +39,13 @@ const LibraryPage = () => {
     setCurrentPage(0);
   };
 
-  const handleDepartmentChange = (ids: number[]) => {
-    setSelectedDepartmentIds(ids);
+  const handleYearChange = (year: string | null) => {
+    setSelectedYear(year);
     setCurrentPage(0);
   };
 
-  const handleYearChange = (year: number | null) => {
-    setSelectedYear(year);
+  const handleDepartmentChange = (departmentId: string | null) => {
+    setSelectedDepartment(departmentId);
     setCurrentPage(0);
   };
 
@@ -74,9 +68,9 @@ const LibraryPage = () => {
     }
   };
 
-  // Wait for ALL initial data to load (filters + first page of papers)
-  const isInitialLoading = departmentsLoading || yearsLoading || papersLoading;
-  const hasError = departmentsError || yearsError || papersError;
+  // Wait for data fetching states
+  const hasError = papersError;
+  const isInitialLoading = papersLoading;
 
   if (isInitialLoading) {
     return (
@@ -98,9 +92,7 @@ const LibraryPage = () => {
         <Header />
         <main className={style.main}>
           <div className={style.container}>
-            <p className={style.errorMessage}>
-              Error: {departmentsError || yearsError || papersError}
-            </p>
+            <p className={style.errorMessage}>Error: {papersError}</p>
           </div>
         </main>
         <Footer />
@@ -108,7 +100,7 @@ const LibraryPage = () => {
     );
   }
 
-  // Only render when everything is loaded
+  // Render the library page layout
   return (
     <div className={style.page}>
       <Header />
@@ -127,21 +119,20 @@ const LibraryPage = () => {
             </p>
           </section>
 
+          {/* Search and Filter Section */}
           <SearchNFilter
             searchQuery={searchQuery}
             onSearchChange={handleSearchChange}
-            selectedDepartmentIds={selectedDepartmentIds}
-            onDepartmentChange={handleDepartmentChange}
             selectedYear={selectedYear}
             onYearChange={handleYearChange}
-            departments={departments}
-            availableYears={years}
-            searchPlaceholder="Search papers..."
+            selectedDepartment={selectedDepartment}
+            onDepartmentChange={handleDepartmentChange}
           />
 
+          {/* Research Section */}
           <section className={style.researchSection}>
             {papers.length === 0 ? (
-              <p className={style.emptyMessage}>No papers found. Try adjusting your filters. </p>
+              <p className={style.emptyMessage}>No papers found. Try adjusting your filters.</p>
             ) : (
               papers.map((research) => (
                 <ResearchCard
@@ -156,6 +147,7 @@ const LibraryPage = () => {
             )}
           </section>
 
+          {/* Pagination */}
           {pagination && pagination.totalPages > 1 && (
             <section className={style.paginationSection}>
               <Button
@@ -184,6 +176,7 @@ const LibraryPage = () => {
         </div>
       </main>
 
+      {/* Research Modal */}
       {selectedResearch && (
         <ResearchModal
           researchPaper={selectedResearch}

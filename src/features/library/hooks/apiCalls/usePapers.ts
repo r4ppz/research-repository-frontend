@@ -33,6 +33,10 @@ export const usePapers = (params: UsePapersParams = {}): UsePapersReturn => {
   const [error, setError] = useState<string | null>(null);
   const [pagination, setPagination] = useState<UsePapersReturn["pagination"]>(null);
 
+  const departmentIdsString = params.departmentIds?.length
+    ? params.departmentIds.join(",")
+    : undefined;
+
   const fetchPapers = useCallback(async (): Promise<void> => {
     setLoading(true);
     setError(null);
@@ -40,7 +44,7 @@ export const usePapers = (params: UsePapersParams = {}): UsePapersReturn => {
     try {
       const apiParams: GetPapersParams = {
         search: params.search || undefined,
-        departmentId: params.departmentIds?.length ? params.departmentIds.join(",") : undefined,
+        departmentId: departmentIdsString,
         year: params.year || undefined,
         sortBy: params.sortBy,
         sortOrder: params.sortOrder,
@@ -68,7 +72,7 @@ export const usePapers = (params: UsePapersParams = {}): UsePapersReturn => {
     }
   }, [
     params.search,
-    params.departmentIds,
+    departmentIdsString,
     params.year,
     params.sortBy,
     params.sortOrder,
