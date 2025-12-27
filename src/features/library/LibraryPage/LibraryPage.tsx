@@ -1,80 +1,59 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Button from "@/components/common/Button/Button";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
-import { FilterConfig } from "@/components/layout/DynamicFilter/FilterTypes";
 import Footer from "@/components/layout/Footer/Footer";
 import Header from "@/components/layout/Header/Header";
 import ResearchCard from "@/features/library/components/ResearchCard/ResearchCard";
 import ResearchModal from "@/features/library/components/ResearchModal/ResearchModal";
-import { usePagination } from "@/features/library/hooks/usePagination";
-import { usePaperFilter } from "@/features/library/hooks/usePaperFilter";
-import { MOCK_DEPARTMENTS, MOCK_YEARS } from "@/mocks/filterMocks";
-import { MOCK_PAPERS } from "@/mocks/paperMocks";
 import { type ResearchPaper } from "@/types";
-import { extractApiError } from "@/util/errorHandler";
-import { getDepartments, getYears } from "../api/filter";
-import { getPapers } from "../api/paper";
 import SearchNFilter from "../components/SearchNFilter/SearchNFilter";
+import { useDepartments } from "../hooks/apiCalls/useDepartments";
+import { usePapers } from "../hooks/apiCalls/usePapers";
+import { useYears } from "../hooks/apiCalls/useYears";
 import style from "./LibraryPage.module.css";
 
 const LibraryPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
-  const [itemsPerPage] = useState(12); // Fixed items per page
-
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
-  const [selectedYear, setSelectedYear] = useState<string | null>(null);
-
+  const [selectedDepartmentIds, setSelectedDepartmentIds] = useState<number[]>([]);
+  const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [selectedResearch, setSelectedResearch] = useState<ResearchPaper | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [isLoading] = useState(false);
+  // Fetch filter options
+  const { departments, loading: departmentsLoading, error: departmentsError } = useDepartments();
+  const { years, loading: yearsLoading, error: yearsError } = useYears();
 
-  const filteredPapers = usePaperFilter(MOCK_PAPERS, {
-    searchQuery,
-    selectedDepartment,
-    selectedYear,
+  // Fetch papers with current filters
+  const {
+    papers,
+    loading: papersLoading,
+    error: papersError,
+    pagination,
+  } = usePapers({
+    search: searchQuery,
+    departmentIds: selectedDepartmentIds,
+    year: selectedYear,
+    page: currentPage,
+    size: 12,
   });
-  const pageData = usePagination(filteredPapers, currentPage, itemsPerPage);
 
-  // testing api
-  useEffect(() => {
-    getYears()
-      .then((years) => {
-        console.log("API /api/filters/years result:", years);
-      })
-      .catch((error: unknown) => {
-        const apiError = extractApiError(error);
-        console.error("API /api/filters/years error:", apiError);
-      });
+  // Reset to page 0 when filters change
+  const handleSearchChange = (query: string) => {
+    setSearchQuery(query);
+    setCurrentPage(0);
+  };
 
-    getDepartments()
-      .then((departments) => {
-        console.log("API /api/filters/departments result:", departments);
-      })
-      .catch((error: unknown) => {
-        const apiError = extractApiError(error);
-        console.error("API /api/filters/departments error:", apiError);
-      });
-  }, []);
+  const handleDepartmentChange = (ids: number[]) => {
+    setSelectedDepartmentIds(ids);
+    setCurrentPage(0);
+  };
 
-  useEffect(() => {
-    getPapers({
-      search: "D",
-    })
-      .then((data) => {
-        console.log("API /api/papers result:", data);
-      })
-      .catch((error: unknown) => {
-        const apiError = extractApiError(error);
-        console.error("API /api/papers error:", apiError);
-      });
-  }, []);
-
-  useEffect(() => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  }, [currentPage]);
+  const handleYearChange = (year: number | null) => {
+    setSelectedYear(year);
+    setCurrentPage(0);
+  };
 
   const handleCloseModal = () => {
     setSelectedResearch(null);
@@ -82,37 +61,54 @@ const LibraryPage = () => {
   };
 
   const handleNextPage = () => {
-    if (pageData && currentPage < pageData.totalPages - 1) {
+    if (pagination && currentPage < pagination.totalPages - 1) {
       setCurrentPage(currentPage + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
   const handlePrevPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className={style.loadingContainer}>
-        <LoadingSpinner message="Loading research papers..." />
-      </div>
-    );
-  }
+  // Wait for ALL initial data to load (filters + first page of papers)
+  const isInitialLoading = departmentsLoading || yearsLoading || papersLoading;
+  const hasError = departmentsError || yearsError || papersError;
 
-  if (!pageData) {
+  if (isInitialLoading) {
     return (
       <div className={style.page}>
         <Header />
         <main className={style.main}>
-          <p>Error loading research papers</p>
+          <div className={style.loadingContainer}>
+            <LoadingSpinner message="Loading library..." />
+          </div>
         </main>
         <Footer />
       </div>
     );
   }
 
+  if (hasError) {
+    return (
+      <div className={style.page}>
+        <Header />
+        <main className={style.main}>
+          <div className={style.container}>
+            <p className={style.errorMessage}>
+              Error: {departmentsError || yearsError || papersError}
+            </p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  // Only render when everything is loaded
   return (
     <div className={style.page}>
       <Header />
@@ -130,17 +126,24 @@ const LibraryPage = () => {
               knowledge and inspiring new ideas
             </p>
           </section>
+
           <SearchNFilter
             searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            searchPlaceholder="Search paper title"
+            onSearchChange={handleSearchChange}
+            selectedDepartmentIds={selectedDepartmentIds}
+            onDepartmentChange={handleDepartmentChange}
+            selectedYear={selectedYear}
+            onYearChange={handleYearChange}
+            departments={departments}
+            availableYears={years}
+            searchPlaceholder="Search papers..."
           />
 
           <section className={style.researchSection}>
-            {pageData.content.length === 0 ? (
-              <p>Tf?</p>
+            {papers.length === 0 ? (
+              <p className={style.emptyMessage}>No papers found. Try adjusting your filters. </p>
             ) : (
-              pageData.content.map((research) => (
+              papers.map((research) => (
                 <ResearchCard
                   key={research.paperId}
                   researchPaper={research}
@@ -151,17 +154,9 @@ const LibraryPage = () => {
                 />
               ))
             )}
-
-            {selectedResearch && (
-              <ResearchModal
-                researchPaper={selectedResearch}
-                isOpen={isModalOpen}
-                onClose={handleCloseModal}
-              />
-            )}
           </section>
 
-          {pageData.totalPages > 1 && (
+          {pagination && pagination.totalPages > 1 && (
             <section className={style.paginationSection}>
               <Button
                 className={style.pagingButton}
@@ -173,13 +168,13 @@ const LibraryPage = () => {
               </Button>
 
               <p className={style.pagingIndicator}>
-                Page {currentPage + 1} of {pageData.totalPages}
+                Page {currentPage + 1} of {pagination.totalPages}
               </p>
 
               <Button
                 className={style.pagingButton}
                 onClick={handleNextPage}
-                disabled={currentPage >= pageData.totalPages - 1}
+                disabled={currentPage >= pagination.totalPages - 1}
               >
                 Next
                 <ChevronRight className={style.iconChevron} />
@@ -188,6 +183,14 @@ const LibraryPage = () => {
           )}
         </div>
       </main>
+
+      {selectedResearch && (
+        <ResearchModal
+          researchPaper={selectedResearch}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        />
+      )}
 
       <Footer />
     </div>

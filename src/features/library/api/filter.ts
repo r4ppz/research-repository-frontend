@@ -1,15 +1,20 @@
 import { axiosClient } from "@/api/axiosClient";
+import { Department } from "@/types";
+
+interface YearsResponse {
+  years: number[];
+}
+
+interface DepartmentsResponse {
+  departments: Department[];
+}
 
 export const getYears = async (): Promise<number[]> => {
-  const response = await axiosClient.get<number[]>("/api/filters/years");
-  return response.data;
+  const response = await axiosClient.get<YearsResponse>("/api/filters/years");
+  return response.data.years;
 };
 
-export const getDepartments = async (): Promise<
-  { departmentid: number; departmentname: string }[]
-> => {
-  const response = await axiosClient.get<{ departmentid: number; departmentname: string }[]>(
-    "/api/filters/departments",
-  );
-  return response.data;
+export const getDepartments = async (): Promise<Department[]> => {
+  const response = await axiosClient.get<DepartmentsResponse>("/api/filters/departments");
+  return response.data.departments;
 };
