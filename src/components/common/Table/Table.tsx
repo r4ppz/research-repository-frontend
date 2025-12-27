@@ -1,6 +1,6 @@
+import { useState } from "react";
 import clsx from "clsx";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
 import Button from "@/components/common/Button/Button";
 import { safeToString } from "@/util/safeToString";
 import style from "./Table.module.css";

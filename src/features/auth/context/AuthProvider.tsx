@@ -1,9 +1,9 @@
-import { ReactNode, useState, useEffect } from "react";
-import { AuthResponse, User, ApiError } from "@/types";
+import { ReactNode, useEffect, useState } from "react";
+import { ApiError, AuthResponse, User } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
+import { loginApi, logoutApi } from "../api/auth";
 import { AuthContext, AuthContextValue } from "./AuthContext";
 import { removeAccessToken, setAccessToken } from "./tokenStore";
-import { loginApi, logoutApi } from "../api/auth";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);

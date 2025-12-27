@@ -1,0 +1,28 @@
+.searchNfilterSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .searchNfilterSection {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+.filterButtonWrapper {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-sm);
+}
+@media (min-width: 768px) {
+  .filterButtonWrapper {
+    width: 30%;
+  }
+}
+
+.filterButtons {
+  width: 100%;
+  min-width: 130px;
+}

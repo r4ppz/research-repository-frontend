@@ -1,5 +1,5 @@
+import { type ComponentType, forwardRef, type InputHTMLAttributes } from "react";
 import clsx from "clsx";
-import { type ComponentType, type InputHTMLAttributes, forwardRef } from "react";
 import style from "./Input.module.css";
 
 type InputType =

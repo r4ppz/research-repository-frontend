@@ -1,5 +1,5 @@
-import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { ChevronDown } from "lucide-react";
 import Button from "@/components/common/Button/Button";
 import style from "./DynamicFilter.module.css";
 import { FilterConfig } from "./FilterTypes";

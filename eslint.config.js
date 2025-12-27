@@ -2,7 +2,7 @@ import globals from "globals";
 import tseslint from "typescript-eslint";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
-import importPlugin from "eslint-plugin-import";
+import simpleImportSort from "eslint-plugin-simple-import-sort";
 import prettierPlugin from "eslint-plugin-prettier";
 
 export default [
@@ -10,7 +10,6 @@ export default [
     ignores: ["dist", "node_modules", "*.env", "*.d.ts", "eslint.config.js", "vite.config.ts"],
   },
 
-  // Type-aware TypeScript rules
   ...tseslint.configs.strictTypeChecked,
 
   {
@@ -29,19 +28,8 @@ export default [
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
-      import: importPlugin,
+      "simple-import-sort": simpleImportSort,
       prettier: prettierPlugin,
-    },
-
-    settings: {
-      "import/resolver": {
-        typescript: {
-          project: "./tsconfig.json",
-        },
-        node: {
-          extensions: [".ts", ".tsx"],
-        },
-      },
     },
 
     rules: {
@@ -60,15 +48,22 @@ export default [
       ...reactHooks.configs["recommended-latest"].rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
 
-      "import/order": [
+      // Import sorting
+      "simple-import-sort/imports": [
         "warn",
         {
-          groups: ["builtin", "external", "internal", ["sibling", "parent"], "index"],
-          "newlines-between": "never",
-          alphabetize: { order: "asc", caseInsensitive: true },
+          groups: [
+            [
+              "^\\u0000", // Side effects
+              "^node:", // Node builtins
+              "^react",
+              "^@?\\w", // External packages
+              "^@/", // Internal packages
+              "^\\.", // Relative imports
+            ],
+          ],
         },
       ],
-
       "prettier/prettier": "warn",
     },
   },

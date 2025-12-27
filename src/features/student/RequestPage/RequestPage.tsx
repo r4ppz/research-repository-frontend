@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import { useState } from "react";
+import clsx from "clsx";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import { FilterConfig } from "@/components/layout/DynamicFilter/FilterTypes";
 import Footer from "@/components/layout/Footer/Footer";
@@ -9,7 +9,7 @@ import RequestTable from "@/features/student/components/RequestTable/RequestTabl
 import { useLoadingDelay } from "@/hooks/useLoadingDelay";
 import { useMultiFilterRequest } from "@/hooks/useMultiFilterRequest";
 import { DocumentRequest } from "@/types/";
-import { getRequestDepartmentOptions, getRequestDateOptions } from "@/util/requestFilterUtils";
+import { getRequestDateOptions, getRequestDepartmentOptions } from "@/util/requestFilterUtils";
 import style from "./RequestPage.module.css";
 
 const RequestPage = () => {

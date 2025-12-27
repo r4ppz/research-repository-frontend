@@ -1,7 +1,7 @@
-import { clsx } from "clsx";
-import { X } from "lucide-react";
 import React from "react";
 import ReactDOM from "react-dom";
+import { clsx } from "clsx";
+import { X } from "lucide-react";
 import { useModalBodyClass } from "@/hooks/useModalBodyClass";
 import style from "./Modal.module.css";
 

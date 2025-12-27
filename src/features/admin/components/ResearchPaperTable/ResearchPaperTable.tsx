@@ -1,6 +1,6 @@
-import clsx from "clsx";
-import { Archive, Eye, Pencil, Trash2, RotateCcw } from "lucide-react";
 import { useState } from "react";
+import clsx from "clsx";
+import { Archive, Eye, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import Button from "@/components/common/Button/Button";
 import Table from "@/components/common/Table/Table";
 import { type ResearchPaper } from "@/types";

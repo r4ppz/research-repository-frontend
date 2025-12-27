@@ -1,7 +1,7 @@
-import clsx from "clsx";
-import { LogOut, Menu } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import clsx from "clsx";
+import { LogOut, Menu } from "lucide-react";
 import schoolLogo from "@/assets/school-logo.svg";
 import Button from "@/components/common/Button/Button";
 import CNavLink from "@/components/common/CNavLink/CNavLink";

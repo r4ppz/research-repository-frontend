@@ -1,5 +1,5 @@
-import clsx from "clsx";
 import { AnchorHTMLAttributes, ReactNode } from "react";
+import clsx from "clsx";
 import style from "./Link.module.css";
 
 interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {

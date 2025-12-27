@@ -87,14 +87,6 @@
   }
 }
 
-.emptyState {
-  grid-column: 1 / -1;
-  padding: var(--space-2xl);
-  font-size: var(--font-size-lg);
-  color: var(--color-text-muted);
-  text-align: center;
-}
-
 .paginationSection {
   display: flex;
   flex-direction: row;

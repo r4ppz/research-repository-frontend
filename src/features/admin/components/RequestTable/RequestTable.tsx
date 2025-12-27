@@ -1,6 +1,6 @@
+import { useState } from "react";
 import clsx from "clsx";
 import { Check, X } from "lucide-react";
-import { useState } from "react";
 import Button from "@/components/common/Button/Button";
 import Table from "@/components/common/Table/Table";
 import { DocumentRequest } from "@/types";
