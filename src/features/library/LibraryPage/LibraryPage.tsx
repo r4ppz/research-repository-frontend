@@ -10,11 +10,13 @@ import ResearchCard from "@/features/library/components/ResearchCard/ResearchCar
 import ResearchModal from "@/features/library/components/ResearchModal/ResearchModal";
 import { usePagination } from "@/features/library/hooks/usePagination";
 import { usePaperFilter } from "@/features/library/hooks/usePaperFilter";
-import { useLoadingDelay } from "@/hooks/useLoadingDelay";
 import { MOCK_DEPARTMENTS, MOCK_YEARS } from "@/mocks/filterMocks";
 import { MOCK_PAPERS } from "@/mocks/paperMocks";
 import { type ResearchPaper } from "@/types";
+import { extractApiError } from "@/util/errorHandler";
 import style from "./LibraryPage.module.css";
+import { getDepartments, getYears } from "../api/filter";
+import { getPapers } from "../api/paper";
 
 const LibraryPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
@@ -27,7 +29,7 @@ const LibraryPage = () => {
   const [selectedResearch, setSelectedResearch] = useState<ResearchPaper | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const loading = useLoadingDelay();
+  const [isLoading, setIsloading] = useState(false);
 
   const filteredPapers = usePaperFilter(MOCK_PAPERS, {
     searchQuery,
@@ -35,6 +37,40 @@ const LibraryPage = () => {
     selectedYear,
   });
   const pageData = usePagination(filteredPapers, currentPage, itemsPerPage);
+
+  // testing api
+  useEffect(() => {
+    getYears()
+      .then((years) => {
+        console.log("API /api/filters/years result:", years);
+      })
+      .catch((error: unknown) => {
+        const apiError = extractApiError(error);
+        console.error("API /api/filters/years error:", apiError);
+      });
+
+    getDepartments()
+      .then((departments) => {
+        console.log("API /api/filters/departments result:", departments);
+      })
+      .catch((error: unknown) => {
+        const apiError = extractApiError(error);
+        console.error("API /api/filters/departments error:", apiError);
+      });
+  }, []);
+
+  useEffect(() => {
+    getPapers({
+      search: "D",
+    })
+      .then((data) => {
+        console.log("API /api/papers result:", data);
+      })
+      .catch((error: unknown) => {
+        const apiError = extractApiError(error);
+        console.error("API /api/papers error:", apiError);
+      });
+  }, []);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -57,7 +93,7 @@ const LibraryPage = () => {
     }
   };
 
-  if (loading) {
+  if (isLoading) {
     return (
       <div className={style.loadingContainer}>
         <LoadingSpinner message="Loading research papers..." />
