@@ -10,7 +10,7 @@ import { extractApiError, isAuthError } from "@/util/errorHandler";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL;
 
-const axiosClient = axios.create({
+export const axiosClient = axios.create({
   baseURL: BASE_URL,
   withCredentials: true,
 });
@@ -26,7 +26,6 @@ type QueueItem = {
   resolve: (token: string) => void;
   reject: (err: ApiError) => void;
 };
-
 let failedQueue: QueueItem[] = [];
 
 function processQueue(err: ApiError | null, token?: string): void {
@@ -127,5 +126,3 @@ axiosClient.interceptors.response.use(
     }
   },
 );
-
-export default axiosClient;

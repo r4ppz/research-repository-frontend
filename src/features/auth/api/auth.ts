@@ -1,4 +1,4 @@
-import axiosClient, { refreshClient } from "@/api/axiosClient";
+import { axiosClient, refreshClient } from "@/api/axiosClient";
 import { AuthResponse, User } from "@/types";
 import { extractApiError } from "@/util/errorHandler";
 
