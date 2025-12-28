@@ -35,8 +35,7 @@ function useYears() {
 const FilterYearsButton = ({ selectedYear, onYearChange }: FilterYearsButtonProps) => {
   const { years, loading, error } = useYears();
 
-  if (loading) return <Button disabled>Loading...</Button>;
-  if (error) return <Button disabled>Error loading years</Button>;
+  if (loading || error) return <Button disabled>Year</Button>;
 
   return (
     <Select.Root

@@ -39,8 +39,7 @@ const FilterDepartmentButton = ({
 }: FilterDepartmentButtonProps) => {
   const { departments, loading, error } = useDepartments();
 
-  if (loading) return <Button disabled>Loading...</Button>;
-  if (error) return <Button disabled>Error loading departments</Button>;
+  if (loading || error) return <Button disabled>Department</Button>;
 
   const options = departments.map((d) => ({
     value: d.departmentId.toString(),

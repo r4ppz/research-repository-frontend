@@ -1,3 +1,4 @@
+import { SearchIcon } from "lucide-react";
 import Input from "@/components/common/Input/Input";
 import FilterDepartmentButton from "../FilterDepartmentsButton/FilterDepartmentsButton";
 import FilterYearsButton from "../FilterYearsButton/FilterYearsButton";
@@ -26,6 +27,7 @@ const SearchNFilter = ({
     <section className={style.searchNfilterSection}>
       {/* Search Input */}
       <Input
+        icon={SearchIcon}
         type="search"
         placeholder={searchPlaceholder}
         value={searchQuery}
