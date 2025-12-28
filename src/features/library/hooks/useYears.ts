@@ -3,14 +3,13 @@ import { getYears } from "@/api/filter";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
 interface UseYearsReturn {
-  years: number[];
+  years: string[];
   loading: boolean;
   error: string | null;
-  refetch: () => Promise<void>;
 }
 
 export const useYears = (): UseYearsReturn => {
-  const [years, setYears] = useState<number[]>([]);
+  const [years, setYears] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -20,7 +19,7 @@ export const useYears = (): UseYearsReturn => {
 
     try {
       const result = await getYears();
-      setYears(result);
+      setYears(result.map(String));
     } catch (err) {
       const apiError = extractApiError(err);
       setError(getUserErrorMessage(apiError));
@@ -38,6 +37,5 @@ export const useYears = (): UseYearsReturn => {
     years,
     loading,
     error,
-    refetch: fetchYears,
   };
 };

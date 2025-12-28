@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
 import * as Select from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
-import { getYears } from "@/api/filter";
 import Button from "@/components/common/Button/Button";
+import { useYears } from "@/features/library/hooks/useYears";
 import style from "./FilterYearsButton.module.css";
 
 interface FilterYearsButtonProps {
@@ -10,32 +9,8 @@ interface FilterYearsButtonProps {
   onYearChange: (year: string | null) => void;
 }
 
-function useYears() {
-  const [years, set] = useState<string[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const fetchYears = async () => {
-      try {
-        setLoading(true);
-        const result = await getYears();
-        set(result.map((y) => y.toString()));
-      } catch {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    void fetchYears();
-  }, []);
-  return { years, loading, error };
-}
-
 const FilterYearsButton = ({ selectedYear, onYearChange }: FilterYearsButtonProps) => {
-  const { years, loading, error } = useYears();
-
-  if (loading || error) return <Button disabled>Year</Button>;
+  const { years } = useYears();
 
   return (
     <Select.Root

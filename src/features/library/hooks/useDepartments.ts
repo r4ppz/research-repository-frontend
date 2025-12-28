@@ -7,7 +7,6 @@ interface UseDepartmentsReturn {
   departments: Department[];
   loading: boolean;
   error: string | null;
-  refetch: () => Promise<void>;
 }
 
 export const useDepartments = (): UseDepartmentsReturn => {
@@ -39,6 +38,5 @@ export const useDepartments = (): UseDepartmentsReturn => {
     departments,
     loading,
     error,
-    refetch: fetchDepartments,
   };
 };

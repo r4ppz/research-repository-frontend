@@ -1,9 +1,7 @@
-import { useEffect, useState } from "react";
 import * as Select from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
-import { getDepartments } from "@/api/filter";
 import Button from "@/components/common/Button/Button";
-import { Department } from "@/types";
+import { useDepartments } from "@/features/library/hooks/useDepartments";
 import style from "./FilterDepartmentsButton.module.css";
 
 interface FilterDepartmentButtonProps {
@@ -11,35 +9,11 @@ interface FilterDepartmentButtonProps {
   onDepartmentChange: (departmentId: string | null) => void;
 }
 
-function useDepartments() {
-  const [departments, setDepartments] = useState<Department[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
-
-  useEffect(() => {
-    const fetchDepartments = async () => {
-      try {
-        setLoading(true);
-        setDepartments(await getDepartments());
-      } catch {
-        setError(true);
-      } finally {
-        setLoading(false);
-      }
-    };
-    void fetchDepartments();
-  }, []);
-
-  return { departments, loading, error };
-}
-
 const FilterDepartmentButton = ({
   selectedDepartment,
   onDepartmentChange,
 }: FilterDepartmentButtonProps) => {
-  const { departments, loading, error } = useDepartments();
-
-  if (loading || error) return <Button disabled>Department</Button>;
+  const { departments } = useDepartments();
 
   const options = departments.map((d) => ({
     value: d.departmentId.toString(),

@@ -7,7 +7,6 @@ interface UsePaperByIdReturn {
   paper: ResearchPaper | null;
   loading: boolean;
   error: string | null;
-  refetch: () => Promise<void>;
 }
 
 export const usePaperById = (id: number | null): UsePaperByIdReturn => {
@@ -45,6 +44,5 @@ export const usePaperById = (id: number | null): UsePaperByIdReturn => {
     paper,
     loading,
     error,
-    refetch: fetchPaper,
   };
 };
