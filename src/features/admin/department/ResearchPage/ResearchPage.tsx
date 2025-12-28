@@ -1,50 +1,16 @@
 import { useState } from "react";
 import { Archive, FilePlus2, RotateCcw } from "lucide-react";
 import Button from "@/components/common/Button/Button";
-import { FilterConfig } from "@/components/layout/DynamicFilter/FilterTypes";
 import Footer from "@/components/layout/Footer/Footer";
 import Header from "@/components/layout/Header/Header";
-import SearchAndFilter from "@/components/layout/SearchAndFilter/SearchAndFilter";
-import AddPaperModal from "@/features/admin/components/AddPaperModal/AddPaperModal";
-import ResearchPaperTable from "@/features/admin/components/ResearchPaperTable/ResearchPaperTable";
-import { useActivePaperFilter } from "@/features/admin/hooks/useActivePaperFilter";
-import { useArchivedPaperFilter } from "@/features/admin/hooks/useArchivedPaperFilter";
-import { useAuth } from "@/features/auth/context/useAuth";
 import { useModalBodyClass } from "@/hooks/useModalBodyClass";
-import { MOCK_YEARS } from "@/mocks/filterMocks";
-import { MOCK_PAPERS } from "@/mocks/paperMocks";
 import style from "./ResearchPage.module.css";
 
 const ResearchPage = () => {
-  const { user } = useAuth();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedYear, setSelectedYear] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<"active" | "archived">("active");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useModalBodyClass(isModalOpen);
-
-  const allPapers = MOCK_PAPERS.filter((paper) =>
-    user?.role === "DEPARTMENT_ADMIN"
-      ? paper.department.departmentName === user.department?.departmentName
-      : true,
-  );
-
-  const activePapers = useActivePaperFilter(searchQuery, null, selectedYear, allPapers);
-  const archivedPapers = useArchivedPaperFilter(searchQuery, null, selectedYear, allPapers);
-
-  const filters: FilterConfig[] = [
-    {
-      type: "year",
-      label: "Year",
-      options: MOCK_YEARS.map((year) => ({
-        value: year,
-        label: year,
-      })),
-      value: selectedYear,
-      onChange: setSelectedYear,
-    },
-  ];
 
   return (
     <div className={style.page}>
@@ -63,13 +29,6 @@ const ResearchPage = () => {
               Add Paper
             </Button>
           </div>
-
-          <AddPaperModal
-            isOpen={isModalOpen}
-            onClose={() => {
-              setIsModalOpen(false);
-            }}
-          />
 
           <div className={style.tabsContainer}>
             <Button
@@ -94,23 +53,7 @@ const ResearchPage = () => {
             </Button>
           </div>
 
-          <SearchAndFilter
-            searchQuery={searchQuery}
-            onSearchChange={setSearchQuery}
-            filters={filters}
-            searchPlaceholder="Search paper title"
-          />
-
-          <div className={style.tableSection}>
-            <ResearchPaperTable
-              papers={activeTab === "active" ? activePapers : archivedPapers}
-              onEdit={() => {}}
-              onArchive={() => {}}
-              onDelete={() => {}}
-              onPreview={() => {}}
-              showDepartmentColumn={false}
-            />
-          </div>
+          <div className={style.tableSection}></div>
         </div>
       </main>
       <Footer />
