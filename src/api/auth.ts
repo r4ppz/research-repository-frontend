@@ -1,5 +1,5 @@
 import { axiosClient, refreshClient } from "@/api/axiosClient";
-import { AuthResponse, User } from "@/types";
+import { AuthResponse } from "@/types";
 import { extractApiError } from "@/util/errorHandler";
 
 export const postLoginGoogle = async (code: string): Promise<AuthResponse> => {
@@ -32,10 +32,5 @@ export const postRefresh = async (): Promise<{ accessToken: string }> => {
 
 export const postLogout = async (): Promise<{ message: string }> => {
   const response = await axiosClient.post<{ message: string }>("/api/auth/logout");
-  return response.data;
-};
-
-export const getUser = async (): Promise<User> => {
-  const response = await axiosClient.get<User>("/api/auth/me");
   return response.data;
 };
