@@ -50,7 +50,7 @@ export default [
 
       // Import sorting
       "simple-import-sort/imports": [
-        "warn",
+        "off",
         {
           groups: [
             [
