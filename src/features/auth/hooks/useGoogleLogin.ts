@@ -3,11 +3,11 @@ import { extractApiError } from "@/util/errorHandler";
 import { useAuth } from "../context/useAuth";
 
 export function useGoogleLogin(setShowErrorModal: (v: boolean) => void) {
-  const { login, setAuthError, setIsLoading: setAuthIsLoading } = useAuth();
+  const { login, setAuthError, setIsLoading } = useAuth();
   const navigate = useNavigate();
 
   const performLogin = async (authCode: string) => {
-    setAuthIsLoading(true);
+    setIsLoading(true);
     setAuthError(null);
     try {
       await login(authCode);
@@ -17,7 +17,7 @@ export function useGoogleLogin(setShowErrorModal: (v: boolean) => void) {
       setAuthError(apiError);
       setShowErrorModal(true);
     } finally {
-      setAuthIsLoading(false);
+      setIsLoading(false);
     }
   };
 
