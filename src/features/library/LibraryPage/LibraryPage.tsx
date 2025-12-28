@@ -117,7 +117,7 @@ const LibraryPage = () => {
           {/* Research Section */}
           <section className={style.researchSection}>
             {papers.length === 0 ? (
-              <p>No papers found. Try adjusting your filters.</p>
+              <p>Where's your paper? idk</p>
             ) : (
               papers.map((research) => (
                 <ResearchCard
