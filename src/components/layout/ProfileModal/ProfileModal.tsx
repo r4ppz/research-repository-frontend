@@ -34,7 +34,7 @@ const ProfileModal = ({ isOpen, onClose, user, className }: ProfileModalProps) =
             </Tooltip.Trigger>
             <Tooltip.Portal>
               <Tooltip.Content className={style.tooltipContent}>
-                You may wonder why your profile is an emoji. Because I suck at making API thats why.
+                Theres no API for this... I forgor :(
                 <Tooltip.Arrow />
               </Tooltip.Content>
             </Tooltip.Portal>
