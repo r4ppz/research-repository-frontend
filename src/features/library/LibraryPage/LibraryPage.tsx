@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Button from "@/components/common/Button/Button";
-import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import Footer from "@/components/layout/Footer/Footer";
 import Header from "@/components/layout/Header/Header";
 import ResearchCard from "@/features/library/components/ResearchCard/ResearchCard";
 import ResearchModal from "@/features/library/components/ResearchModal/ResearchModal";
+import useDebounce from "@/hooks/useDebounce";
 import { type ResearchPaper } from "@/types";
 import SearchNFilter from "../components/SearchNFilter/SearchNFilter";
 import { usePapers } from "../hooks/apiCalls/usePapers";
@@ -19,14 +19,16 @@ const LibraryPage = () => {
   const [selectedResearch, setSelectedResearch] = useState<ResearchPaper | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Debounce the search query to prevent excessive API calls
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+
   // Fetch papers with current filters
   const {
     papers,
-    loading: papersLoading,
     error: papersError,
     pagination,
   } = usePapers({
-    search: searchQuery,
+    search: debouncedSearchQuery,
     departmentIds: selectedDepartment ? [parseInt(selectedDepartment)] : [],
     year: selectedYear ? parseInt(selectedYear) : null,
     page: currentPage,
@@ -70,21 +72,6 @@ const LibraryPage = () => {
 
   // Wait for data fetching states
   const hasError = papersError;
-  const isInitialLoading = papersLoading;
-
-  if (isInitialLoading) {
-    return (
-      <div className={style.page}>
-        <Header />
-        <main className={style.main}>
-          <div className={style.loadingContainer}>
-            <LoadingSpinner message="Loading library..." />
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
 
   if (hasError) {
     return (
@@ -132,7 +119,7 @@ const LibraryPage = () => {
           {/* Research Section */}
           <section className={style.researchSection}>
             {papers.length === 0 ? (
-              <p className={style.emptyMessage}>No papers found. Try adjusting your filters.</p>
+              <p>No papers found. Try adjusting your filters.</p>
             ) : (
               papers.map((research) => (
                 <ResearchCard
