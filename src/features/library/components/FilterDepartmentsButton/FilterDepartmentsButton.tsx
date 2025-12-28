@@ -33,11 +33,6 @@ function useDepartments() {
   return { departments, loading, error };
 }
 
-function getLabel(selected: string | null, options: { value: string; label: string }[]) {
-  if (!selected) return "All Departments";
-  return options.find((o) => o.value === selected)?.label ?? "All Departments";
-}
-
 const FilterDepartmentButton = ({
   selectedDepartment,
   onDepartmentChange,
@@ -52,8 +47,6 @@ const FilterDepartmentButton = ({
     label: d.departmentName,
   }));
 
-  const label = getLabel(selectedDepartment, options);
-
   return (
     <Select.Root
       value={selectedDepartment ?? "all"}
@@ -63,7 +56,10 @@ const FilterDepartmentButton = ({
     >
       <Select.Trigger asChild>
         <Button>
-          <span>{label}</span>
+          <div className={style.buttonContent}>
+            {selectedDepartment && <span className={style.dotIndicator}></span>}
+            <span>Department</span>
+          </div>
           <ChevronDown className={style.chevronIcon} />
         </Button>
       </Select.Trigger>

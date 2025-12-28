@@ -38,8 +38,6 @@ const FilterYearsButton = ({ selectedYear, onYearChange }: FilterYearsButtonProp
   if (loading) return <Button disabled>Loading...</Button>;
   if (error) return <Button disabled>Error loading years</Button>;
 
-  const label = selectedYear ?? "All Years";
-
   return (
     <Select.Root
       value={selectedYear ?? "all"}
@@ -49,7 +47,10 @@ const FilterYearsButton = ({ selectedYear, onYearChange }: FilterYearsButtonProp
     >
       <Select.Trigger asChild>
         <Button>
-          <span>{label}</span>
+          <div className={style.buttonContent}>
+            {selectedYear && <span className={style.dotIndicator}></span>}
+            <span>Year</span>
+          </div>
           <ChevronDown className={style.chevronIcon} />
         </Button>
       </Select.Trigger>

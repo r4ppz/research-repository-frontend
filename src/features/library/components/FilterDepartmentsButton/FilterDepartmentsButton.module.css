@@ -4,6 +4,20 @@
   transition: transform var(--transition-normal);
 }
 
+.buttonContent {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+}
+
+.dotIndicator {
+  flex-shrink: 0;
+  width: 5px;
+  height: 5px;
+  background-color: var(--color-bg);
+  border-radius: 50%;
+}
+
 .dropdownContent {
   z-index: 1000;
   min-width: 180px;
