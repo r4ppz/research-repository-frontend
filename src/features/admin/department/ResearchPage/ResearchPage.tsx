@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Archive, FilePlus2, RotateCcw } from "lucide-react";
 import Button from "@/components/common/Button/Button";
-import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import { FilterConfig } from "@/components/layout/DynamicFilter/FilterTypes";
 import Footer from "@/components/layout/Footer/Footer";
 import Header from "@/components/layout/Header/Header";
@@ -11,7 +10,6 @@ import ResearchPaperTable from "@/features/admin/components/ResearchPaperTable/R
 import { useActivePaperFilter } from "@/features/admin/hooks/useActivePaperFilter";
 import { useArchivedPaperFilter } from "@/features/admin/hooks/useArchivedPaperFilter";
 import { useAuth } from "@/features/auth/context/useAuth";
-import { useLoadingDelay } from "@/hooks/useLoadingDelay";
 import { useModalBodyClass } from "@/hooks/useModalBodyClass";
 import { MOCK_YEARS } from "@/mocks/filterMocks";
 import { MOCK_PAPERS } from "@/mocks/paperMocks";
@@ -34,16 +32,6 @@ const ResearchPage = () => {
 
   const activePapers = useActivePaperFilter(searchQuery, null, selectedYear, allPapers);
   const archivedPapers = useArchivedPaperFilter(searchQuery, null, selectedYear, allPapers);
-
-  const loading = useLoadingDelay();
-
-  if (loading) {
-    return (
-      <div className={style.loadingContainer}>
-        <LoadingSpinner message="Loading research papers..." />
-      </div>
-    );
-  }
 
   const filters: FilterConfig[] = [
     {

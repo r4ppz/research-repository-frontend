@@ -1,12 +1,10 @@
 import { useState } from "react";
-import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import { FilterConfig } from "@/components/layout/DynamicFilter/FilterTypes";
 import Footer from "@/components/layout/Footer/Footer";
 import Header from "@/components/layout/Header/Header";
 import SearchAndFilter from "@/components/layout/SearchAndFilter/SearchAndFilter";
 import RequestTable from "@/features/admin/components/RequestTable/RequestTable";
 import { useDepartmentRequestFilter } from "@/features/admin/hooks/useDepartmentRequestFilter";
-import { useLoadingDelay } from "@/hooks/useLoadingDelay";
 import { useMultiFilterRequest } from "@/hooks/useMultiFilterRequest";
 import { MOCK_REQUEST_DATES } from "@/mocks/filterMocks";
 import { MOCK_REQUESTS } from "@/mocks/requestMocks";
@@ -16,7 +14,6 @@ import style from "./RequestPage.module.css";
 const RequestPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
-  const loading = useLoadingDelay();
 
   const allRequests = useDepartmentRequestFilter(MOCK_REQUESTS);
   const filteredRequests = useMultiFilterRequest(allRequests, {
@@ -42,14 +39,6 @@ const RequestPage = () => {
       onChange: setSelectedDate,
     },
   ];
-
-  if (loading) {
-    return (
-      <div className={style.loadingContainer}>
-        <LoadingSpinner message="Loading document requests..." />
-      </div>
-    );
-  }
 
   return (
     <div className={style.page}>
