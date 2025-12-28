@@ -4,19 +4,15 @@ import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import Modal from "@/components/common/Modal/Modal";
 import GoogleButton from "@/features/auth/components/GoogleButton/GoogleButton";
 import { useAuth } from "@/features/auth/context/useAuth";
-import { useAutoLogin } from "@/features/auth/hooks/useAutoLogin";
 import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
 import { ApiError } from "@/types";
 import { getUserErrorMessage } from "@/util/errorHandler";
 import style from "./LoginPage.module.css";
 
 const LoginPage = () => {
-  const { authError, setAuthError } = useAuth();
+  const { authError, setAuthError, isLoading } = useAuth();
   const [showErrorModal, setShowErrorModal] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
-
-  useAutoLogin(setIsLoading, setShowErrorModal);
 
   // To show modal
   useEffect(() => {
@@ -25,7 +21,7 @@ const LoginPage = () => {
     }
   }, [authError, isLoading]);
 
-  const handleGoogleSuccess = useGoogleLogin(setIsLoading, setShowErrorModal);
+  const handleGoogleSuccess = useGoogleLogin(setShowErrorModal);
 
   const handleGoogleError = () => {
     setAuthError(new ApiError("INTERNAL_ERROR", "Google authentication failed. Please try again."));

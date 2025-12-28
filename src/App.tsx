@@ -7,6 +7,7 @@ import SuperAdminResearchPage from "@/features/admin/super/ResearchPage/Research
 import LoginPage from "@/features/auth/LoginPage/LoginPage";
 import LibraryPage from "@/features/library/LibraryPage/LibraryPage";
 import StudentRequestsPage from "@/features/student/RequestPage/RequestPage";
+import AuthRestorer from "@/features/auth/components/AuthRestorer/AuthRestorer";
 import useScrollbarGutter from "@/hooks/useScrollbarGutter";
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
 
   return (
     <>
+      <AuthRestorer />
       <Routes>
         <Route path="/login" element={<LoginPage />} />
 
