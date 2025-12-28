@@ -67,7 +67,6 @@ export const usePapers = (params: UsePapersParams = {}): UsePapersReturn => {
       setError(getUserErrorMessage(apiError));
       setPapers([]);
       setPagination(null);
-      throw apiError;
     } finally {
       setLoading(false);
     }

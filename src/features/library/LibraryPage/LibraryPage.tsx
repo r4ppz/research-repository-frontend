@@ -6,7 +6,6 @@ import Header from "@/components/layout/Header/Header";
 import ResearchCard from "@/features/library/components/ResearchCard/ResearchCard";
 import ResearchModal from "@/features/library/components/ResearchModal/ResearchModal";
 import useDebounce from "@/hooks/useDebounce";
-import { type ResearchPaper } from "@/types";
 import SearchNFilter from "../components/SearchNFilter/SearchNFilter";
 import { usePapers } from "../hooks/usePapers";
 import style from "./LibraryPage.module.css";
@@ -16,7 +15,7 @@ const LibraryPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
-  const [selectedResearch, setSelectedResearch] = useState<ResearchPaper | null>(null);
+  const [selectedPaperId, setSelectedPaperId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // Debounce the search query to prevent excessive API calls
@@ -52,7 +51,7 @@ const LibraryPage = () => {
   };
 
   const handleCloseModal = () => {
-    setSelectedResearch(null);
+    setSelectedPaperId(null);
     setIsModalOpen(false);
   };
 
@@ -124,7 +123,7 @@ const LibraryPage = () => {
                   key={research.paperId}
                   researchPaper={research}
                   onView={() => {
-                    setSelectedResearch(research);
+                    setSelectedPaperId(research.paperId);
                     setIsModalOpen(true);
                   }}
                 />
@@ -162,13 +161,7 @@ const LibraryPage = () => {
       </main>
 
       {/* Research Modal */}
-      {selectedResearch && (
-        <ResearchModal
-          researchPaper={selectedResearch}
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-        />
-      )}
+      <ResearchModal paperId={selectedPaperId} isOpen={isModalOpen} onClose={handleCloseModal} />
 
       <Footer />
     </div>

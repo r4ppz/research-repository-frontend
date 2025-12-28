@@ -25,7 +25,6 @@ export const useYears = (): UseYearsReturn => {
       const apiError = extractApiError(err);
       setError(getUserErrorMessage(apiError));
       setYears([]);
-      throw apiError;
     } finally {
       setLoading(false);
     }

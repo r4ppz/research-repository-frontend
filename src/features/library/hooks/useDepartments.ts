@@ -26,7 +26,6 @@ export const useDepartments = (): UseDepartmentsReturn => {
       const apiError = extractApiError(err);
       setError(getUserErrorMessage(apiError));
       setDepartments([]);
-      throw apiError;
     } finally {
       setLoading(false);
     }

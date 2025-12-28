@@ -18,3 +18,8 @@ export const getPapers = async (params: GetPapersParams = {}): Promise<Page<Rese
   });
   return response.data;
 };
+
+export const getPaperById = async (id: number): Promise<ResearchPaper> => {
+  const response = await axiosClient.get<ResearchPaper>(`/api/papers/${id.toString()}`);
+  return response.data;
+};
