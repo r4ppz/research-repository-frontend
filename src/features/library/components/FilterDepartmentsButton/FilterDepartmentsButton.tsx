@@ -11,70 +11,66 @@ interface FilterDepartmentButtonProps {
   onDepartmentChange: (departmentId: string | null) => void;
 }
 
-const FilterDepartmentButton = ({
-  selectedDepartment,
-  onDepartmentChange,
-}: FilterDepartmentButtonProps) => {
+function useDepartments() {
   const [departments, setDepartments] = useState<Department[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  // Fetch departments on mount
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
         setLoading(true);
-        const result = await getDepartments();
-        setDepartments(result);
-        setError(false);
+        setDepartments(await getDepartments());
       } catch {
         setError(true);
       } finally {
         setLoading(false);
       }
     };
-
     void fetchDepartments();
   }, []);
 
-  // Map departments for use in the dropdown
-  const options = departments.map((dept) => ({
-    value: dept.departmentId.toString(),
-    label: dept.departmentName,
+  return { departments, loading, error };
+}
+
+function getLabel(selected: string | null, options: { value: string; label: string }[]) {
+  if (!selected) return "All Departments";
+  return options.find((o) => o.value === selected)?.label ?? "All Departments";
+}
+
+const FilterDepartmentButton = ({
+  selectedDepartment,
+  onDepartmentChange,
+}: FilterDepartmentButtonProps) => {
+  const { departments, loading, error } = useDepartments();
+
+  if (loading) return <Button disabled>Loading...</Button>;
+  if (error) return <Button disabled>Error loading departments</Button>;
+
+  const options = departments.map((d) => ({
+    value: d.departmentId.toString(),
+    label: d.departmentName,
   }));
 
-  return loading ? (
-    <Button className={style.triggerButton} disabled>
-      Loading...
-    </Button>
-  ) : error ? (
-    <Button className={style.triggerButton} disabled>
-      Error loading departments
-    </Button>
-  ) : (
+  const label = getLabel(selectedDepartment, options);
+
+  return (
     <Select.Root
-      value={selectedDepartment || "all"}
-      onValueChange={(value) => {
-        onDepartmentChange(value === "all" ? null : value);
+      value={selectedDepartment ?? "all"}
+      onValueChange={(v) => {
+        onDepartmentChange(v === "all" ? null : v);
       }}
     >
-      {/* Trigger: Button style */}
       <Select.Trigger asChild>
-        <Button className={style.triggerButton}>
-          <span>
-            {selectedDepartment
-              ? options.find((opt) => opt.value === selectedDepartment)?.label || "All Departments"
-              : "All Departments"}
-          </span>
+        <Button>
+          <span>{label}</span>
           <ChevronDown className={style.chevronIcon} />
         </Button>
       </Select.Trigger>
 
-      {/* Dropdown Content */}
       <Select.Portal>
         <Select.Content className={style.dropdownContent} position="popper" sideOffset={4}>
           <Select.Viewport className={style.dropdownViewport}>
-            {/* All Departments */}
             <Select.Item value="all" className={style.dropdownItem}>
               <Select.ItemText>All Departments</Select.ItemText>
               <Select.ItemIndicator className={style.dropdownIndicator}>
@@ -82,10 +78,9 @@ const FilterDepartmentButton = ({
               </Select.ItemIndicator>
             </Select.Item>
 
-            {/* Render Department Options */}
-            {options.map((option) => (
-              <Select.Item key={option.value} value={option.value} className={style.dropdownItem}>
-                <Select.ItemText>{option.label}</Select.ItemText>
+            {options.map((o) => (
+              <Select.Item key={o.value} value={o.value} className={style.dropdownItem}>
+                <Select.ItemText>{o.label}</Select.ItemText>
                 <Select.ItemIndicator className={style.dropdownIndicator}>
                   <Check size={16} />
                 </Select.ItemIndicator>

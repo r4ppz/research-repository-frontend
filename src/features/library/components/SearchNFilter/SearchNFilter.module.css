@@ -1,11 +1,11 @@
 .searchNfilterSection {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: var(--space-md);
 }
 
 .filterButtonGroup {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: row;
   gap: var(--space-md);
 }
