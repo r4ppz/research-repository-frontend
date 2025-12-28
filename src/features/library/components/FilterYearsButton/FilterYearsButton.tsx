@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import * as Select from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
+import { getYears } from "@/api/filter";
 import Button from "@/components/common/Button/Button";
-import { getYears } from "../../api/filter";
 import style from "./FilterYearsButton.module.css";
 
 interface FilterYearsButtonProps {

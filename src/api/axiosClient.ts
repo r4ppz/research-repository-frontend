@@ -1,5 +1,5 @@
 import axios from "axios";
-import { refreshApi } from "@/features/auth/api/auth";
+import { postRefresh } from "@/api/auth";
 import {
   getAccessToken,
   removeAccessToken,
@@ -105,7 +105,7 @@ axiosClient.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      const { accessToken } = await refreshApi();
+      const { accessToken } = await postRefresh();
 
       setAccessToken(accessToken);
       processQueue(null, accessToken);

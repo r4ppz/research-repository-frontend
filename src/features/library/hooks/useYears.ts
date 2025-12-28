@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getYears } from "@/features/library/api/filter";
+import { getYears } from "@/api/filter";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
 interface UseYearsReturn {
@@ -25,6 +25,7 @@ export const useYears = (): UseYearsReturn => {
       const apiError = extractApiError(err);
       setError(getUserErrorMessage(apiError));
       setYears([]);
+      throw apiError;
     } finally {
       setLoading(false);
     }

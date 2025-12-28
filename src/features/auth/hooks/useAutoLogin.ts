@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { getUser, postRefresh } from "@/api/auth";
 import { extractApiError, isAuthError } from "@/util/errorHandler";
-import { getUserApi, refreshApi } from "../api/auth";
 import { getAccessToken, removeAccessToken, setAccessToken } from "../context/tokenStore";
 import { useAuth } from "../context/useAuth";
 
@@ -26,11 +26,11 @@ export function useAutoLogin(
       const token = getAccessToken();
       if (token && !user) {
         try {
-          const data = await refreshApi();
+          const data = await postRefresh();
           removeAccessToken();
           setAccessToken(data.accessToken);
 
-          const userData = await getUserApi();
+          const userData = await getUser();
           setUser(userData);
           setIsLoading(false);
           void navigate("/", { replace: true });

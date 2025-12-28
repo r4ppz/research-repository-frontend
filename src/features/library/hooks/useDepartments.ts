@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getDepartments } from "@/features/library/api/filter";
+import { getDepartments } from "@/api/filter";
 import { Department } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
@@ -26,6 +26,7 @@ export const useDepartments = (): UseDepartmentsReturn => {
       const apiError = extractApiError(err);
       setError(getUserErrorMessage(apiError));
       setDepartments([]);
+      throw apiError;
     } finally {
       setLoading(false);
     }

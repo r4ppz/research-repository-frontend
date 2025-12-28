@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { getPapers, type GetPapersParams } from "@/features/library/api/paper";
+import { getPapers, type GetPapersParams } from "@/api/paper";
 import { type ResearchPaper } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
@@ -67,6 +67,7 @@ export const usePapers = (params: UsePapersParams = {}): UsePapersReturn => {
       setError(getUserErrorMessage(apiError));
       setPapers([]);
       setPagination(null);
+      throw apiError;
     } finally {
       setLoading(false);
     }

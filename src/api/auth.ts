@@ -2,7 +2,7 @@ import { axiosClient, refreshClient } from "@/api/axiosClient";
 import { AuthResponse, User } from "@/types";
 import { extractApiError } from "@/util/errorHandler";
 
-export const loginApi = async (code: string): Promise<AuthResponse> => {
+export const postLoginGoogle = async (code: string): Promise<AuthResponse> => {
   const response = await axiosClient.post<AuthResponse>("/api/auth/google", { code });
   return response.data;
 };
@@ -10,7 +10,7 @@ export const loginApi = async (code: string): Promise<AuthResponse> => {
 let isRefreshInProgress = false;
 let refreshPromise: Promise<{ accessToken: string }> | null = null;
 
-export const refreshApi = async (): Promise<{ accessToken: string }> => {
+export const postRefresh = async (): Promise<{ accessToken: string }> => {
   if (isRefreshInProgress && refreshPromise) {
     return refreshPromise;
   }
@@ -30,12 +30,12 @@ export const refreshApi = async (): Promise<{ accessToken: string }> => {
   return refreshPromise;
 };
 
-export const logoutApi = async (): Promise<{ message: string }> => {
+export const postLogout = async (): Promise<{ message: string }> => {
   const response = await axiosClient.post<{ message: string }>("/api/auth/logout");
   return response.data;
 };
 
-export const getUserApi = async (): Promise<User> => {
+export const getUser = async (): Promise<User> => {
   const response = await axiosClient.get<User>("/api/auth/me");
   return response.data;
 };

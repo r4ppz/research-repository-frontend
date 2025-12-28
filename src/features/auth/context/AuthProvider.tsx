@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from "react";
+import { postLoginGoogle, postLogout } from "@/api/auth";
 import { ApiError, AuthResponse, User } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
-import { loginApi, logoutApi } from "../api/auth";
 import { AuthContext, AuthContextValue } from "./AuthContext";
 import { removeAccessToken, setAccessToken } from "./tokenStore";
 
@@ -14,7 +14,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     setIsLoading(true);
     setAuthError(null);
     try {
-      const data: AuthResponse = await loginApi(authCode);
+      const data: AuthResponse = await postLoginGoogle(authCode);
       setAccessToken(data.accessToken);
       setUser(data.user);
     } catch (error) {
@@ -29,7 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = async () => {
     setIsLoading(true);
     try {
-      await logoutApi();
+      await postLogout();
     } catch (error) {
       const apiError = extractApiError(error);
       const errorMessage = getUserErrorMessage(apiError);

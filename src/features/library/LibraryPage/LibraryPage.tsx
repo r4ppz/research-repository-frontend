@@ -71,9 +71,7 @@ const LibraryPage = () => {
   };
 
   // Wait for data fetching states
-  const hasError = papersError;
-
-  if (hasError) {
+  if (papersError) {
     return (
       <div className={style.page}>
         <Header />
