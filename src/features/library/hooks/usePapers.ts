@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
+import { getPapers, type GetPapersParams } from "@/features/library/api/paper";
 import { type ResearchPaper } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
-import { getPapers, type GetPapersParams } from "../../api/paper";
 
 interface UsePapersParams {
   search?: string;

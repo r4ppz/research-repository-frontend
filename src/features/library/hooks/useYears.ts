@@ -1,44 +1,43 @@
 import { useEffect, useState } from "react";
-import { Department } from "@/types";
+import { getYears } from "@/features/library/api/filter";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
-import { getDepartments } from "../../api/filter";
 
-interface UseDepartmentsReturn {
-  departments: Department[];
+interface UseYearsReturn {
+  years: number[];
   loading: boolean;
   error: string | null;
   refetch: () => Promise<void>;
 }
 
-export const useDepartments = (): UseDepartmentsReturn => {
-  const [departments, setDepartments] = useState<Department[]>([]);
+export const useYears = (): UseYearsReturn => {
+  const [years, setYears] = useState<number[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchDepartments = async (): Promise<void> => {
+  const fetchYears = async (): Promise<void> => {
     setLoading(true);
     setError(null);
 
     try {
-      const result = await getDepartments();
-      setDepartments(result);
+      const result = await getYears();
+      setYears(result);
     } catch (err) {
       const apiError = extractApiError(err);
       setError(getUserErrorMessage(apiError));
-      setDepartments([]);
+      setYears([]);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    void fetchDepartments();
+    void fetchYears();
   }, []);
 
   return {
-    departments,
+    years,
     loading,
     error,
-    refetch: fetchDepartments,
+    refetch: fetchYears,
   };
 };

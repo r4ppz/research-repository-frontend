@@ -8,7 +8,7 @@ import ResearchModal from "@/features/library/components/ResearchModal/ResearchM
 import useDebounce from "@/hooks/useDebounce";
 import { type ResearchPaper } from "@/types";
 import SearchNFilter from "../components/SearchNFilter/SearchNFilter";
-import { usePapers } from "../hooks/apiCalls/usePapers";
+import { usePapers } from "../hooks/usePapers";
 import style from "./LibraryPage.module.css";
 
 const LibraryPage = () => {
