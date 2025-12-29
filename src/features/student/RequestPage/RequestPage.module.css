@@ -14,7 +14,9 @@
 }
 
 .main {
-  display: block;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
 }
 
 .mainContainer {
@@ -47,6 +49,14 @@
     font-size: var(--font-size-2xl);
     text-align: left;
   }
+}
+
+.loadingContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  width: 100%;
 }
 
 .tableSection {

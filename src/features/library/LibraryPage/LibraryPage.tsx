@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import Button from "@/components/common/Button/Button";
 import Footer from "@/components/layout/Footer/Footer";
 import Header from "@/components/layout/Header/Header";
+import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import ResearchCard from "@/features/library/components/ResearchCard/ResearchCard";
 import ResearchModal from "@/features/library/components/ResearchModal/ResearchModal";
 import useDebounce from "@/hooks/useDebounce";
@@ -115,8 +116,14 @@ const LibraryPage = () => {
 
           {/* Research Section */}
           <section className={style.researchSection}>
-            {papers.length === 0 ? (
-              <p>Where's your paper? idk</p>
+            {papers.length === 0 && debouncedSearchQuery ? (
+              <div className={style.emptyState}>
+                <p>No papers found matching your search.</p>
+              </div>
+            ) : papers.length === 0 && !debouncedSearchQuery ? (
+              <div className={style.loadingContainer}>
+                <LoadingSpinner message="Loading papers..." />
+              </div>
             ) : (
               papers.map((research) => (
                 <ResearchCard

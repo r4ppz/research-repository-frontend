@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Footer from "@/components/layout/Footer/Footer";
 import Header from "@/components/layout/Header/Header";
+import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import { useUserRequests } from "../hooks/useUserRequests";
 import style from "./RequestPage.module.css";
 import DocumentRequestTable from "../components/RequestTable/RequestTable";
@@ -15,7 +16,13 @@ const RequestPage = () => {
         <div className={style.mainContainer}>
           <section className={style.tableSection}>
             {/* <h1 className={style.titleHeader}>Manage Research Paper Requests</h1> */}
-            {loading ? <p>Loading requests...</p> : <DocumentRequestTable data={requests} />}
+            {loading ? (
+              <div className={style.loadingContainer}>
+                <LoadingSpinner message="Loading requests..." />
+              </div>
+            ) : (
+              <DocumentRequestTable data={requests} />
+            )}
           </section>
         </div>
       </main>
