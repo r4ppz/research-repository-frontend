@@ -19,7 +19,7 @@
 }
 
 .actionButton {
-  font-size: var(--font-size-xs);
-  padding: var(--space-sm) var(--space-lg);
   max-width: 100px;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--font-size-xs);
 }

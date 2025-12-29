@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: 300px;
+  min-height: 400px;
 }
 
 .page {
@@ -75,11 +75,11 @@
 .loadingContainer,
 .emptyState {
   display: flex;
+  grid-column: 1 / -1;
   align-items: center;
   justify-content: center;
-  min-height: 300px;
   width: 100%;
-  grid-column: 1 / -1;
+  min-height: 300px;
 }
 
 .researchSection {
