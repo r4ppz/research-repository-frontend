@@ -35,15 +35,25 @@ function DocumentRequestTable({ data }: Props) {
           ))}
         </thead>
         <tbody className={style.tableBody}>
-          {table.getRowModel().rows.map((row) => (
-            <tr className={style.tableRow} key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td className={clsx(style.tableData, style.tableBodyData)} key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
+          {table.getRowModel().rows.length > 0 ? (
+            table.getRowModel().rows.map((row) => (
+              <tr className={style.tableRow} key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td className={clsx(style.tableData, style.tableBodyData)} key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))
+          ) : (
+            <tr className={style.tableRow}>
+              <td className={clsx(style.tableData, style.tableBodyData)} colSpan={columns.length}>
+                <div className={style.emptyState}>
+                  <p>No requests found</p>
+                </div>
+              </td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

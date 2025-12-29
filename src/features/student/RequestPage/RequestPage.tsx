@@ -14,16 +14,14 @@ const RequestPage = () => {
       <Header />
       <main className={style.main}>
         <div className={style.mainContainer}>
-          <section className={style.tableSection}>
-            {/* <h1 className={style.titleHeader}>Manage Research Paper Requests</h1> */}
-            {loading ? (
-              <div className={style.loadingContainer}>
-                <LoadingSpinner message="Loading requests..." />
-              </div>
-            ) : (
-              <DocumentRequestTable data={requests} />
-            )}
-          </section>
+          {/* <h1 className={style.titleHeader}>Manage Research Paper Requests</h1> */}
+          {loading ? (
+            <div className={style.loadingContainer}>
+              <LoadingSpinner message="Loading requests..." />
+            </div>
+          ) : (
+            <DocumentRequestTable data={requests} />
+          )}
         </div>
       </main>
       <Footer />

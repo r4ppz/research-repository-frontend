@@ -1,12 +1,14 @@
 .tableContainer {
   width: 100%;
+  min-height: 300px;
   margin: 0 auto;
   padding: 0 24px 32px 24px;
-  max-width: 1200px;
 }
 
 .table {
   width: 100%;
+  min-height: 400px;
+  table-layout: fixed;
   border-collapse: separate;
   border-spacing: 0;
   background: var(--color-surface);
@@ -25,8 +27,8 @@
   padding-left: var(--space-sm);
 }
 
-.tableHead,
-.tableBody {
+.tableBody,
+.tableHead {
   background: var(--color-surface);
   font-size: var(--font-size-md);
 }
@@ -67,4 +69,14 @@
 
 .tableBody tr:last-child .tableBodyData {
   border-bottom: none;
+}
+
+.emptyState {
+  width: 100%;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-gray-500);
 }
