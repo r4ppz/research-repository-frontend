@@ -37,24 +37,27 @@ export const columns: ColumnDef<DocumentRequest>[] = [
       const doc = row.original;
       const isAccepted = doc.status === "ACCEPTED";
       const isRejected = doc.status === "REJECTED";
+      const isPending = doc.status === "PENDING";
 
       return (
-        <div style={{ display: "flex", gap: "8px" }}>
-          <Button
-            onClick={() => {
-              console.log("Downloading paper");
-            }}
-            disabled={!isAccepted}
-          >
-            {isAccepted ? "Download" : "Disabled"}
-          </Button>
+        <div>
+          {(isPending || isAccepted) && (
+            <Button
+              disabled={isPending}
+              onClick={() => {
+                console.log("Downloading paper");
+              }}
+            >
+              Download
+            </Button>
+          )}
           {isRejected && (
             <Button
               onClick={() => {
                 console.log("Removing request");
               }}
             >
-              X
+              Remove
             </Button>
           )}
         </div>

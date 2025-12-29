@@ -1,90 +1,77 @@
 .tableContainer {
   width: 100%;
-  padding: 8px;
+  margin: 0 auto;
+  padding: 0 24px 32px 24px;
+  max-width: 1200px;
 }
 
-/* Hide desktop table by default (mobile) */
 .table {
-  display: none;
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-active);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-border-default);
 }
 
 .tableCaption {
-  font-size: 14px;
-  font-weight: 600;
-  margin-bottom: 12px;
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
   text-align: left;
+  margin-bottom: var(--space-md);
+  caption-side: top;
 }
 
 .tableHead {
-  font-size: 13px;
+  background: var(--color-surface);
 }
 
 .tableRow {
+  transition: box-shadow 0.15s;
 }
 
-.tableHeaderData,
-.tableBodyData {
-  padding: 12px;
-  border-bottom: 1px solid #222;
-  font-size: 13px;
+.tableRow:hover .tableBodyData {
+  background: var(--color-surface);
+}
+
+.tableHeaderData {
+  padding: var(--space-md);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-md);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border-default);
   text-align: left;
+  letter-spacing: 0;
+  user-select: none;
 }
 
-/* MOBILE CARD VIEW (shown by default) */
-
-.mobileCardContainer {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
+.tableHeaderData:first-child {
+  border-radius: var(--radius-lg) 0 0 0;
 }
 
-.card {
-  border: 1px solid #222;
-  border-radius: 8px;
-  padding: 16px;
-  width: 100%;
+.tableHeaderData:last-child {
+  border-radius: 0 var(--radius-lg) 0 0;
 }
 
-.cardRow {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
+.tableBody {
+  font-size: var(--font-size-md);
 }
 
-.cardLabel {
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  margin-bottom: 3px;
+.tableBodyData {
+  padding: var(--space-sm);
+  border-bottom: 1px solid #f1f1f1;
+  text-align: left;
+  vertical-align: middle;
+  transition: background 0.15s;
 }
 
-.cardValue {
-  font-size: 14px;
-  word-break: break-word;
+.tableBody tr:last-child .tableBodyData {
+  border-bottom: none;
 }
 
-/* DESKTOP BREAKPOINT */
-@media (min-width: 769px) {
-  /* Show table on desktop */
-  .table {
-    display: table;
-  }
-
-  /* Hide cards on desktop */
-  .mobileCardContainer {
-    display: none;
-  }
-
-  /* Desktop font scale */
-  .tableHeaderData,
-  .tableBodyData {
-    font-size: 14px;
-  }
-
-  .tableContainer {
-    padding: 16px;
-  }
+.tableBodyData button {
+  font-size: var(--font-size-xs);
+  padding: var(--space-sm) var(--space-lg);
 }
