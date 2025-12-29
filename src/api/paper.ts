@@ -1,5 +1,5 @@
 import { axiosClient } from "@/api/axiosClient";
-import { Page, ResearchPaper } from "@/types";
+import { DocumentRequest, Page, ResearchPaper } from "@/types";
 
 export interface GetPapersParams {
   search?: string;
@@ -21,5 +21,12 @@ export const getPapers = async (params: GetPapersParams = {}): Promise<Page<Rese
 
 export const getPaperById = async (id: number): Promise<ResearchPaper> => {
   const response = await axiosClient.get<ResearchPaper>(`/api/papers/${id.toString()}`);
+  return response.data;
+};
+
+export const getMyPaperRequest = async (paperId: number): Promise<DocumentRequest> => {
+  const response = await axiosClient.get<DocumentRequest>(
+    `/api/papers/${paperId.toString()}/my-request`,
+  );
   return response.data;
 };
