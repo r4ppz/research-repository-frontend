@@ -2,6 +2,7 @@ import { getCoreRowModel, useReactTable, flexRender } from "@tanstack/react-tabl
 import { DocumentRequest } from "@/types";
 import { columns } from "./columns";
 import style from "./RequestTable.module.css";
+import clsx from "clsx";
 
 interface Props {
   data: DocumentRequest[];
@@ -22,7 +23,11 @@ function DocumentRequestTable({ data }: Props) {
           {table.getHeaderGroups().map((headerGroup) => (
             <tr className={style.tableRow} key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id} className={style.tableHeaderData} scope="col">
+                <th
+                  className={clsx(style.tableData, style.tableHeaderData)}
+                  key={header.id}
+                  scope="col"
+                >
                   {flexRender(header.column.columnDef.header, header.getContext())}
                 </th>
               ))}
@@ -33,7 +38,7 @@ function DocumentRequestTable({ data }: Props) {
           {table.getRowModel().rows.map((row) => (
             <tr className={style.tableRow} key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className={style.tableBodyData}>
+                <td className={clsx(style.tableData, style.tableBodyData)} key={cell.id}>
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
