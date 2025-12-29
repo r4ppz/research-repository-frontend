@@ -5,7 +5,6 @@
 
 .table {
   width: 100%;
-  min-height: 400px;
   border-collapse: separate;
   border-spacing: 0;
   background: var(--color-surface);

@@ -7,7 +7,7 @@ import style from "./RequestPage.module.css";
 import DocumentRequestTable from "../components/RequestTable/RequestTable";
 
 const RequestPage = () => {
-  const { requests, loading } = useUserRequests();
+  const { requests, loading, refetch } = useUserRequests();
 
   return (
     <div className={clsx(style.page)}>
@@ -20,7 +20,7 @@ const RequestPage = () => {
               <LoadingSpinner message="Loading requests..." />
             </div>
           ) : (
-            <DocumentRequestTable data={requests} />
+            <DocumentRequestTable data={requests} refreshData={refetch} />
           )}
         </div>
       </main>

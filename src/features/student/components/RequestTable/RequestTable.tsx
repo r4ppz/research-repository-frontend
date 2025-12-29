@@ -1,14 +1,17 @@
 import { getCoreRowModel, useReactTable, flexRender } from "@tanstack/react-table";
 import { DocumentRequest } from "@/types";
-import { columns } from "./columns";
+import { createColumns } from "./columns";
 import style from "./RequestTable.module.css";
 import clsx from "clsx";
 
 interface Props {
   data: DocumentRequest[];
+  refreshData: () => void;
 }
 
-function DocumentRequestTable({ data }: Props) {
+function DocumentRequestTable({ data, refreshData }: Props) {
+  const columns = createColumns({ refreshData });
+
   const table = useReactTable({
     data,
     columns,

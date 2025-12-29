@@ -1,10 +1,16 @@
 import { ColumnDef } from "@tanstack/react-table";
 import Button from "@/components/common/Button/Button";
+import { deleteRequest } from "@/api/request";
 import { DocumentRequest, RequestStatus } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
 import style from "./column.module.css";
+import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
-export const columns: ColumnDef<DocumentRequest>[] = [
+interface ColumnProps {
+  refreshData: () => void;
+}
+
+export const createColumns = ({ refreshData }: ColumnProps): ColumnDef<DocumentRequest>[] => [
   {
     accessorKey: "paper.title",
     header: () => "Paper Title",
@@ -53,6 +59,22 @@ export const columns: ColumnDef<DocumentRequest>[] = [
       const isRejected = doc.status === "REJECTED";
       const isPending = doc.status === "PENDING";
 
+      const handleDeleteRequest = async () => {
+        try {
+          await deleteRequest(doc.requestId);
+          alert("Request removed successfully");
+          refreshData();
+        } catch (error) {
+          const apiError = extractApiError(error);
+          const errorMessage = getUserErrorMessage(apiError);
+          alert("Request removed successfully" + errorMessage);
+        }
+      };
+
+      const handleDeleteClick = () => {
+        void handleDeleteRequest();
+      };
+
       return (
         <div className={style.actionButtonContainer}>
           {(isPending || isAccepted) && (
@@ -67,12 +89,7 @@ export const columns: ColumnDef<DocumentRequest>[] = [
             </Button>
           )}
           {isRejected && (
-            <Button
-              className={style.actionButton}
-              onClick={() => {
-                console.log("TODO: API call to remove request");
-              }}
-            >
+            <Button className={style.actionButton} onClick={handleDeleteClick}>
               Remove
             </Button>
           )}

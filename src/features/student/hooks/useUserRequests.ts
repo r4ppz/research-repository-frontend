@@ -7,6 +7,7 @@ interface UseUserRequestsReturn {
   requests: DocumentRequest[];
   loading: boolean;
   error: string | null;
+  refetch: () => void;
 }
 
 export const useUserRequests = (): UseUserRequestsReturn => {
@@ -38,5 +39,8 @@ export const useUserRequests = (): UseUserRequestsReturn => {
     requests,
     loading,
     error,
+    refetch: () => {
+      void fetchUserRequests();
+    },
   };
 };
