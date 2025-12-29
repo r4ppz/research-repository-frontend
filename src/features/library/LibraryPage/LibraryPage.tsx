@@ -5,7 +5,7 @@ import Footer from "@/components/layout/Footer/Footer";
 import Header from "@/components/layout/Header/Header";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import ResearchCard from "@/features/library/components/ResearchCard/ResearchCard";
-import ResearchModal from "@/features/library/components/ResearchModal/ResearchModal";
+import ResearchModal from "@/components/layout/ResearchModal";
 import useDebounce from "@/hooks/useDebounce";
 import SearchNFilter from "../components/SearchNFilter/SearchNFilter";
 import { usePapers } from "../hooks/usePapers";
