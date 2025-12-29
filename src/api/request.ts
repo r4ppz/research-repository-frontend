@@ -14,3 +14,7 @@ export const createRequest = async (
   const response = await axiosClient.post<CreateRequestResponse>("/api/requests", params);
   return response.data;
 };
+
+export const deleteRequest = async (requestId: number): Promise<void> => {
+  await axiosClient.delete(`/api/requests/${requestId.toString()}`);
+};
