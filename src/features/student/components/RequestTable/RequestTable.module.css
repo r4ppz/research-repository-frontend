@@ -68,8 +68,3 @@
 .tableBody tr:last-child .tableBodyData {
   border-bottom: none;
 }
-
-.tableBodyData button {
-  font-size: var(--font-size-xs);
-  padding: var(--space-sm) var(--space-lg);
-}

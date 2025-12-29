@@ -1,0 +1,24 @@
+.status {
+  font-weight: var(--font-weight-semibold);
+}
+
+.status--accepted {
+  color: var(--color-green-500);
+}
+
+.status--rejected {
+  color: var(--color-red-500);
+}
+
+.status--pending {
+  color: var(--color-yellow-500);
+}
+
+.actionButtonContainer {
+  display: flex;
+}
+
+.actionButton {
+  font-size: var(--font-size-xs);
+  padding: var(--space-sm) var(--space-lg);
+}

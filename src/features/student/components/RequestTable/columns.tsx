@@ -2,6 +2,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import Button from "@/components/common/Button/Button";
 import { DocumentRequest, RequestStatus } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
+import style from "./column.module.css";
 
 export const columns: ColumnDef<DocumentRequest>[] = [
   {
@@ -27,7 +28,20 @@ export const columns: ColumnDef<DocumentRequest>[] = [
     header: () => "Status",
     cell: (info) => {
       const status = info.getValue<RequestStatus>();
-      return <span>{status}</span>;
+      return (
+        <span
+          className={[
+            style.status,
+            status === "ACCEPTED"
+              ? style["status--accepted"]
+              : status === "REJECTED"
+                ? style["status--rejected"]
+                : style["status--pending"],
+          ].join(" ")}
+        >
+          {status}
+        </span>
+      );
     },
   },
   {
@@ -40,12 +54,13 @@ export const columns: ColumnDef<DocumentRequest>[] = [
       const isPending = doc.status === "PENDING";
 
       return (
-        <div>
+        <div className={style.actionButtonContainer}>
           {(isPending || isAccepted) && (
             <Button
+              className={style.actionButton}
               disabled={isPending}
               onClick={() => {
-                console.log("Downloading paper");
+                console.log("TODO: API call to download file");
               }}
             >
               Download
@@ -53,8 +68,9 @@ export const columns: ColumnDef<DocumentRequest>[] = [
           )}
           {isRejected && (
             <Button
+              className={style.actionButton}
               onClick={() => {
-                console.log("Removing request");
+                console.log("TODO: API call to remove request");
               }}
             >
               Remove
