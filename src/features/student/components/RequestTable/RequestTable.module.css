@@ -1,14 +1,11 @@
 .tableContainer {
-  width: 100%;
+  min-width: 80vw;
   min-height: 300px;
-  margin: 0 auto;
-  padding: 0 24px 32px 24px;
 }
 
 .table {
   width: 100%;
   min-height: 400px;
-  table-layout: fixed;
   border-collapse: separate;
   border-spacing: 0;
   background: var(--color-surface);
