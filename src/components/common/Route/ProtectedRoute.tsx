@@ -24,7 +24,7 @@ const ProtectedRoute = ({ children, allowedRoles }: ProtectedRouteProps) => {
           width: "100%",
         }}
       >
-        <LoadingSpinner message="loading.." />
+        <LoadingSpinner />
       </div>
     );
   }
