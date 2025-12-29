@@ -1,10 +1,13 @@
+import { useState, useEffect } from "react";
 import Button from "@/components/common/Button/Button";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import Modal from "@/components/common/Modal/Modal";
-import { createRequest } from "@/api/request";
+import { getMyPaperRequest } from "@/api/paper";
 import { formatDateLong } from "@/util/formatDate";
 import { usePaperById } from "../../hooks/usePaperById";
+import { createRequest } from "@/api/request";
 import style from "./ResearchModal.module.css";
+import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
 interface ResearchModalProps {
   isOpen: boolean;
@@ -14,17 +17,46 @@ interface ResearchModalProps {
 
 const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
   const { paper, loading, error } = usePaperById(paperId);
+  const [requestExists, setRequestExists] = useState<boolean>(false);
+  const [isRequestLoading, setIsRequestLoading] = useState<boolean>(false);
+
+  // Check if request already exists when paperId changes
+  useEffect(() => {
+    const checkRequestExists = async () => {
+      if (paperId !== null) {
+        try {
+          await getMyPaperRequest(paperId);
+          setRequestExists(true);
+        } catch (error) {
+          const apiError = extractApiError(error);
+          console.log(getUserErrorMessage(apiError));
+          setRequestExists(false);
+        }
+      } else {
+        setRequestExists(false);
+      }
+    };
+
+    void checkRequestExists();
+  }, [paperId]);
+
+  const requestDocument = async () => {
+    if (requestExists || isRequestLoading || !paperId) return;
+
+    setIsRequestLoading(true);
+
+    try {
+      await createRequest({ paperId });
+      setRequestExists(true);
+    } catch (err) {
+      console.error("Error creating request:", err);
+    } finally {
+      setIsRequestLoading(false);
+    }
+  };
 
   const handleRequestDocument = () => {
-    if (paperId) {
-      createRequest({ paperId })
-        .then((response) => {
-          console.log("Request created successfully:", response.requestId);
-        })
-        .catch((error: unknown) => {
-          console.error("Error creating request:", error);
-        });
-    }
+    void requestDocument();
   };
 
   if (loading) {
@@ -63,7 +95,9 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
         <h3 className={style.abtractHeader}>Abstract</h3>
         <p className={style.abstractText}>{paper.abstractText}</p>
       </div>
-      <Button onClick={handleRequestDocument}>Request Document</Button>
+      <Button onClick={handleRequestDocument} disabled={requestExists || isRequestLoading}>
+        {requestExists ? "Request Submitted" : "Request Document"}
+      </Button>
     </Modal>
   );
 };
