@@ -1,6 +1,7 @@
 import Button from "@/components/common/Button/Button";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import Modal from "@/components/common/Modal/Modal";
+import { createRequest } from "@/api/request";
 import { formatDateLong } from "@/util/formatDate";
 import { usePaperById } from "../../hooks/usePaperById";
 import style from "./ResearchModal.module.css";
@@ -15,7 +16,15 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
   const { paper, loading, error } = usePaperById(paperId);
 
   const handleRequestDocument = () => {
-    alert(`TODO: add api call in here`);
+    if (paperId) {
+      createRequest({ paperId })
+        .then((response) => {
+          console.log("Request created successfully:", response.requestId);
+        })
+        .catch((error: unknown) => {
+          console.error("Error creating request:", error);
+        });
+    }
   };
 
   if (loading) {
