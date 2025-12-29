@@ -4,7 +4,7 @@ import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import Modal from "@/components/common/Modal/Modal";
 import { getMyPaperRequest } from "@/api/paper";
 import { formatDateLong } from "@/util/formatDate";
-import { usePaperById } from "../../features/library/hooks/usePaperById";
+import { usePaperById } from "@/features/library/hooks/usePaperById";
 import { createRequest } from "@/api/request";
 import style from "./ResearchModal.module.css";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
