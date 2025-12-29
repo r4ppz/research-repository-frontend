@@ -1,6 +1,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import Button from "@/components/common/Button/Button";
 import { DocumentRequest, RequestStatus } from "@/types";
+import { formatDateShort } from "@/util/formatDate";
 
 export const columns: ColumnDef<DocumentRequest>[] = [
   {
@@ -13,13 +14,13 @@ export const columns: ColumnDef<DocumentRequest>[] = [
     header: () => "Author",
   },
   {
-    accessorKey: "paper.department",
+    accessorKey: "paper.department.departmentName",
     header: () => "Department",
   },
   {
     accessorKey: "createdAt",
     header: () => "Request Date",
-    cell: (info) => new Date(info.getValue<string>()).toLocaleDateString(),
+    cell: (info) => formatDateShort(info.getValue<string>()),
   },
   {
     accessorKey: "status",
@@ -52,7 +53,6 @@ export const columns: ColumnDef<DocumentRequest>[] = [
               onClick={() => {
                 console.log("Removing request");
               }}
-              style={{ backgroundColor: "red", color: "white" }}
             >
               X
             </Button>

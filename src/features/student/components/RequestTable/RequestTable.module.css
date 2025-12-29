@@ -1,0 +1,90 @@
+.tableContainer {
+  width: 100%;
+  padding: 8px;
+}
+
+/* Hide desktop table by default (mobile) */
+.table {
+  display: none;
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tableCaption {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-align: left;
+}
+
+.tableHead {
+  font-size: 13px;
+}
+
+.tableRow {
+}
+
+.tableHeaderData,
+.tableBodyData {
+  padding: 12px;
+  border-bottom: 1px solid #222;
+  font-size: 13px;
+  text-align: left;
+}
+
+/* MOBILE CARD VIEW (shown by default) */
+
+.mobileCardContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.card {
+  border: 1px solid #222;
+  border-radius: 8px;
+  padding: 16px;
+  width: 100%;
+}
+
+.cardRow {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+}
+
+.cardLabel {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+
+.cardValue {
+  font-size: 14px;
+  word-break: break-word;
+}
+
+/* DESKTOP BREAKPOINT */
+@media (min-width: 769px) {
+  /* Show table on desktop */
+  .table {
+    display: table;
+  }
+
+  /* Hide cards on desktop */
+  .mobileCardContainer {
+    display: none;
+  }
+
+  /* Desktop font scale */
+  .tableHeaderData,
+  .tableBodyData {
+    font-size: 14px;
+  }
+
+  .tableContainer {
+    padding: 16px;
+  }
+}

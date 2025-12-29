@@ -1,46 +1,10 @@
-import { getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import { getCoreRowModel, useReactTable, flexRender } from "@tanstack/react-table";
 import { DocumentRequest } from "@/types";
 import { columns } from "./columns";
 import style from "./RequestTable.module.css";
 
 interface Props {
   data: DocumentRequest[];
-}
-
-function TableHeader({ table }: { table: ReturnType<typeof useReactTable<DocumentRequest>> }) {
-  return (
-    <thead>
-      {table.getHeaderGroups().map((group) => (
-        <tr key={group.id}>
-          {group.headers.map((header) => (
-            <th key={header.id}>
-              {typeof header.column.columnDef.header === "function"
-                ? header.column.columnDef.header(header.getContext())
-                : header.column.columnDef.header}
-            </th>
-          ))}
-        </tr>
-      ))}
-    </thead>
-  );
-}
-
-function TableBody({ table }: { table: ReturnType<typeof useReactTable<DocumentRequest>> }) {
-  return (
-    <tbody>
-      {table.getRowModel().rows.map((row) => (
-        <tr key={row.id}>
-          {row.getVisibleCells().map((cell) => (
-            <td key={cell.id}>
-              {typeof cell.column.columnDef.cell === "function"
-                ? cell.column.columnDef.cell(cell.getContext())
-                : cell.getValue()}
-            </td>
-          ))}
-        </tr>
-      ))}
-    </tbody>
-  );
 }
 
 function DocumentRequestTable({ data }: Props) {
@@ -50,12 +14,66 @@ function DocumentRequestTable({ data }: Props) {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const headerGroup = table.getHeaderGroups()[0];
+
   return (
     <div className={style.tableContainer}>
+      {/* Desktop Table View */}
       <table className={style.table}>
-        <TableHeader table={table} />
-        <TableBody table={table} />
+        <caption className={style.tableCaption}>Document Requests</caption>
+        <thead className={style.tableHead}>
+          {table.getHeaderGroups().map((hg) => (
+            <tr className={style.tableRow} key={hg.id}>
+              {hg.headers.map((header) => (
+                <th key={header.id} className={style.tableHeaderData} scope="col">
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody className={style.tableBody}>
+          {table.getRowModel().rows.map((row) => (
+            <tr className={style.tableRow} key={row.id}>
+              {row.getVisibleCells().map((cell) => (
+                <td key={cell.id} className={style.tableBodyData}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
       </table>
+
+      {/* Mobile Card View */}
+      <div className={style.mobileCardContainer}>
+        {table.getRowModel().rows.map((row) => (
+          <div key={row.id} className={style.card}>
+            {headerGroup.headers.map((header) => {
+              const cell = row.getVisibleCells().find((c) => c.column.id === header.column.id);
+              if (!cell) return null;
+
+              return (
+                <div key={cell.id} className={style.cardRow}>
+                  <div className={style.cardLabel}>
+                    {flexRender(header.column.columnDef.header, {
+                      column: header.column,
+                      header,
+                      table,
+                      headerGroup,
+                      depth: header.depth,
+                      isPlaceholder: header.isPlaceholder,
+                    })}
+                  </div>
+                  <div className={style.cardValue}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

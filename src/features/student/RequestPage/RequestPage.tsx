@@ -13,13 +13,12 @@ const RequestPage = () => {
       <Header />
       <main className={style.main}>
         <div className={style.mainContainer}>
-          <h1 className={style.titleHeader}>Manage Research Paper Requests</h1>
-          <div className={style.tableSection}>
+          <section className={style.tableSection}>
+            {/* <h1 className={style.titleHeader}>Manage Research Paper Requests</h1> */}
             {loading ? <p>Loading requests...</p> : <DocumentRequestTable data={requests} />}
-          </div>
+          </section>
         </div>
       </main>
-
       <Footer />
     </div>
   );
