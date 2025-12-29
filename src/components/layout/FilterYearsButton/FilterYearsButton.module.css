@@ -9,6 +9,8 @@
 .dropdownContent {
   z-index: 1000;
   overflow: hidden;
+  min-width: var(--radix-select-trigger-width);
+  max-width: min(var(--radix-select-content-available-width), 400px);
   background: var(--color-surface);
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-lg);
