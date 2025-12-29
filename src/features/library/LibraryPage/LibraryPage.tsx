@@ -118,7 +118,7 @@ const LibraryPage = () => {
           <section className={style.researchSection}>
             {papers.length === 0 && debouncedSearchQuery ? (
               <div className={style.emptyState}>
-                <p>No papers found matching your search.</p>
+                <p>No papers found matching your search :(</p>
               </div>
             ) : papers.length === 0 && !debouncedSearchQuery ? (
               <div className={style.loadingContainer}>

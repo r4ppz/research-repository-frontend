@@ -3,8 +3,8 @@ import clsx from "clsx";
 import style from "./Link.module.css";
 
 interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
-  href: string;
-  children: ReactNode;
+  href?: string;
+  children?: ReactNode;
 }
 
 const Link = ({
