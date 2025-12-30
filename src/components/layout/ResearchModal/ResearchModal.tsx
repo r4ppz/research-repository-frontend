@@ -9,6 +9,7 @@ import { createRequest } from "@/api/request";
 import { useAuth } from "@/features/auth/context/useAuth";
 import style from "./ResearchModal.module.css";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
+import { isUserAdmin } from "@/util/roleBasedAccess";
 
 interface ResearchModalProps {
   isOpen: boolean;
@@ -24,7 +25,7 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (!user || user.role === "DEPARTMENT_ADMIN" || user.role === "SUPER_ADMIN") {
+    if (isUserAdmin(user)) {
       return;
     }
 
@@ -47,7 +48,7 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
   }, [paperId, user]);
 
   const requestDocument = async () => {
-    if (!user || user.role === "DEPARTMENT_ADMIN" || user.role === "SUPER_ADMIN") {
+    if (isUserAdmin(user)) {
       return;
     }
 
@@ -105,7 +106,7 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
         <h3 className={style.abtractHeader}>Abstract</h3>
         <p className={style.abstractText}>{paper.abstractText}</p>
       </div>
-      {user && user.role !== "DEPARTMENT_ADMIN" && user.role !== "SUPER_ADMIN" && (
+      {!isUserAdmin(user) && (
         <Button onClick={handleRequestDocument} disabled={requestExists || isRequestLoading}>
           {requestExists ? "Request Submitted" : "Request Document"}
         </Button>

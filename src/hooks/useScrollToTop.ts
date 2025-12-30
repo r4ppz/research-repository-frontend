@@ -1,15 +1,17 @@
-import { useEffect } from "react";
+import { useEffect, RefObject } from "react";
 
 export function useScrollToTop<T extends HTMLElement>(
-  ref: React.RefObject<T>,
+  ref: RefObject<T | null>,
   deps: ReadonlyArray<unknown>,
 ) {
   useEffect(() => {
     const el = ref.current;
+    if (el === null) return;
 
-    let timeoutId: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
     const raf = requestAnimationFrame(() => {
-      timeoutId = window.setTimeout(() => {
+      timeoutId = setTimeout(() => {
         try {
           if (el.scrollTop === 0) {
             el.scrollTop = 1;
