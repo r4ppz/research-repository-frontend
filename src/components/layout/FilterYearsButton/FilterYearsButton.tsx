@@ -39,9 +39,9 @@ const FilterYearsButton = ({ selectedYear, onYearChange }: FilterYearsButtonProp
               </Select.ItemIndicator>
             </Select.Item>
 
-            {years.map((y) => (
-              <Select.Item key={y} value={y} className={style.dropdownItem}>
-                <Select.ItemText>{y}</Select.ItemText>
+            {years.map((year) => (
+              <Select.Item key={year} value={year} className={style.dropdownItem}>
+                <Select.ItemText>{year}</Select.ItemText>
                 <Select.ItemIndicator className={style.dropdownIndicator}>
                   <Check size={16} />
                 </Select.ItemIndicator>

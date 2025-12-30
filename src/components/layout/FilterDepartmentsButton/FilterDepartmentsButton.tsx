@@ -15,9 +15,9 @@ const FilterDepartmentButton = ({
 }: FilterDepartmentButtonProps) => {
   const { departments } = useDepartments();
 
-  const options = departments.map((d) => ({
-    value: d.departmentId.toString(),
-    label: d.departmentName,
+  const options = departments.map((department) => ({
+    value: department.departmentId.toString(),
+    label: department.departmentName,
   }));
 
   return (
@@ -47,9 +47,9 @@ const FilterDepartmentButton = ({
               </Select.ItemIndicator>
             </Select.Item>
 
-            {options.map((o) => (
-              <Select.Item key={o.value} value={o.value} className={style.dropdownItem}>
-                <Select.ItemText>{o.label}</Select.ItemText>
+            {options.map((option) => (
+              <Select.Item key={option.value} value={option.value} className={style.dropdownItem}>
+                <Select.ItemText>{option.label}</Select.ItemText>
                 <Select.ItemIndicator className={style.dropdownIndicator}>
                   <Check size={16} />
                 </Select.ItemIndicator>
