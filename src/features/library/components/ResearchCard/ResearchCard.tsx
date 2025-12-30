@@ -26,13 +26,20 @@ const ResearchCard = ({ researchPaper, onView }: ResearchCardProps) => {
           <p className={style.date}>{formattedDate}</p>
         </div>
       </div>
-      <div className={style.departmentContainer}>
-        <p className={style.department}>{department}</p>
+      <div className={style.departmentArchivedContainer}>
+        <div className={style.departmentContainer}>
+          <p className={style.department}>{department}</p>
+        </div>
+        {researchPaper.archived && (
+          <div className={style.archivedContainer}>
+            <p className={style.archived}>Archived</p>
+          </div>
+        )}
       </div>
       <p className={style.abstract}>{researchPaper.abstractText}</p>
       <Button onClick={onView}>
         <Eye className={style.iconEye} />
-        Read Abstract
+        View Details
       </Button>
     </div>
   );

@@ -41,11 +41,29 @@
   font-weight: var(--font-weight-normal);
 }
 
+.departmentArchivedContainer {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-sm);
+}
+
 .departmentContainer {
   align-self: flex-start;
   padding: var(--space-xs) var(--space-md);
   background-color: var(--color-gray-300);
   border-radius: var(--radius-lg);
+}
+
+.archivedContainer {
+  align-self: flex-start;
+  padding: var(--space-xs) var(--space-md);
+  background-color: var(--color-orange-500);
+  border-radius: var(--radius-lg);
+}
+
+.archived {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
 }
 
 .department {

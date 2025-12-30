@@ -12,6 +12,7 @@
     width: 100%;
     max-width: 700px;
     max-height: 90%;
+    min-height: 100px;
   }
 }
 
@@ -50,6 +51,12 @@
   font-weight: var(--font-weight-normal);
 }
 
+.departmentArchivedContainer {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-sm);
+}
+
 .departmentContainer {
   display: inline-flex;
   align-self: flex-start;
@@ -59,6 +66,18 @@
 }
 
 .department {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+}
+
+.archivedContainer {
+  align-self: flex-start;
+  padding: var(--space-xs) var(--space-md);
+  background-color: var(--color-orange-500);
+  border-radius: var(--radius-lg);
+}
+
+.archived {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-normal);
 }

@@ -9,7 +9,7 @@ import { createRequest } from "@/api/request";
 import { useAuth } from "@/features/auth/context/useAuth";
 import style from "./ResearchModal.module.css";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
-import { isUserAdmin } from "@/util/roleBasedAccess";
+import { isUserAdmin, isUserStudentOrTeacher } from "@/util/roleBasedAccess";
 
 interface ResearchModalProps {
   isOpen: boolean;
@@ -21,7 +21,7 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
   const [requestExists, setRequestExists] = useState<boolean>(false);
   const [isRequestLoading, setIsRequestLoading] = useState<boolean>(false);
 
-  const { paper, loading, error: paperError } = usePaperById(paperId);
+  const { paper, loading, error } = usePaperById(paperId);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -78,10 +78,10 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
     );
   }
 
-  if (paperError || !paper) {
+  if (error || !paper) {
     return (
       <Modal className={style.modal} isOpen={isOpen} onClose={onClose}>
-        <p>{paperError || "Paper not found"}</p>
+        <p>{error || "Paper not found"}</p>
         <Button onClick={onClose}>Close</Button>
       </Modal>
     );
@@ -99,14 +99,21 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
           <p className={style.date}>{formattedDate}</p>
         </div>
       </div>
-      <div className={style.departmentContainer}>
-        <p className={style.department}>{department}</p>
+      <div className={style.departmentArchivedContainer}>
+        <div className={style.departmentContainer}>
+          <p className={style.department}>{department}</p>
+        </div>
+        {paper.archived && (
+          <div className={style.archivedContainer}>
+            <p className={style.archived}>Archived</p>
+          </div>
+        )}
       </div>
       <div className={style.abstractWrapper}>
         <h3 className={style.abtractHeader}>Abstract</h3>
         <p className={style.abstractText}>{paper.abstractText}</p>
       </div>
-      {!isUserAdmin(user) && (
+      {isUserStudentOrTeacher(user) && (
         <Button onClick={handleRequestDocument} disabled={requestExists || isRequestLoading}>
           {requestExists ? "Request Submitted" : "Request Document"}
         </Button>
