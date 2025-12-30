@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import Button from "@/components/common/Button/Button";
 import Footer from "@/components/layout/Footer/Footer";
@@ -10,8 +10,9 @@ import useDebounce from "@/hooks/useDebounce";
 import SearchNFilter from "../components/SearchNFilter/SearchNFilter";
 import { usePapers } from "../hooks/usePapers";
 import style from "./LibraryPage.module.css";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
 
-const LibraryPage = () => {
+const LibraryPage: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
@@ -34,6 +35,8 @@ const LibraryPage = () => {
     page: currentPage,
     size: 12,
   });
+
+  const pageRef = useRef<HTMLDivElement>(null);
 
   // Reset to page 0 when filters change
   const handleSearchChange = (query: string) => {
@@ -58,22 +61,22 @@ const LibraryPage = () => {
 
   const handleNextPage = () => {
     if (pagination && currentPage < pagination.totalPages - 1) {
-      setCurrentPage(currentPage + 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      setCurrentPage((p) => p + 1);
     }
   };
 
   const handlePrevPage = () => {
     if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      setCurrentPage((p) => p - 1);
     }
   };
+
+  useScrollToTop(pageRef, [currentPage, papers]);
 
   // Wait for data fetching states
   if (papersError) {
     return (
-      <div className={style.page}>
+      <div className={style.page} ref={pageRef}>
         <Header />
         <main className={style.main}>
           <div className={style.container}>
@@ -87,7 +90,7 @@ const LibraryPage = () => {
 
   // Render the library page layout
   return (
-    <div className={style.page}>
+    <div className={style.page} ref={pageRef}>
       <Header />
       <main className={style.main}>
         <div className={style.container}>

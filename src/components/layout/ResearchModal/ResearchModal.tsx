@@ -6,6 +6,7 @@ import { getMyPaperRequest } from "@/api/paper";
 import { formatDateLong } from "@/util/formatDate";
 import { usePaperById } from "@/features/library/hooks/usePaperById";
 import { createRequest } from "@/api/request";
+import { useAuth } from "@/features/auth/context/useAuth";
 import style from "./ResearchModal.module.css";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
@@ -16,18 +17,23 @@ interface ResearchModalProps {
 }
 
 const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
-  const { paper, loading, error } = usePaperById(paperId);
   const [requestExists, setRequestExists] = useState<boolean>(false);
   const [isRequestLoading, setIsRequestLoading] = useState<boolean>(false);
 
-  // Check if request already exists when paperId changes
+  const { paper, loading, error: paperError } = usePaperById(paperId);
+  const { user } = useAuth();
+
   useEffect(() => {
+    if (!user || user.role === "DEPARTMENT_ADMIN" || user.role === "SUPER_ADMIN") {
+      return;
+    }
+
     const checkRequestExists = async () => {
       if (paperId !== null) {
         try {
           await getMyPaperRequest(paperId);
           setRequestExists(true);
-        } catch (error) {
+        } catch (error: unknown) {
           const apiError = extractApiError(error);
           console.log(getUserErrorMessage(apiError));
           setRequestExists(false);
@@ -38,9 +44,13 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
     };
 
     void checkRequestExists();
-  }, [paperId]);
+  }, [paperId, user]);
 
   const requestDocument = async () => {
+    if (!user || user.role === "DEPARTMENT_ADMIN" || user.role === "SUPER_ADMIN") {
+      return;
+    }
+
     if (requestExists || isRequestLoading || !paperId) return;
 
     setIsRequestLoading(true);
@@ -48,7 +58,7 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
     try {
       await createRequest({ paperId });
       setRequestExists(true);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error("Error creating request:", err);
     } finally {
       setIsRequestLoading(false);
@@ -67,10 +77,10 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
     );
   }
 
-  if (error || !paper) {
+  if (paperError || !paper) {
     return (
       <Modal className={style.modal} isOpen={isOpen} onClose={onClose}>
-        <p>{error || "Paper not found"}</p>
+        <p>{paperError || "Paper not found"}</p>
         <Button onClick={onClose}>Close</Button>
       </Modal>
     );
@@ -95,9 +105,11 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
         <h3 className={style.abtractHeader}>Abstract</h3>
         <p className={style.abstractText}>{paper.abstractText}</p>
       </div>
-      <Button onClick={handleRequestDocument} disabled={requestExists || isRequestLoading}>
-        {requestExists ? "Request Submitted" : "Request Document"}
-      </Button>
+      {user && user.role !== "DEPARTMENT_ADMIN" && user.role !== "SUPER_ADMIN" && (
+        <Button onClick={handleRequestDocument} disabled={requestExists || isRequestLoading}>
+          {requestExists ? "Request Submitted" : "Request Document"}
+        </Button>
+      )}
     </Modal>
   );
 };
