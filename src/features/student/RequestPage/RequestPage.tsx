@@ -8,21 +8,19 @@ import DocumentRequestTable from "../components/RequestTable/RequestTable";
 
 const RequestPage = () => {
   const { requests, loading, refetch } = useUserRequests();
+  let content;
+
+  if (loading) {
+    content = <LoadingSpinner message="Loading requests..." />;
+  } else {
+    content = <DocumentRequestTable data={requests} refreshData={refetch} />;
+  }
 
   return (
     <div className={clsx(style.page)}>
       <Header />
       <main className={style.main}>
-        <div className={style.mainContainer}>
-          {/* <h1 className={style.titleHeader}>Manage Research Paper Requests</h1> */}
-          {loading ? (
-            <div className={style.loadingContainer}>
-              <LoadingSpinner message="Loading requests..." />
-            </div>
-          ) : (
-            <DocumentRequestTable data={requests} refreshData={refetch} />
-          )}
-        </div>
+        <div className={style.mainContainer}>{content}</div>
       </main>
       <Footer />
     </div>

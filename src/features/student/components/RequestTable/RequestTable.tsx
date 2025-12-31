@@ -18,6 +18,30 @@ function DocumentRequestTable({ data, refreshData }: Props) {
     getCoreRowModel: getCoreRowModel(),
   });
 
+  const renderTableBody = () => {
+    if (table.getRowModel().rows.length > 0) {
+      return table.getRowModel().rows.map((row) => (
+        <tr className={style.tableRow} key={row.id}>
+          {row.getVisibleCells().map((cell) => (
+            <td className={clsx(style.tableData, style.tableBodyData)} key={cell.id}>
+              {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            </td>
+          ))}
+        </tr>
+      ));
+    } else {
+      return (
+        <tr className={style.tableRow}>
+          <td className={clsx(style.tableData, style.tableBodyData)} colSpan={columns.length}>
+            <div className={style.emptyState}>
+              <p>No requests found</p>
+            </div>
+          </td>
+        </tr>
+      );
+    }
+  };
+
   return (
     <div className={style.tableContainer}>
       <table className={style.table}>
@@ -37,27 +61,7 @@ function DocumentRequestTable({ data, refreshData }: Props) {
             </tr>
           ))}
         </thead>
-        <tbody className={style.tableBody}>
-          {table.getRowModel().rows.length > 0 ? (
-            table.getRowModel().rows.map((row) => (
-              <tr className={style.tableRow} key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td className={clsx(style.tableData, style.tableBodyData)} key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))
-          ) : (
-            <tr className={style.tableRow}>
-              <td className={clsx(style.tableData, style.tableBodyData)} colSpan={columns.length}>
-                <div className={style.emptyState}>
-                  <p>No requests found</p>
-                </div>
-              </td>
-            </tr>
-          )}
-        </tbody>
+        <tbody className={style.tableBody}>{renderTableBody()}</tbody>
       </table>
     </div>
   );

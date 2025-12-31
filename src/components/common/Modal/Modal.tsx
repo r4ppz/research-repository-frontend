@@ -5,6 +5,10 @@ import { X } from "lucide-react";
 import { useModalBodyClass } from "@/hooks/useModalBodyClass";
 import style from "./Modal.module.css";
 
+// pls help me fix this shitty modal
+
+// TODO: use radix primitive modal
+
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -24,7 +28,6 @@ const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
     throw new Error("Modal root element not found");
   }
 
-  // TODO: use native modal instead of recreating it
   return ReactDOM.createPortal(
     <div className={style.overlay} onClick={onClose}>
       <div

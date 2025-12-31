@@ -20,15 +20,9 @@ const LibraryPage: React.FC = () => {
   const [selectedPaperId, setSelectedPaperId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Debounce the search query to prevent excessive API calls
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  // Fetch papers with current filters
-  const {
-    papers,
-    error: papersError,
-    pagination,
-  } = usePapers({
+  const { papers, error, pagination, loading } = usePapers({
     search: debouncedSearchQuery,
     departmentIds: selectedDepartment ? [parseInt(selectedDepartment)] : [],
     year: selectedYear ? parseInt(selectedYear) : null,
@@ -38,7 +32,6 @@ const LibraryPage: React.FC = () => {
 
   const pageRef = useRef<HTMLDivElement>(null);
 
-  // Reset to page 0 when filters change
   const handleSearchChange = (query: string) => {
     setSearchQuery(query);
     setCurrentPage(0);
@@ -73,14 +66,13 @@ const LibraryPage: React.FC = () => {
 
   useScrollToTop(pageRef, [currentPage, papers]);
 
-  // Wait for data fetching states
-  if (papersError) {
+  if (error) {
     return (
       <div className={style.page} ref={pageRef}>
         <Header />
         <main className={style.main}>
           <div className={style.container}>
-            <p className={style.errorMessage}>Error: {papersError}</p>
+            <p className={style.errorMessage}>Error: {error}</p>
           </div>
         </main>
         <Footer />
@@ -88,7 +80,45 @@ const LibraryPage: React.FC = () => {
     );
   }
 
-  // Render the library page layout
+  // Determine research section content
+  let researchContent;
+
+  // FLOW:
+  // 1. Show loading spinner ONLY when API is actively loading
+  // 2. Handle empty arrays properly after loading completes
+  if (loading) {
+    researchContent = (
+      <div className={style.loadingContainer}>
+        <LoadingSpinner message="Loading papers..." />
+      </div>
+    );
+  } else if (papers.length === 0 && debouncedSearchQuery) {
+    researchContent = (
+      <div className={style.emptyState}>
+        <p>No papers found matching your search :(</p>
+      </div>
+    );
+  } else if (papers.length === 0 && !debouncedSearchQuery) {
+    // API returned empty array with no search query
+    // Preserve original UI structure but with correct behavior
+    researchContent = (
+      <div className={style.emptyState}>
+        <p>No papers found matching your search :(</p>
+      </div>
+    );
+  } else {
+    researchContent = papers.map((research) => (
+      <ResearchCard
+        key={research.paperId}
+        researchPaper={research}
+        onView={() => {
+          setSelectedPaperId(research.paperId);
+          setIsModalOpen(true);
+        }}
+      />
+    ));
+  }
+
   return (
     <div className={style.page} ref={pageRef}>
       <Header />
@@ -107,7 +137,6 @@ const LibraryPage: React.FC = () => {
             </p>
           </section>
 
-          {/* Search and Filter Section */}
           <SearchNFilter
             searchQuery={searchQuery}
             onSearchChange={handleSearchChange}
@@ -117,31 +146,8 @@ const LibraryPage: React.FC = () => {
             onDepartmentChange={handleDepartmentChange}
           />
 
-          {/* Research Section */}
-          <section className={style.researchSection}>
-            {papers.length === 0 && debouncedSearchQuery ? (
-              <div className={style.emptyState}>
-                <p>No papers found matching your search :(</p>
-              </div>
-            ) : papers.length === 0 && !debouncedSearchQuery ? (
-              <div className={style.loadingContainer}>
-                <LoadingSpinner message="Loading papers..." />
-              </div>
-            ) : (
-              papers.map((research) => (
-                <ResearchCard
-                  key={research.paperId}
-                  researchPaper={research}
-                  onView={() => {
-                    setSelectedPaperId(research.paperId);
-                    setIsModalOpen(true);
-                  }}
-                />
-              ))
-            )}
-          </section>
+          <section className={style.researchSection}>{researchContent}</section>
 
-          {/* Pagination */}
           {pagination && pagination.totalPages > 1 && (
             <section className={style.paginationSection}>
               <Button
@@ -170,9 +176,7 @@ const LibraryPage: React.FC = () => {
         </div>
       </main>
 
-      {/* Research Modal */}
       <ResearchModal paperId={selectedPaperId} isOpen={isModalOpen} onClose={handleCloseModal} />
-
       <Footer />
     </div>
   );

@@ -92,6 +92,7 @@
 @media (min-width: 768px) {
   .researchSection {
     grid-template-columns: repeat(2, 1fr);
+    min-height: 300px;
   }
 }
 @media (min-width: 1024px) {
