@@ -1,8 +1,10 @@
-import { useState } from "react";
 import clsx from "clsx";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
+
 import Button from "@/components/common/Button/Button";
 import { safeToString } from "@/util/safeToString";
+
 import style from "./Table.module.css";
 
 export interface TableColumn<T> {
@@ -77,7 +79,7 @@ const Table = <T extends object>({
   const getMobileRowProps = (item: T, index: number) => {
     return {
       key: String(rowKey(item)),
-      className: clsx(style.mobileCard, rowClassName?.(item, index) || ""),
+      className: clsx(style.mobileCard, rowClassName?.(item, index) ?? ""),
       onClick: () => {
         handleRowClick(item, index);
       },
@@ -87,7 +89,7 @@ const Table = <T extends object>({
   const getDesktopRowProps = (item: T, index: number) => {
     return {
       key: String(rowKey(item)),
-      className: clsx(style.row, rowClassName?.(item, index) || ""),
+      className: clsx(style.row, rowClassName?.(item, index) ?? ""),
       onClick: () => {
         handleRowClick(item, index);
       },

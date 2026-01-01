@@ -1,7 +1,7 @@
 import { axiosClient } from "@/api/axiosClient";
+import { RequestStatus, ResearchPaper } from "@/types";
 import { Page } from "@/types/api";
 import { User } from "@/types/user";
-import { RequestStatus, ResearchPaper } from "@/types";
 
 export interface AdminDocumentRequest {
   requestId: number;

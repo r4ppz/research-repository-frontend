@@ -1,12 +1,13 @@
 import { useEffect } from "react";
-import { useAuth } from "@/features/auth/context/useAuth";
+
+import { postRefresh } from "@/api/auth";
+import { getCurrentUser } from "@/api/users";
 import {
   getAccessToken,
   removeAccessToken,
   setAccessToken,
 } from "@/features/auth/context/tokenStore";
-import { postRefresh } from "@/api/auth";
-import { getCurrentUser } from "@/api/users";
+import { useAuth } from "@/features/auth/context/useAuth";
 import { extractApiError, isAuthError } from "@/util/errorHandler";
 
 const AuthRestorer = () => {

@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { Navigate } from "react-router-dom";
+
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { type Role } from "@/types";

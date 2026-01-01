@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { getDepartments } from "@/api/filter";
 import { Department } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";

@@ -1,6 +1,6 @@
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import path from "path";
+import { defineConfig } from "vite";
 
 export default defineConfig(({ mode }) => {
   const isDevelopment = mode === "development";
@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       react({
         babel: {
-          plugins: [["babel-plugin-react-compiler", {}]],
+          plugins: ["babel-plugin-react-compiler"],
         },
       }),
     ],

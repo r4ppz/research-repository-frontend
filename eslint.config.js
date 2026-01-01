@@ -1,32 +1,37 @@
-import globals from "globals";
-import tseslint from "typescript-eslint";
+import eslintConfigPrettier from "eslint-config-prettier";
+import prettierPlugin from "eslint-plugin-prettier";
+import reactCompiler from "eslint-plugin-react-compiler";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
 import simpleImportSort from "eslint-plugin-simple-import-sort";
-import prettierPlugin from "eslint-plugin-prettier";
-import reactCompiler from "eslint-plugin-react-compiler";
+import globals from "globals";
+import tseslint from "typescript-eslint";
 
+/** @type {import('eslint').Linter.Config[]} */
 export default [
   {
-    ignores: ["dist", "node_modules", "*.env", "*.d.ts"],
+    // Global ignores
+    ignores: ["dist", "node_modules", "*.env", "*.d.ts", "stylelint.config.mjs", "*.config.mjs"],
   },
 
+  // Base TypeScript configs (these return arrays, so we spread them)
   ...tseslint.configs.strictTypeChecked,
-
+  ...tseslint.configs.stylisticTypeChecked,
   {
-    // files: ["src/**/*.{ts,tsx}"],
     files: ["src/**/*.{ts,tsx}", "vite.config.ts", "eslint.config.js"],
-
     languageOptions: {
       parserOptions: {
         ecmaVersion: "latest",
         sourceType: "module",
         project: "./tsconfig.json",
-        tsconfigRootDir: new URL(".", import.meta.url).pathname,
+        // Modern replacement for new URL(...).pathname
+        tsconfigRootDir: import.meta.dirname,
       },
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        ...globals.es2021,
+      },
     },
-
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
@@ -34,41 +39,26 @@ export default [
       "react-compiler": reactCompiler,
       prettier: prettierPlugin,
     },
-
     rules: {
-      // TypeScript / base
-      "no-unused-vars": "off",
+      // TypeScript refinements
       "@typescript-eslint/no-unused-vars": [
         "warn",
         { args: "after-used", argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
-      "no-var": "warn",
-      "prefer-const": "warn",
-      "prefer-arrow-callback": "warn",
-      "no-debugger": "warn",
 
-      // React Hooks + Fast Refresh
-      ...reactHooks.configs["recommended-latest"].rules,
+      // React Hooks & Compiler
+      ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
       "react-compiler/react-compiler": "error",
 
-      // Import sorting
-      "simple-import-sort/imports": [
-        "off",
-        {
-          groups: [
-            [
-              "^\\u0000", // Side effects
-              "^node:", // Node builtins
-              "^react",
-              "^@?\\w", // External packages
-              "^@/", // Internal packages
-              "^\\.", // Relative imports
-            ],
-          ],
-        },
-      ],
+      // Sorting
+      "simple-import-sort/imports": "warn",
+      "simple-import-sort/exports": "warn",
+
+      // Prettier
       "prettier/prettier": "warn",
     },
   },
+  // Must be the last object to override previous stylistic rules
+  eslintConfigPrettier,
 ];

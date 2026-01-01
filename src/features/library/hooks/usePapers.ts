@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+
 import { getPapers, type GetPapersParams } from "@/api/paper";
 import { type ResearchPaper } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
@@ -43,13 +44,13 @@ export const usePapers = (params: UsePapersParams = {}): UsePapersReturn => {
 
     try {
       const apiParams: GetPapersParams = {
-        search: params.search || undefined,
+        search: params.search ?? undefined,
         departmentId: departmentIdsString,
-        year: params.year || undefined,
+        year: params.year ?? undefined,
         sortBy: params.sortBy,
         sortOrder: params.sortOrder,
-        page: params.page || 0,
-        size: params.size || 20,
+        page: params.page ?? 0,
+        size: params.size ?? 20,
         archived: params.archived,
       };
 

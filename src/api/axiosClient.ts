@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { postRefresh } from "@/api/auth";
 import {
   getAccessToken,
@@ -22,10 +23,10 @@ export const refreshClient = axios.create({
 
 let isRefreshing = false;
 
-type QueueItem = {
+interface QueueItem {
   resolve: (token: string) => void;
   reject: (err: ApiError) => void;
-};
+}
 let failedQueue: QueueItem[] = [];
 
 function processQueue(err: ApiError | null, token?: string): void {

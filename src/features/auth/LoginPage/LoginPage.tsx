@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import schoolLogo from "@/assets/school-logo.svg";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import Modal from "@/components/common/Modal/Modal";
@@ -7,6 +8,7 @@ import { useAuth } from "@/features/auth/context/useAuth";
 import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
 import { ApiError } from "@/types";
 import { getUserErrorMessage } from "@/util/errorHandler";
+
 import style from "./LoginPage.module.css";
 
 const LoginPage = () => {

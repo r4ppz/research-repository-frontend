@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
+
+import { getMyPaperRequest } from "@/api/paper";
+import { createRequest } from "@/api/request";
 import Button from "@/components/common/Button/Button";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import Modal from "@/components/common/Modal/Modal";
-import { getMyPaperRequest } from "@/api/paper";
-import { formatDateLong } from "@/util/formatDate";
-import { usePaperById } from "@/features/library/hooks/usePaperById";
-import { createRequest } from "@/api/request";
 import { useAuth } from "@/features/auth/context/useAuth";
-import style from "./ResearchModal.module.css";
+import { usePaperById } from "@/features/library/hooks/usePaperById";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
+import { formatDateLong } from "@/util/formatDate";
 import { isUserAdmin, isUserStudentOrTeacher } from "@/util/roleBasedAccess";
+
+import style from "./ResearchModal.module.css";
 
 interface ResearchModalProps {
   isOpen: boolean;
@@ -81,7 +83,7 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
   if (error || !paper) {
     return (
       <Modal className={style.modal} isOpen={isOpen} onClose={onClose}>
-        <p>{error || "Paper not found"}</p>
+        <p>{error ?? "Paper not found"}</p>
         <Button onClick={onClose}>Close</Button>
       </Modal>
     );

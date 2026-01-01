@@ -1,4 +1,4 @@
-import { useEffect, RefObject } from "react";
+import { RefObject, useEffect } from "react";
 
 export function useScrollToTop<T extends HTMLElement>(ref: RefObject<T | null>, trigger: unknown) {
   useEffect(() => {
