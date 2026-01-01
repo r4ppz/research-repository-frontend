@@ -20,7 +20,7 @@ const LibraryPage: React.FC = () => {
   const [selectedPaperId, setSelectedPaperId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const debouncedSearchQuery = useDebounce(searchQuery, 300);
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
   const { papers, error, pagination, loading } = usePapers({
     search: debouncedSearchQuery,
@@ -31,6 +31,7 @@ const LibraryPage: React.FC = () => {
   });
 
   const pageRef = useRef<HTMLDivElement>(null);
+  useScrollToTop(pageRef, currentPage);
 
   const handleSearchChange = (query: string) => {
     setSearchQuery(query);
@@ -64,8 +65,6 @@ const LibraryPage: React.FC = () => {
     }
   };
 
-  useScrollToTop(pageRef, [currentPage, papers]);
-
   if (error) {
     return (
       <div className={style.page} ref={pageRef}>
@@ -83,9 +82,9 @@ const LibraryPage: React.FC = () => {
   // Determine research section content
   let researchContent;
 
-  // FLOW:
-  // 1. Show loading spinner ONLY when API is actively loading
-  // 2. Handle empty arrays properly after loading completes
+  // flow
+  // - Show loading spinner ONLY when API is actively loading
+  // - Handle empty arrays properly after loading completes
   if (loading) {
     researchContent = (
       <div className={style.loadingContainer}>
@@ -148,7 +147,7 @@ const LibraryPage: React.FC = () => {
 
           <section className={style.researchSection}>{researchContent}</section>
 
-          {pagination && pagination.totalPages > 1 && (
+          {!loading && pagination && pagination.totalPages > 1 && (
             <section className={style.paginationSection}>
               <Button
                 className={style.pagingButton}

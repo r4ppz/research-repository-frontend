@@ -1,12 +1,9 @@
 import { useEffect, RefObject } from "react";
 
-export function useScrollToTop<T extends HTMLElement>(
-  ref: RefObject<T | null>,
-  deps: ReadonlyArray<unknown>,
-) {
+export function useScrollToTop<T extends HTMLElement>(ref: RefObject<T | null>, trigger: unknown) {
   useEffect(() => {
     const el = ref.current;
-    if (el === null) return;
+    if (!el) return;
 
     let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
@@ -35,6 +32,5 @@ export function useScrollToTop<T extends HTMLElement>(
       cancelAnimationFrame(raf);
       if (timeoutId) clearTimeout(timeoutId);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps);
+  }, [trigger, ref]);
 }
