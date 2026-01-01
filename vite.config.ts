@@ -6,7 +6,13 @@ export default defineConfig(({ mode }) => {
   const isDevelopment = mode === "development";
 
   return {
-    plugins: [react()],
+    plugins: [
+      react({
+        babel: {
+          plugins: [["babel-plugin-react-compiler", {}]],
+        },
+      }),
+    ],
     base: isDevelopment ? "/" : "/research-repository/",
     resolve: {
       alias: {

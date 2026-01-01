@@ -9,6 +9,7 @@
     "esModuleInterop": true,
     /* React & JSX */
     "jsx": "react-jsx",
+    "allowJs": true,
     /* Strictness */
     "strict": true,
     "noUnusedLocals": true,
@@ -29,7 +30,8 @@
   },
   "include": [
     "src",
-    "vite.config.ts"
+    "vite.config.ts",
+    "eslint.config.js"
   ],
   "exclude": [
     "node_modules",
