@@ -15,7 +15,6 @@ import { usePapers } from "../hooks/usePapers";
 import style from "./LibraryPage.module.css";
 
 const LibraryPage: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
@@ -24,47 +23,33 @@ const LibraryPage: React.FC = () => {
 
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
-  const { papers, error, pagination, loading } = usePapers({
-    search: debouncedSearchQuery,
-    departmentIds: selectedDepartment ? [parseInt(selectedDepartment)] : [],
-    year: selectedYear ? parseInt(selectedYear) : null,
-    page: currentPage,
-    size: 12,
-  });
+  const { papers, error, pagination, loading, currentPage, goToNextPage, goToPrevPage } = usePapers(
+    {
+      search: debouncedSearchQuery,
+      departmentIds: selectedDepartment ? [parseInt(selectedDepartment)] : [],
+      year: selectedYear ? parseInt(selectedYear) : null,
+      size: 12,
+    },
+  );
 
   const pageRef = useRef<HTMLDivElement>(null);
   useScrollToTop(pageRef, currentPage);
 
   const handleSearchChange = (query: string) => {
     setSearchQuery(query);
-    setCurrentPage(0);
   };
 
   const handleYearChange = (year: string | null) => {
     setSelectedYear(year);
-    setCurrentPage(0);
   };
 
   const handleDepartmentChange = (departmentId: string | null) => {
     setSelectedDepartment(departmentId);
-    setCurrentPage(0);
   };
 
   const handleCloseModal = () => {
     setSelectedPaperId(null);
     setIsModalOpen(false);
-  };
-
-  const handleNextPage = () => {
-    if (pagination && currentPage < pagination.totalPages - 1) {
-      setCurrentPage((p) => p + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 0) {
-      setCurrentPage((p) => p - 1);
-    }
   };
 
   if (error) {
@@ -153,21 +138,21 @@ const LibraryPage: React.FC = () => {
             <section className={style.paginationSection}>
               <Button
                 className={style.pagingButton}
-                onClick={handlePrevPage}
-                disabled={currentPage === 0}
+                onClick={goToPrevPage}
+                disabled={pagination.currentPage === 0}
               >
                 <ChevronLeft className={style.iconChevron} />
                 Previous
               </Button>
 
               <p className={style.pagingIndicator}>
-                Page {currentPage + 1} of {pagination.totalPages}
+                Page {pagination.currentPage + 1} of {pagination.totalPages}
               </p>
 
               <Button
                 className={style.pagingButton}
-                onClick={handleNextPage}
-                disabled={currentPage >= pagination.totalPages - 1}
+                onClick={goToNextPage}
+                disabled={pagination.currentPage >= pagination.totalPages - 1}
               >
                 Next
                 <ChevronRight className={style.iconChevron} />

@@ -25,6 +25,10 @@ interface UsePapersReturn {
     currentPage: number;
     pageSize: number;
   } | null;
+  currentPage: number;
+  goToNextPage: () => void;
+  goToPrevPage: () => void;
+  goToPage: (page: number) => void;
   refetch: () => Promise<void>;
 }
 
@@ -33,10 +37,11 @@ export const usePapers = (params: UsePapersParams = {}): UsePapersReturn => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [pagination, setPagination] = useState<UsePapersReturn["pagination"]>(null);
+  const [currentPage, setCurrentPage] = useState(params.page ?? 0);
 
-  const departmentIdsString = params.departmentIds?.length
-    ? params.departmentIds.join(",")
-    : undefined;
+  const { search, departmentIds, year, sortBy, sortOrder, size = 20, archived } = params;
+
+  const departmentIdsString = departmentIds?.join(",") ?? undefined;
 
   const fetchPapers = useCallback(async (): Promise<void> => {
     setLoading(true);
@@ -44,14 +49,14 @@ export const usePapers = (params: UsePapersParams = {}): UsePapersReturn => {
 
     try {
       const apiParams: GetPapersParams = {
-        search: params.search ?? undefined,
+        search: search ?? undefined,
         departmentId: departmentIdsString,
-        year: params.year ?? undefined,
-        sortBy: params.sortBy,
-        sortOrder: params.sortOrder,
-        page: params.page ?? 0,
-        size: params.size ?? 20,
-        archived: params.archived,
+        year: year ?? undefined,
+        sortBy,
+        sortOrder,
+        page: currentPage,
+        size,
+        archived,
       };
 
       const result = await getPapers(apiParams);
@@ -71,26 +76,47 @@ export const usePapers = (params: UsePapersParams = {}): UsePapersReturn => {
     } finally {
       setLoading(false);
     }
-  }, [
-    params.search,
-    departmentIdsString,
-    params.year,
-    params.sortBy,
-    params.sortOrder,
-    params.page,
-    params.size,
-    params.archived,
-  ]);
+  }, [search, departmentIdsString, year, sortBy, sortOrder, currentPage, size, archived]);
+
+  const goToNextPage = useCallback(() => {
+    if (pagination && currentPage < pagination.totalPages - 1) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  }, [currentPage, pagination]);
+
+  const goToPrevPage = useCallback(() => {
+    if (currentPage > 0) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  }, [currentPage]);
+
+  const goToPage = useCallback(
+    (page: number) => {
+      if (pagination && page >= 0 && page < pagination.totalPages) {
+        setCurrentPage(page);
+      }
+    },
+    [pagination],
+  );
+
+  // Reset to first page when search parameters change
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [search, departmentIdsString, year]);
 
   useEffect(() => {
     void fetchPapers();
-  }, [fetchPapers]);
+  }, [fetchPapers, currentPage]);
 
   return {
     papers,
     loading,
     error,
     pagination,
+    currentPage,
+    goToNextPage,
+    goToPrevPage,
+    goToPage,
     refetch: fetchPapers,
   };
 };
