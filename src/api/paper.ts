@@ -4,7 +4,7 @@ import { DocumentRequest, Page, ResearchPaper } from "@/types";
 export interface GetPapersParams {
   search?: string;
   departmentId?: string; // comma-separated IDs
-  year?: number;
+  year?: number; // comma-separated IDs
   sortBy?: string;
   sortOrder?: "asc" | "desc";
   page?: number;
