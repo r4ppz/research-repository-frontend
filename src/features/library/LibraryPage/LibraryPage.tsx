@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import Button from "@/components/common/Button/Button";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
@@ -14,7 +14,7 @@ import SearchNFilter from "../components/SearchNFilter/SearchNFilter";
 import { usePapers } from "../hooks/usePapers";
 import style from "./LibraryPage.module.css";
 
-const LibraryPage: React.FC = () => {
+const LibraryPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
@@ -26,8 +26,8 @@ const LibraryPage: React.FC = () => {
   const { papers, error, pagination, loading, currentPage, goToNextPage, goToPrevPage } = usePapers(
     {
       search: debouncedSearchQuery,
-      departmentIds: selectedDepartment ? [parseInt(selectedDepartment)] : [],
-      year: selectedYear ? parseInt(selectedYear) : null,
+      departmentId: selectedDepartment,
+      year: selectedYear,
       size: 12,
     },
   );

@@ -6,8 +6,8 @@ import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
 interface UsePapersParams {
   search?: string;
-  departmentIds?: number[];
-  year?: number | null;
+  departmentId?: string | null; // Comma-separated department IDs
+  year?: string | null; // Comma-separated year values
   sortBy?: string;
   sortOrder?: "asc" | "desc";
   page?: number;
@@ -39,9 +39,7 @@ export const usePapers = (params: UsePapersParams = {}): UsePapersReturn => {
   const [pagination, setPagination] = useState<UsePapersReturn["pagination"]>(null);
   const [currentPage, setCurrentPage] = useState(params.page ?? 0);
 
-  const { search, departmentIds, year, sortBy, sortOrder, size = 20, archived } = params;
-
-  const departmentIdsString = departmentIds?.join(",") ?? undefined;
+  const { search, departmentId, year, sortBy, sortOrder, size = 20, archived } = params;
 
   const fetchPapers = useCallback(async (): Promise<void> => {
     setLoading(true);
@@ -50,7 +48,7 @@ export const usePapers = (params: UsePapersParams = {}): UsePapersReturn => {
     try {
       const apiParams: GetPapersParams = {
         search: search ?? undefined,
-        departmentId: departmentIdsString,
+        departmentId: departmentId ?? undefined,
         year: year ?? undefined,
         sortBy,
         sortOrder,
@@ -76,7 +74,7 @@ export const usePapers = (params: UsePapersParams = {}): UsePapersReturn => {
     } finally {
       setLoading(false);
     }
-  }, [search, departmentIdsString, year, sortBy, sortOrder, currentPage, size, archived]);
+  }, [search, departmentId, year, sortBy, sortOrder, currentPage, size, archived]);
 
   const goToNextPage = useCallback(() => {
     if (pagination && currentPage < pagination.totalPages - 1) {
@@ -102,7 +100,7 @@ export const usePapers = (params: UsePapersParams = {}): UsePapersReturn => {
   // Reset to first page when search parameters change
   useEffect(() => {
     setCurrentPage(0);
-  }, [search, departmentIdsString, year]);
+  }, [search, departmentId, year]);
 
   useEffect(() => {
     void fetchPapers();
