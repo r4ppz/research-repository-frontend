@@ -10,20 +10,28 @@ import style from "./RequestPage.module.css";
 
 const RequestPage = () => {
   const { requests, loading, refetch } = useUserRequests();
-  let content;
 
+  let mainContent;
   if (loading) {
-    content = <LoadingSpinner message="Loading requests..." />;
+    mainContent = (
+      <main className={style.loadingContainer}>
+        <LoadingSpinner message="Loading requests..." />
+      </main>
+    );
   } else {
-    content = <DocumentRequestTable data={requests} refreshData={refetch} />;
+    mainContent = (
+      <main className={style.main}>
+        <div className={style.mainContainer}>
+          <DocumentRequestTable data={requests} refreshData={refetch} />
+        </div>
+      </main>
+    );
   }
 
   return (
     <div className={clsx(style.page)}>
       <Header />
-      <main className={style.main}>
-        <div className={style.mainContainer}>{content}</div>
-      </main>
+      {mainContent}
       <Footer />
     </div>
   );

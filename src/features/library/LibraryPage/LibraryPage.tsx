@@ -33,7 +33,7 @@ const LibraryPage = () => {
   );
 
   const pageRef = useRef<HTMLDivElement>(null);
-  useScrollToTop(pageRef, currentPage);
+  useScrollToTop(pageRef, { trigger: currentPage, isLoading: loading });
 
   const handleSearchChange = (query: string) => {
     setSearchQuery(query);
@@ -57,7 +57,7 @@ const LibraryPage = () => {
       <div className={style.page} ref={pageRef}>
         <Header />
         <main className={style.main}>
-          <div className={style.container}>
+          <div className={style.mainContainer}>
             <p className={style.errorMessage}>Error: {error}</p>
           </div>
         </main>
@@ -109,7 +109,7 @@ const LibraryPage = () => {
     <div className={style.page} ref={pageRef}>
       <Header />
       <main className={style.main}>
-        <div className={style.container}>
+        <div className={style.mainContainer}>
           <section>
             <h1 className={style.heroHeader}>Discover Academic Research</h1>
             <p className={style.mobileHeroText}>

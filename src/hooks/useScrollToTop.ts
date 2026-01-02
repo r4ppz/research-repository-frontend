@@ -1,36 +1,40 @@
 import { RefObject, useEffect } from "react";
 
-export function useScrollToTop<T extends HTMLElement>(ref: RefObject<T | null>, trigger: unknown) {
+interface ScrollOptions<T> {
+  trigger: T;
+  isLoading: boolean;
+  behavior?: ScrollBehavior;
+  delay?: number;
+}
+
+export function useScrollToTop<E extends HTMLElement, T>(
+  ref: RefObject<E | null>,
+  { trigger, isLoading, behavior = "smooth", delay = 50 }: ScrollOptions<T>,
+): void {
   useEffect(() => {
+    // Only scroll when loading is finished
+    if (isLoading) return;
+
     const el = ref.current;
     if (!el) return;
 
-    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+    let timeoutId: ReturnType<typeof setTimeout>;
 
-    const raf = requestAnimationFrame(() => {
+    // Wait for the next paint cycle
+    const rafId = requestAnimationFrame(() => {
+      // Small delay allows the browser to finish layout and
+      // ensures the smooth-scroll engine can initialize properly.
       timeoutId = setTimeout(() => {
-        try {
-          if (el.scrollTop === 0) {
-            el.scrollTop = 1;
-            requestAnimationFrame(() => {
-              try {
-                el.scrollTo({ top: 0, behavior: "smooth" });
-              } catch {
-                el.scrollTop = 0;
-              }
-            });
-          } else {
-            el.scrollTo({ top: 0, behavior: "smooth" });
-          }
-        } catch {
-          el.scrollTop = 0;
-        }
-      }, 100);
+        el.scrollTo({
+          top: 0,
+          behavior,
+        });
+      }, delay);
     });
 
     return () => {
-      cancelAnimationFrame(raf);
-      if (timeoutId) clearTimeout(timeoutId);
+      cancelAnimationFrame(rafId);
+      clearTimeout(timeoutId);
     };
-  }, [trigger, ref]);
+  }, [trigger, isLoading, ref, behavior, delay]);
 }
