@@ -1,4 +1,25 @@
+.modalLoadingOrError {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  width: 100%;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: left;
+  min-height: 60vh;
+}
+@media (min-width: 768px) {
+  .modalLoadingOrError {
+    width: 100%;
+    max-width: 700px;
+    max-height: 90%;
+  }
+}
+
 .modal {
+  display: flex;
+  justify-content: center;
   gap: var(--space-md);
   width: 100%;
   max-width: 100%;
@@ -11,7 +32,6 @@
   .modal {
     width: 100%;
     max-width: 700px;
-    min-height: 100px;
     max-height: 90%;
   }
 }

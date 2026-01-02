@@ -74,7 +74,7 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
 
   if (loading) {
     return (
-      <Modal className={style.modal} isOpen={isOpen} onClose={onClose}>
+      <Modal className={style.modalLoadingOrError} isOpen={isOpen} onClose={onClose}>
         <LoadingSpinner message="Loading..." />
       </Modal>
     );
@@ -82,7 +82,7 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
 
   if (error || !paper) {
     return (
-      <Modal className={style.modal} isOpen={isOpen} onClose={onClose}>
+      <Modal className={style.modalLoadingOrError} isOpen={isOpen} onClose={onClose}>
         <p>{error ?? "Paper not found"}</p>
         <Button onClick={onClose}>Close</Button>
       </Modal>

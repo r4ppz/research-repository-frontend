@@ -25,7 +25,7 @@ export function useScrollToTop<T extends HTMLElement>(ref: RefObject<T | null>, 
         } catch {
           el.scrollTop = 0;
         }
-      }, 0);
+      }, 100);
     });
 
     return () => {
