@@ -35,9 +35,9 @@ export const usePapers = (params: GetPapersParams = {}): UsePapersReturn => {
 
     try {
       const apiParams: GetPapersParams = {
-        search: search ?? undefined,
-        departmentId: departmentId ?? undefined,
-        year: year ?? undefined,
+        search: search,
+        departmentId: departmentId,
+        year: year,
         sortBy,
         sortOrder,
         page: currentPage,

@@ -33,6 +33,7 @@ export const columns = [
     id: "actions",
     header: "Action",
     cell: (props) => (
+      // temporary add later
       <div>
         <Button
           onClick={() => {

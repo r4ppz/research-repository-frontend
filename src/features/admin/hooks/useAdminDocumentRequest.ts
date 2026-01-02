@@ -3,105 +3,65 @@ import { getAdminRequests, GetAdminRequestsParams } from "@/api/admin/requests";
 import { DocumentRequest } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
-interface UseAdminRequestsReturn {
-  requests: DocumentRequest[];
-  loading: boolean;
-  error: string | null;
-  pagination: {
-    totalElements: number;
-    totalPages: number;
-    currentPage: number;
-    pageSize: number;
-  } | null;
-  currentPage: number;
-  goToNextPage: () => void;
-  goToPrevPage: () => void;
-  goToPage: (page: number) => void;
-  refetch: () => Promise<void>;
-}
-
-export const useAdminRequests = (params: GetAdminRequestsParams = {}): UseAdminRequestsReturn => {
-  const [requests, setRequests] = useState<DocumentRequest[]>([]);
+export const useAdminDocumentRequests = (params: GetAdminRequestsParams = {}) => {
+  const [data, setData] = useState<DocumentRequest[]>([]);
   const [loading, setLoading] = useState(false);
+  const [totalElements, setTotalElements] = useState(0);
+  const [pageCount, setPageCount] = useState(0);
   const [error, setError] = useState<string | null>(null);
-  const [pagination, setPagination] = useState<UseAdminRequestsReturn["pagination"]>(null);
-  const [currentPage, setCurrentPage] = useState(params.page ?? 0);
 
-  const { departmentId, status, sortBy, sortOrder, size = 10 } = params;
+  // Destructure primitives to avoid the object reference identity trap
+  const { departmentId, status, sortBy, sortOrder, size = 20 } = params;
 
-  const fetchRequests = useCallback(async (): Promise<void> => {
+  //  Local state for TanStack Table pagination
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: size,
+  });
+
+  const fetchRequests = useCallback(async () => {
     setLoading(true);
     setError(null);
-
     try {
-      const apiParams: GetAdminRequestsParams = {
-        departmentId: departmentId ?? undefined,
-        status: status ?? undefined,
+      const response = await getAdminRequests({
+        departmentId,
+        status,
         sortBy,
         sortOrder,
-        page: currentPage,
-        size,
-      };
-
-      const result = await getAdminRequests(apiParams);
-
-      setRequests(result.content);
-      setPagination({
-        totalElements: result.totalElements,
-        totalPages: result.totalPages,
-        currentPage: result.number,
-        pageSize: result.size,
+        page: pagination.pageIndex,
+        size: pagination.pageSize,
       });
+
+      setData(response.content);
+      setTotalElements(response.totalElements);
+      setPageCount(response.totalPages);
     } catch (err) {
       const apiError = extractApiError(err);
       setError(getUserErrorMessage(apiError));
-      setRequests([]);
-      setPagination(null);
+      console.error("Failed to fetch requests", apiError);
     } finally {
       setLoading(false);
     }
-  }, [departmentId, status, sortBy, sortOrder, currentPage, size]);
+    //  Dependency array uses primitives (strings/numbers) only
+  }, [departmentId, status, sortBy, sortOrder, pagination.pageIndex, pagination.pageSize]);
 
-  const goToNextPage = useCallback(() => {
-    if (pagination && currentPage < pagination.totalPages - 1) {
-      setCurrentPage((prev) => prev + 1);
-    }
-  }, [currentPage, pagination]);
-
-  const goToPrevPage = useCallback(() => {
-    if (currentPage > 0) {
-      setCurrentPage((prev) => prev - 1);
-    }
-  }, [currentPage]);
-
-  const goToPage = useCallback(
-    (page: number) => {
-      if (pagination && page >= 0 && page < pagination.totalPages) {
-        setCurrentPage(page);
-      }
-    },
-    [pagination],
-  );
-
-  // Reset to first page when filters change
+  // Reset to first page if filters change
   useEffect(() => {
-    setCurrentPage(0);
-  }, [departmentId, status]);
+    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
+  }, [departmentId, status, sortBy, sortOrder]);
 
-  // Fetch data when dependencies or page change
   useEffect(() => {
     void fetchRequests();
-  }, [fetchRequests, currentPage]);
+  }, [fetchRequests]);
 
   return {
-    requests,
+    data,
     loading,
     error,
+    totalElements,
+    pageCount,
     pagination,
-    currentPage,
-    goToNextPage,
-    goToPrevPage,
-    goToPage,
+    setPagination,
     refetch: fetchRequests,
   };
 };

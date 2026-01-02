@@ -26,8 +26,8 @@ const LibraryPage = () => {
   const { papers, error, pagination, loading, currentPage, goToNextPage, goToPrevPage } = usePapers(
     {
       search: debouncedSearchQuery,
-      departmentId: selectedDepartment,
-      year: selectedYear,
+      departmentId: selectedDepartment ?? undefined,
+      year: selectedYear ?? undefined,
       size: 12,
     },
   );
