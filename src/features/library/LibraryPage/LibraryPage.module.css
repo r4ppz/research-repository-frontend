@@ -1,12 +1,12 @@
 .loadingContainer,
 .emptyState {
   display: flex;
+  flex: 1;
+  flex-direction: column;
   grid-column: 1 / -1;
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  flex: 1;
-  flex-direction: column;
   min-height: 70vh;
   margin-top: var(--space-7xl);
 }

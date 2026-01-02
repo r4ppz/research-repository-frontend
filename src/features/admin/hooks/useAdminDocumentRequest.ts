@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useState } from "react";
-import { getPapers, GetPapersParams } from "@/api/paper";
-import { type ResearchPaper } from "@/types";
+import { getAdminRequests, GetAdminRequestsParams } from "@/api/admin/requests";
+import { DocumentRequest } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
-interface UsePapersReturn {
-  papers: ResearchPaper[];
+interface UseAdminRequestsReturn {
+  requests: DocumentRequest[];
   loading: boolean;
   error: string | null;
   pagination: {
@@ -20,34 +20,32 @@ interface UsePapersReturn {
   refetch: () => Promise<void>;
 }
 
-export const usePapers = (params: GetPapersParams = {}): UsePapersReturn => {
-  const [papers, setPapers] = useState<ResearchPaper[]>([]);
+export const useAdminRequests = (params: GetAdminRequestsParams = {}): UseAdminRequestsReturn => {
+  const [requests, setRequests] = useState<DocumentRequest[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [pagination, setPagination] = useState<UsePapersReturn["pagination"]>(null);
+  const [pagination, setPagination] = useState<UseAdminRequestsReturn["pagination"]>(null);
   const [currentPage, setCurrentPage] = useState(params.page ?? 0);
 
-  const { search, departmentId, year, sortBy, sortOrder, size = 12, archived } = params;
+  const { departmentId, status, sortBy, sortOrder, size = 10 } = params;
 
-  const fetchPapers = useCallback(async (): Promise<void> => {
+  const fetchRequests = useCallback(async (): Promise<void> => {
     setLoading(true);
     setError(null);
 
     try {
-      const apiParams: GetPapersParams = {
-        search: search ?? undefined,
+      const apiParams: GetAdminRequestsParams = {
         departmentId: departmentId ?? undefined,
-        year: year ?? undefined,
+        status: status ?? undefined,
         sortBy,
         sortOrder,
         page: currentPage,
         size,
-        archived,
       };
 
-      const result = await getPapers(apiParams);
+      const result = await getAdminRequests(apiParams);
 
-      setPapers(result.content);
+      setRequests(result.content);
       setPagination({
         totalElements: result.totalElements,
         totalPages: result.totalPages,
@@ -57,12 +55,12 @@ export const usePapers = (params: GetPapersParams = {}): UsePapersReturn => {
     } catch (err) {
       const apiError = extractApiError(err);
       setError(getUserErrorMessage(apiError));
-      setPapers([]);
+      setRequests([]);
       setPagination(null);
     } finally {
       setLoading(false);
     }
-  }, [search, departmentId, year, sortBy, sortOrder, currentPage, size, archived]);
+  }, [departmentId, status, sortBy, sortOrder, currentPage, size]);
 
   const goToNextPage = useCallback(() => {
     if (pagination && currentPage < pagination.totalPages - 1) {
@@ -85,17 +83,18 @@ export const usePapers = (params: GetPapersParams = {}): UsePapersReturn => {
     [pagination],
   );
 
-  // Reset to first page when search parameters change
+  // Reset to first page when filters change
   useEffect(() => {
     setCurrentPage(0);
-  }, [search, departmentId, year]);
+  }, [departmentId, status]);
 
+  // Fetch data when dependencies or page change
   useEffect(() => {
-    void fetchPapers();
-  }, [fetchPapers, currentPage]);
+    void fetchRequests();
+  }, [fetchRequests, currentPage]);
 
   return {
-    papers,
+    requests,
     loading,
     error,
     pagination,
@@ -103,6 +102,6 @@ export const usePapers = (params: GetPapersParams = {}): UsePapersReturn => {
     goToNextPage,
     goToPrevPage,
     goToPage,
-    refetch: fetchPapers,
+    refetch: fetchRequests,
   };
 };

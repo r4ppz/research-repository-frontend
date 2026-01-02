@@ -1,4 +1,4 @@
-import { type Department } from "./user";
+import { Department, User } from "./user";
 
 export type RequestStatus = "PENDING" | "ACCEPTED" | "REJECTED";
 
@@ -15,6 +15,7 @@ export interface ResearchPaper {
 }
 
 export interface DocumentRequest {
+  user?: User;
   requestId: number;
   status: RequestStatus;
   createdAt: string; // ISO datetime
