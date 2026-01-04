@@ -8,7 +8,7 @@ import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 export function useAdminRequests() {
   const [data, setData] = useState<DocumentRequest[]>([]);
   const [pageIndex, setPageIndex] = useState<number>(0);
-  const [pageSize, setPageSize] = useState<number>(5);
+  const [pageSize, setPageSize] = useState<number>(6);
   const [totalCount, setTotalCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);

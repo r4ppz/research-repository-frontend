@@ -1,4 +1,5 @@
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import clsx from "clsx";
 
 import Button from "@/components/common/Button/Button";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
@@ -25,23 +26,31 @@ export default function RequestsTable() {
     },
   });
 
+  const handlePrevPage = () => {
+    setPageIndex(pageIndex - 1);
+  };
+
+  const handleNextPage = () => {
+    setPageIndex(pageIndex + 1);
+  };
+
+  //
   // UI Helper variables
   const isFirstPage = pageIndex === 0;
   const isLastPage = pageIndex + 1 >= pageCount;
   const hasNoData = data.length === 0 && !loading;
 
   return (
-    <div className={style.tableWrapper}>
+    <div className={style.tableContainer}>
       {loading && <LoadingSpinner />}
-
-      {error && <p className={style.error}>Failed to load: {error}</p>}
+      {error && <p>Failed to load: {error}</p>}
 
       <table className={style.table}>
-        <thead>
+        <thead className={style.tableHead}>
           {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
+            <tr className={style.tableRow} key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <th key={header.id}>
+                <th className={clsx(style.tableData, style.tableHeaderData)} key={header.id}>
                   {flexRender(header.column.columnDef.header, header.getContext())}
                 </th>
               ))}
@@ -49,18 +58,20 @@ export default function RequestsTable() {
           ))}
         </thead>
 
-        <tbody>
+        <tbody className={style.tableBody}>
           {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
+            <tr className={style.tableRow} key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                <td className={clsx(style.tableData, style.tableBodyData)} key={cell.id}>
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                </td>
               ))}
             </tr>
           ))}
 
           {hasNoData && (
             <tr>
-              <td colSpan={columns.length}>No data available</td>
+              <td>No data available</td>
             </tr>
           )}
         </tbody>
@@ -68,26 +79,16 @@ export default function RequestsTable() {
 
       {/* Pagination Controls */}
       <div className={style.pagination}>
-        <Button
-          onClick={() => {
-            setPageIndex(pageIndex - 1);
-          }}
-          disabled={isFirstPage}
-        >
-          {"<"}
+        <Button onClick={handlePrevPage} disabled={isFirstPage}>
+          Previous
         </Button>
 
         <span>
           Page {pageIndex + 1} of {pageCount || 1}
         </span>
 
-        <Button
-          onClick={() => {
-            setPageIndex(pageIndex + 1);
-          }}
-          disabled={isLastPage}
-        >
-          {">"}
+        <Button onClick={handleNextPage} disabled={isLastPage}>
+          Next
         </Button>
       </div>
     </div>
