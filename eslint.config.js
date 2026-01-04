@@ -52,8 +52,8 @@ export default [
       "react-compiler/react-compiler": "error",
 
       // Sorting
-      "simple-import-sort/imports": "off",
-      "simple-import-sort/exports": "off",
+      "simple-import-sort/imports": "warn",
+      "simple-import-sort/exports": "warn",
 
       // Prettier
       "prettier/prettier": "warn",
