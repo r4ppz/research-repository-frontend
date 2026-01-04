@@ -2,7 +2,7 @@
   "name": "research-repository",
   "description": "Just a school project",
   "private": true,
-  "version": "0.0.0",
+  "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -12,10 +12,9 @@
     "lint:fix": "eslint . --fix",
     "lint:css": "stylelint \"src/**/*.{css,module.css}\"",
     "lint:css:fix": "stylelint \"src/**/*.{css,module.css}\" --fix",
-    "format": "prettier --write src",
     "type-check": "tsc --noEmit",
     "deploy": "gh-pages -d dist",
-    "fix": "npm run lint:fix && npm run lint:css:fix",
+    "fix": "npm run lint:css:fix && npm run lint:fix",
     "check": "npm run lint && npm run type-check"
   },
   "dependencies": {
