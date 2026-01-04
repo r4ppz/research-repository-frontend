@@ -1,33 +1,41 @@
-import { useReactTable, getCoreRowModel, flexRender, PaginationState } from "@tanstack/react-table";
-import { columns } from "./columns"; // Your column file
-import { DocumentRequest } from "@/types";
+import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+
 import Button from "@/components/common/Button/Button";
 
-interface RequestTableProps {
-  data: DocumentRequest[];
-  pageCount: number;
-  pagination: PaginationState;
-  onPaginationChange: (pagination: PaginationState) => void;
-}
+import { useAdminRequests } from "../../hooks/useAdminDocumentRequest";
+import { columns } from "./columns";
+import style from "./RequestTable.module.css";
 
-const RequestTable = ({ data, pageCount, pagination, onPaginationChange }: RequestTableProps) => {
+export default function RequestsTable() {
+  const { data, pageIndex, pageSize, pageCount, setPageIndex, loading, error } = useAdminRequests();
+
   const table = useReactTable({
     data,
     columns,
     pageCount,
-    state: { pagination },
-    onPaginationChange: (updater) => {
-      // This handles the state update correctly whether it's a function or object
-      const nextState = typeof updater === "function" ? updater(pagination) : updater;
-      onPaginationChange(nextState);
+    manualPagination: true,
+    state: {
+      pagination: { pageIndex, pageSize },
     },
     getCoreRowModel: getCoreRowModel(),
-    manualPagination: true,
+    onPaginationChange: (updater) => {
+      const newState = typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
+      setPageIndex(newState.pageIndex);
+    },
   });
 
+  // UI Helper variables
+  const isFirstPage = pageIndex === 0;
+  const isLastPage = pageIndex + 1 >= pageCount;
+  const hasNoData = data.length === 0 && !loading;
+
   return (
-    <div>
-      <table>
+    <div className={style.tableWrapper}>
+      {/* Feedback States */}
+      {loading && <p>Loading...</p>}
+      {error && <p className={style.error}>Failed to load: {error}</p>}
+
+      <table className={style.table}>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -39,6 +47,7 @@ const RequestTable = ({ data, pageCount, pagination, onPaginationChange }: Reque
             </tr>
           ))}
         </thead>
+
         <tbody>
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
@@ -47,35 +56,39 @@ const RequestTable = ({ data, pageCount, pagination, onPaginationChange }: Reque
               ))}
             </tr>
           ))}
+
+          {hasNoData && (
+            <tr>
+              <td colSpan={columns.length}>No data available</td>
+            </tr>
+          )}
         </tbody>
       </table>
 
       {/* Pagination Controls */}
-      <div>
+      <div className={style.pagination}>
         <Button
           onClick={() => {
-            table.previousPage();
+            setPageIndex(pageIndex - 1);
           }}
-          disabled={!table.getCanPreviousPage()}
+          disabled={isFirstPage}
         >
-          Previous
+          {"<"}
         </Button>
 
         <span>
-          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+          Page {pageIndex + 1} of {pageCount || 1}
         </span>
 
         <Button
           onClick={() => {
-            table.nextPage();
+            setPageIndex(pageIndex + 1);
           }}
-          disabled={!table.getCanNextPage()}
+          disabled={isLastPage}
         >
-          Next
+          {">"}
         </Button>
       </div>
     </div>
   );
-};
-
-export default RequestTable;
+}

@@ -8,6 +8,8 @@ import { formatDateShort } from "@/util/formatDate";
 
 import style from "./column.module.css";
 
+// TODO: use createColumnHelper instead
+
 interface ColumnProps {
   refreshData: () => void;
 }

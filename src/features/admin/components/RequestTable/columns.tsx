@@ -1,7 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 
-import { DocumentRequest } from "@/types";
 import Button from "@/components/common/Button/Button";
+import { DocumentRequest } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
 
 const columnHelper = createColumnHelper<DocumentRequest>();

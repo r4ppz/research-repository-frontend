@@ -1,67 +1,54 @@
 import { useCallback, useEffect, useState } from "react";
-import { getAdminRequests, GetAdminRequestsParams } from "@/api/admin/requests";
+
+import { getAdminRequests } from "@/api/admin/requests";
 import { DocumentRequest } from "@/types";
+import { Page } from "@/types/api";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
-export const useAdminDocumentRequests = (params: GetAdminRequestsParams = {}) => {
+export function useAdminRequests() {
   const [data, setData] = useState<DocumentRequest[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [totalElements, setTotalElements] = useState(0);
-  const [pageCount, setPageCount] = useState(0);
+  const [pageIndex, setPageIndex] = useState<number>(0);
+  const [pageSize, setPageSize] = useState<number>(5);
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Destructure primitives to avoid the object reference identity trap
-  const { departmentId, status, sortBy, sortOrder, size = 20 } = params;
-
-  //  Local state for TanStack Table pagination
-  const [pagination, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: size,
-  });
-
-  const fetchRequests = useCallback(async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     setError(null);
-    try {
-      const response = await getAdminRequests({
-        departmentId,
-        status,
-        sortBy,
-        sortOrder,
-        page: pagination.pageIndex,
-        size: pagination.pageSize,
-      });
 
-      setData(response.content);
-      setTotalElements(response.totalElements);
-      setPageCount(response.totalPages);
+    try {
+      const res: Page<DocumentRequest> = await getAdminRequests({
+        page: pageIndex,
+        size: pageSize,
+      });
+      setData(res.content);
+      setTotalCount(res.totalElements);
     } catch (err) {
-      const apiError = extractApiError(err);
-      setError(getUserErrorMessage(apiError));
-      console.error("Failed to fetch requests", apiError);
+      const error = extractApiError(err);
+      setError(getUserErrorMessage(error));
+      setData([]);
+      setTotalCount(0);
     } finally {
       setLoading(false);
     }
-    //  Dependency array uses primitives (strings/numbers) only
-  }, [departmentId, status, sortBy, sortOrder, pagination.pageIndex, pagination.pageSize]);
-
-  // Reset to first page if filters change
-  useEffect(() => {
-    setPagination((prev) => ({ ...prev, pageIndex: 0 }));
-  }, [departmentId, status, sortBy, sortOrder]);
+  }, [pageIndex, pageSize]);
 
   useEffect(() => {
-    void fetchRequests();
-  }, [fetchRequests]);
+    void fetchData();
+  }, [fetchData]);
+
+  const pageCount = Math.ceil(totalCount / pageSize);
 
   return {
     data,
+    pageIndex,
+    pageSize,
+    totalCount,
+    pageCount,
+    setPageIndex,
+    setPageSize,
     loading,
     error,
-    totalElements,
-    pageCount,
-    pagination,
-    setPagination,
-    refetch: fetchRequests,
   };
-};
+}
