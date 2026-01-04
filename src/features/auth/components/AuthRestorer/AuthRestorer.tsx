@@ -8,7 +8,7 @@ import {
   setAccessToken,
 } from "@/features/auth/context/tokenStore";
 import { useAuth } from "@/features/auth/context/useAuth";
-import { extractApiError, isAuthError } from "@/util/errorHandler";
+import { extractApiError, isAuthError, isBackendNotRunning } from "@/util/errorHandler";
 
 const AuthRestorer = () => {
   const { user, setUser, setAuthError, setIsLoading } = useAuth();
@@ -39,6 +39,8 @@ const AuthRestorer = () => {
             // Clear the invalid token
             removeAccessToken();
             setAuthError(null);
+          } else if (isBackendNotRunning(apiError)) {
+            setAuthError(apiError);
           } else {
             setAuthError(apiError);
           }

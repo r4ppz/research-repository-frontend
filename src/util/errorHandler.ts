@@ -15,6 +15,20 @@ export function extractApiError(error: unknown): TypedApiError | ApiError {
   if (axios.isAxiosError(error)) {
     const axiosError = error as AxiosError;
 
+    if (!axiosError.response) {
+      const networkErrorCodes = new Set(["ECONNREFUSED", "ENOTFOUND", "ECONNABORTED", "ETIMEDOUT"]);
+      const networkErrorMessages = ["Network Error", "Failed to fetch", "Load failed"];
+      const code = axiosError.code;
+      const msg = axiosError.message || "";
+
+      if (
+        (code && networkErrorCodes.has(code)) ||
+        networkErrorMessages.some((m) => msg.includes(m))
+      ) {
+        return new ApiError("BACKEND_UNAVAILABLE", "Backend might not be running :0");
+      }
+    }
+
     if (axiosError.response?.data && hasApiErrorStructure(axiosError.response.data)) {
       const data = axiosError.response.data;
       return new ApiError(data.code as ErrorCode, data.message, data.details, data.traceId);
@@ -30,37 +44,26 @@ export function extractApiError(error: unknown): TypedApiError | ApiError {
   return new ApiError("INTERNAL_ERROR", "An unexpected error occurred");
 }
 
-/**
- * Type guard to check if error is an authentication error
- */
 export function isAuthError(error: TypedApiError | ApiError): boolean {
   return error.code === "UNAUTHENTICATED" || error.code === "REFRESH_TOKEN_REVOKED";
 }
 
-/**
- * Type guard to check if error is an authorization error
- */
-export function isAuthorizationError(error: TypedApiError): boolean {
+export function isAuthorizationError(error: TypedApiError | ApiError): boolean {
   return error.code === "ACCESS_DENIED" || error.code === "DOMAIN_NOT_ALLOWED";
 }
 
-/**
- * Type guard to check if error is a validation error
- */
 export function isValidationError(error: TypedApiError): boolean {
   return error.code === "VALIDATION_ERROR";
 }
 
-/**
- * Type guard to check if error is a resource not found error
- */
 export function isNotFoundError(error: TypedApiError): boolean {
   return error.code === "RESOURCE_NOT_FOUND" || error.code === "RESOURCE_NOT_AVAILABLE";
 }
 
-/**
- * Get user-friendly error message for display
- */
 export function getUserErrorMessage(error: TypedApiError | ApiError): string {
   return error.message;
+}
+
+export function isBackendNotRunning(error: TypedApiError | ApiError): boolean {
+  return error.code === "BACKEND_UNAVAILABLE";
 }

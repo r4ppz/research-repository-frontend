@@ -7,7 +7,11 @@ import GoogleButton from "@/features/auth/components/GoogleButton/GoogleButton";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
 import { ApiError } from "@/types";
-import { getUserErrorMessage } from "@/util/errorHandler";
+import {
+  getUserErrorMessage,
+  isAuthorizationError,
+  isBackendNotRunning,
+} from "@/util/errorHandler";
 
 import style from "./LoginPage.module.css";
 
@@ -44,7 +48,12 @@ const LoginPage = () => {
   }
 
   const errorMessage = authError && getUserErrorMessage(authError);
-  const modalTitle = authError?.code === "DOMAIN_NOT_ALLOWED" ? "Access Denied" : "Login Error";
+  let modalTitle = "Login Error";
+  if (authError && isAuthorizationError(authError)) {
+    modalTitle = "Access Denied";
+  } else if (authError && isBackendNotRunning(authError)) {
+    modalTitle = "Service Unavailable";
+  }
 
   return (
     <div className={style.page}>

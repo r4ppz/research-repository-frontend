@@ -55,7 +55,8 @@ export type ErrorCode =
   | "INTERNAL_ERROR"
   | "FILE_STORAGE_ERROR"
   | "SERVICE_UNAVAILABLE"
-  | "INVALID_TOKEN";
+  | "INVALID_TOKEN"
+  | "BACKEND_UNAVAILABLE";
 
 // Narrowed error type with discriminated union
 export interface TypedApiError extends ApiError {
