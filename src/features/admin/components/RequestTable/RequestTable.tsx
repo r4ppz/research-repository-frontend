@@ -1,6 +1,7 @@
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 import Button from "@/components/common/Button/Button";
+import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 
 import { useAdminRequests } from "../../hooks/useAdminDocumentRequest";
 import { columns } from "./columns";
@@ -31,8 +32,8 @@ export default function RequestsTable() {
 
   return (
     <div className={style.tableWrapper}>
-      {/* Feedback States */}
-      {loading && <p>Loading...</p>}
+      {loading && <LoadingSpinner />}
+
       {error && <p className={style.error}>Failed to load: {error}</p>}
 
       <table className={style.table}>
