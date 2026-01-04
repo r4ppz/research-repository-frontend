@@ -10,7 +10,6 @@ const RequestPage = () => {
       <Header />
       <main className={style.main}>
         <div className={style.mainContainer}>
-          <h1 className={style.titleHeader}>Manage Document Requests (Super Admin)</h1>
           <div className={style.tableSection}>
             <RequestTable />
           </div>

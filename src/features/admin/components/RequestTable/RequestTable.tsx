@@ -40,57 +40,61 @@ export default function RequestsTable() {
   const isLastPage = pageIndex + 1 >= pageCount;
   const hasNoData = data.length === 0 && !loading;
 
-  return (
-    <div className={style.tableContainer}>
-      {loading && <LoadingSpinner />}
-      {error && <p>Failed to load: {error}</p>}
+  if (loading) {
+    return <LoadingSpinner message="Loading requests..." />;
+  } else if (error) {
+    return <p>Failed to load: {error}</p>;
+  } else {
+    return (
+      <div className={style.tableContainer}>
+        <table className={style.table}>
+          <caption className={style.tableCaption}>Document Requests</caption>
+          <thead className={style.tableHead}>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr className={style.tableRow} key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th className={clsx(style.tableData, style.tableHeaderData)} key={header.id}>
+                    {flexRender(header.column.columnDef.header, header.getContext())}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
 
-      <table className={style.table}>
-        <thead className={style.tableHead}>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr className={style.tableRow} key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th className={clsx(style.tableData, style.tableHeaderData)} key={header.id}>
-                  {flexRender(header.column.columnDef.header, header.getContext())}
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
+          <tbody className={style.tableBody}>
+            {table.getRowModel().rows.map((row) => (
+              <tr className={style.tableRow} key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <td className={clsx(style.tableData, style.tableBodyData)} key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                ))}
+              </tr>
+            ))}
 
-        <tbody className={style.tableBody}>
-          {table.getRowModel().rows.map((row) => (
-            <tr className={style.tableRow} key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td className={clsx(style.tableData, style.tableBodyData)} key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
+            {hasNoData && (
+              <tr>
+                <td>No data available</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
 
-          {hasNoData && (
-            <tr>
-              <td>No data available</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+        {/* Pagination Controls */}
+        <div className={style.pagination}>
+          <Button onClick={handlePrevPage} disabled={isFirstPage}>
+            Previous
+          </Button>
 
-      {/* Pagination Controls */}
-      <div className={style.pagination}>
-        <Button onClick={handlePrevPage} disabled={isFirstPage}>
-          Previous
-        </Button>
+          <span>
+            Page {pageIndex + 1} of {pageCount || 1}
+          </span>
 
-        <span>
-          Page {pageIndex + 1} of {pageCount || 1}
-        </span>
-
-        <Button onClick={handleNextPage} disabled={isLastPage}>
-          Next
-        </Button>
+          <Button onClick={handleNextPage} disabled={isLastPage}>
+            Next
+          </Button>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
