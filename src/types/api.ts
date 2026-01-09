@@ -75,7 +75,9 @@ export function hasApiErrorStructure(obj: unknown): obj is {
   details?: ApiErrorDetail[] | Record<string, unknown>;
   traceId?: string;
 } {
-  if (typeof obj !== "object" || obj === null) return false;
+  if (typeof obj !== "object" || obj === null) {
+    return false;
+  }
 
   const err = obj as Record<string, unknown>;
   return (

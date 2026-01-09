@@ -7,47 +7,43 @@ import {
   setAccessToken,
 } from "@/features/auth/context/tokenStore";
 import { useAuth } from "@/features/auth/context/useAuth";
-import { extractApiError, isAuthError, isBackendNotRunning } from "@/util/errorHandler";
+import { extractApiError, isAuthError } from "@/util/errorHandler";
 
 const AuthRestorer = () => {
   const { user, setUser, setAuthError, setIsLoading } = useAuth();
 
   useEffect(() => {
     const restoreAuth = async () => {
-      // If user is already set, no need to restore
-      if (user) {
+      const token = getAccessToken();
+
+      if (user || !token) {
         setIsLoading(false);
         return;
       }
 
-      const token = getAccessToken();
-      if (token) {
-        try {
-          setIsLoading(true);
-          const data = await postRefresh();
-          // Update the access token in storage with the new one
+      try {
+        setIsLoading(true);
+
+        // Refresh session
+        const data = await postRefresh();
+        removeAccessToken();
+        setAccessToken(data.accessToken);
+
+        // Fetch profile
+        const userData = await getCurrentUser();
+        setUser(userData);
+        setAuthError(null);
+      } catch (error) {
+        const apiError = extractApiError(error);
+
+        // Handle invalid credentials
+        if (isAuthError(apiError)) {
           removeAccessToken();
-          setAccessToken(data.accessToken);
-
-          const userData = await getCurrentUser();
-          setUser(userData);
-        } catch (error) {
-          const apiError = extractApiError(error);
-
-          if (isAuthError(apiError)) {
-            // Clear the invalid token
-            removeAccessToken();
-            setAuthError(null);
-          } else if (isBackendNotRunning(apiError)) {
-            setAuthError(apiError);
-          } else {
-            setAuthError(apiError);
-          }
-        } finally {
-          setIsLoading(false);
+          setAuthError(null);
+        } else {
+          setAuthError(apiError);
         }
-      } else {
-        // No token exists, so authentication is complete (as "not logged in")
+      } finally {
         setIsLoading(false);
       }
     };
@@ -57,5 +53,4 @@ const AuthRestorer = () => {
 
   return null;
 };
-
 export default AuthRestorer;

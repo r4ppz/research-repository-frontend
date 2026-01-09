@@ -14,10 +14,14 @@ export function useScrollToTop<E extends HTMLElement, T>(
   // biome-ignore lint/correctness/useExhaustiveDependencies: <I dont know>
   useEffect(() => {
     // Only scroll when loading is finished
-    if (isLoading) return;
+    if (isLoading) {
+      return;
+    }
 
     const el = ref.current;
-    if (!el) return;
+    if (!el) {
+      return;
+    }
 
     let timeoutId: ReturnType<typeof setTimeout>;
 

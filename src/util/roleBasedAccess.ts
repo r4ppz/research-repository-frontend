@@ -1,7 +1,9 @@
 import type { Role, User } from "@/types";
 
 function hasRole(user: User | null | undefined, ...roles: Role[]): boolean {
-  if (!user) return false;
+  if (!user) {
+    return false;
+  }
   return roles.includes(user.role);
 }
 

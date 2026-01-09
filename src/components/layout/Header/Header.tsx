@@ -38,7 +38,9 @@ const Header = ({ className, ...props }: ComponentProps) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
-  if (!user) return null;
+  if (!user) {
+    return null;
+  }
 
   const role = user.role;
   const generalRoleLabel = GENERAL_ROLE_LABEL[role];

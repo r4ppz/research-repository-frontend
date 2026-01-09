@@ -13,41 +13,51 @@ import {
  * Conforms to the canonical error response structure from API contract
  */
 export function extractApiError(error: unknown): TypedApiError | ApiError {
+  // Direct match
   if (isApiError(error)) {
     return error as TypedApiError;
   }
 
-  // Handle Axios errors
-  if (axios.isAxiosError(error)) {
-    const axiosError = error as AxiosError;
-
-    if (!axiosError.response) {
-      const networkErrorCodes = new Set(["ECONNREFUSED", "ENOTFOUND", "ECONNABORTED", "ETIMEDOUT"]);
-      const networkErrorMessages = ["Network Error", "Failed to fetch", "Load failed"];
-      const code = axiosError.code;
-      const msg = axiosError.message || "";
-
-      if (
-        (code && networkErrorCodes.has(code)) ||
-        networkErrorMessages.some((m) => msg.includes(m))
-      ) {
-        return new ApiError("BACKEND_UNAVAILABLE", "Backend might not be running :0");
-      }
-    }
-
-    if (axiosError.response?.data && hasApiErrorStructure(axiosError.response.data)) {
-      const data = axiosError.response.data;
-      return new ApiError(data.code as ErrorCode, data.message, data.details, data.traceId);
-    }
-
-    return new ApiError("INTERNAL_ERROR", axiosError.message || "An unexpected error occurred");
+  // Non-Axios Errors
+  if (!axios.isAxiosError(error)) {
+    const message = error instanceof Error ? error.message : "An unexpected error occurred";
+    return new ApiError("INTERNAL_ERROR", message || "An unexpected error occurred");
   }
 
-  if (error instanceof Error) {
-    return new ApiError("INTERNAL_ERROR", error.message || "An unexpected error occurred");
+  // Handle Axios Errors (Flattened)
+  const axiosError = error as AxiosError;
+
+  // Check for Network/Offline issues
+  if (!axiosError.response && isNetworkError(axiosError)) {
+    return new ApiError("BACKEND_UNAVAILABLE", "Backend might not be running :0");
   }
 
-  return new ApiError("INTERNAL_ERROR", "An unexpected error occurred");
+  // Check for valid API response body
+  const responseData = axiosError.response?.data;
+  if (hasApiErrorStructure(responseData)) {
+    return new ApiError(
+      responseData.code as ErrorCode,
+      responseData.message,
+      responseData.details,
+      responseData.traceId,
+    );
+  }
+
+  // Fallback for generic Axios errors
+  return new ApiError("INTERNAL_ERROR", axiosError.message || "An unexpected error occurred");
+}
+
+// Private helper function
+function isNetworkError(error: AxiosError): boolean {
+  const networkErrorCodes = new Set(["ECONNREFUSED", "ENOTFOUND", "ECONNABORTED", "ETIMEDOUT"]);
+  const networkErrorMessages = ["Network Error", "Failed to fetch", "Load failed"];
+
+  const code = error.code;
+  const msg = error.message || "";
+
+  return (
+    (!!code && networkErrorCodes.has(code)) || networkErrorMessages.some((m) => msg.includes(m))
+  );
 }
 
 export function isAuthError(error: TypedApiError | ApiError): boolean {

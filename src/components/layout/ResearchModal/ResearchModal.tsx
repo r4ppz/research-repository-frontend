@@ -52,7 +52,9 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
       return;
     }
 
-    if (requestExists || isRequestLoading || !paperId) return;
+    if (requestExists || isRequestLoading || !paperId) {
+      return;
+    }
 
     setIsRequestLoading(true);
 

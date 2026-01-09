@@ -1,7 +1,9 @@
 let scriptLoaded = false;
 
 export function loadGoogleScript(): Promise<void> {
-  if (scriptLoaded) return Promise.resolve();
+  if (scriptLoaded) {
+    return Promise.resolve();
+  }
 
   return new Promise((resolve, reject) => {
     const script = document.createElement("script");
