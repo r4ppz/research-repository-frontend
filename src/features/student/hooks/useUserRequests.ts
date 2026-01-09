@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { getUserRequests } from "@/api/users";
 import type { DocumentRequest } from "@/types";
-import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
+import { extractApiError } from "@/util/errorHandler";
 
 interface UseUserRequestsReturn {
   requests: DocumentRequest[];
@@ -11,34 +11,24 @@ interface UseUserRequestsReturn {
 }
 
 export const useUserRequests = (): UseUserRequestsReturn => {
-  const [requests, setRequests] = useState<DocumentRequest[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchUserRequests = useCallback(async (): Promise<void> => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const result = await getUserRequests();
-      setRequests(result.requests);
-    } catch (err) {
-      const apiError = extractApiError(err);
-      setError(getUserErrorMessage(apiError));
-      setRequests([]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    void fetchUserRequests();
-  }, [fetchUserRequests]);
+  const { data, isLoading, error, refetch } = useQuery({
+    queryKey: ["userRequests"],
+    queryFn: async () => {
+      try {
+        const result = await getUserRequests();
+        return result.requests;
+      } catch (err) {
+        const apiError = extractApiError(err);
+        throw apiError;
+      }
+    },
+    initialData: [],
+  });
 
   return {
-    requests,
-    loading,
-    error,
-    refetch: fetchUserRequests,
+    requests: data,
+    loading: isLoading,
+    error: error instanceof Error ? error.message : null,
+    refetch: () => void refetch(),
   };
 };
