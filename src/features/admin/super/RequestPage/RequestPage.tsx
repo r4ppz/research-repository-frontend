@@ -10,9 +10,9 @@ const RequestPage = () => {
       <Header />
       <main className={style.main}>
         <div className={style.mainContainer}>
-          <div className={style.tableSection}>
+          <section className={style.tableSection}>
             <RequestTable />
-          </div>
+          </section>
         </div>
       </main>
       <Footer />

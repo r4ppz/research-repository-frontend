@@ -1,8 +1,8 @@
 .tableContainer {
   display: flex;
   flex-direction: column;
-  min-height: 200px;
   gap: var(--space-md);
+  min-height: 200px;
 }
 
 .table {
@@ -81,9 +81,9 @@
 
 .pagination {
   display: flex;
+  gap: var(--space-md);
   align-items: center;
   justify-content: flex-end;
-  gap: var(--space-md);
 }
 
 .pagination button {
