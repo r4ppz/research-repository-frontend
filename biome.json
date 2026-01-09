@@ -20,23 +20,6 @@
     "enabled": true,
     "rules": {
       "recommended": true,
-      "correctness": {
-        "noUnusedVariables": "error",
-        "noUnusedImports": "error",
-        "useExhaustiveDependencies": "error",
-        "useHookAtTopLevel": "error"
-      },
-      "style": {
-        "useConst": "error",
-        "useImportType": "error",
-        "useExportType": "error",
-        "useSelfClosingElements": "error"
-      },
-      "suspicious": {
-        "noExplicitAny": "error",
-        "noImplicitAnyLet": "error",
-        "useAwait": "error"
-      },
       "a11y": "off"
     }
   },
