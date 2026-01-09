@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import schoolLogo from "@/assets/school-logo.svg";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
 import Modal from "@/components/common/Modal/Modal";
@@ -12,7 +11,6 @@ import {
   isAuthorizationError,
   isBackendNotRunning,
 } from "@/util/errorHandler";
-
 import style from "./LoginPage.module.css";
 
 const LoginPage = () => {

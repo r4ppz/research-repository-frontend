@@ -1,7 +1,6 @@
 import { clsx } from "clsx";
 import { Upload } from "lucide-react";
 import type { ChangeEvent, CSSProperties } from "react";
-
 import style from "./FileUpload.module.css";
 
 interface FileUploadProps {

@@ -1,8 +1,6 @@
 import { Eye } from "lucide-react";
-
 import Button from "@/components/common/Button/Button";
 import type { ResearchPaper } from "@/types";
-
 import style from "./ResearchCard.module.css";
 
 interface ResearchCardProps {

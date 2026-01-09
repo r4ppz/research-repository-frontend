@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-
 import { postRefresh } from "@/api/auth";
 import { getCurrentUser } from "@/api/users";
 import {

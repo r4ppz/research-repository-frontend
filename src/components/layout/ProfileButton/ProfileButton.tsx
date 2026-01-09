@@ -1,11 +1,9 @@
 import clsx from "clsx";
 import { User as UserIcon } from "lucide-react";
 import { useState } from "react";
-
 import Button from "@/components/common/Button/Button";
 import ProfileModal from "@/components/layout/ProfileModal/ProfileModal";
 import type { Role, User } from "@/types";
-
 import style from "./ProfileButton.module.css";
 
 interface ProfileButtonProps {

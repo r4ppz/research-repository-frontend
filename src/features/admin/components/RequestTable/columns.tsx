@@ -1,5 +1,4 @@
 import { createColumnHelper } from "@tanstack/react-table";
-
 import Button from "@/components/common/Button/Button";
 import type { DocumentRequest } from "@/types";
 import { formatDateShort } from "@/util/formatDate";

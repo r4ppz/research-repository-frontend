@@ -1,11 +1,9 @@
 import type { ColumnDef } from "@tanstack/react-table";
-
 import { deleteRequest } from "@/api/request";
 import Button from "@/components/common/Button/Button";
 import type { DocumentRequest, RequestStatus } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 import { formatDateShort } from "@/util/formatDate";
-
 import style from "./column.module.css";
 
 // TODO: use createColumnHelper instead

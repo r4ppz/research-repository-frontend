@@ -1,9 +1,7 @@
 import * as Select from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
-
 import Button from "@/components/common/Button/Button";
 import { useDepartments } from "@/features/library/hooks/useDepartments";
-
 import style from "./FilterDepartmentsButton.module.css";
 
 interface FilterDepartmentButtonProps {

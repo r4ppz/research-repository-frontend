@@ -1,5 +1,4 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-
 import { type GetPapersParams, getPapers } from "@/api/paper";
 
 export const usePapers = (params: GetPapersParams) => {

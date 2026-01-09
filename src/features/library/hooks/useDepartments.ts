@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from "react";
-
 import { getDepartments } from "@/api/filter";
 import type { Department } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";

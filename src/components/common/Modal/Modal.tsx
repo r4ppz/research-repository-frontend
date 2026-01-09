@@ -2,9 +2,7 @@ import { clsx } from "clsx";
 import { X } from "lucide-react";
 import type React from "react";
 import ReactDom from "react-dom";
-
 import { useModalBodyClass } from "@/hooks/useModalBodyClass";
-
 import style from "./Modal.module.css";
 
 // pls help me fix this shitty modal

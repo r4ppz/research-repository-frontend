@@ -1,10 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
-
 import { type GetAdminRequestsParams, getAdminRequests } from "@/api/admin/requests";
 import type { DocumentRequest } from "@/types";
 import type { Page } from "@/types/api";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
-
 export function useAdminRequests(params: GetAdminRequestsParams = {}) {
   const [data, setData] = useState<DocumentRequest[]>([]);
   const [totalElements, setTotalElements] = useState<number>(0);

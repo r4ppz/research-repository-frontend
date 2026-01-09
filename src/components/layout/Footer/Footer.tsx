@@ -1,10 +1,8 @@
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
-
 import schoolLogo from "@/assets/school-logo.svg";
 import Button from "@/components/common/Button/Button";
 import Link from "@/components/common/Link/Link";
-
 import style from "./Footer.module.css";
 
 interface ComponentProps {

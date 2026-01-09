@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-
 import Button from "@/components/common/Button/Button";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { ApiError } from "@/types";
 import { loadGoogleScript } from "@/util/googleAuth";
-
 import styles from "./GoogleButton.module.css";
 
 interface GoogleButtonProps {

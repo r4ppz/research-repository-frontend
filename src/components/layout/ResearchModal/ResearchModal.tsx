@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { getMyPaperRequest } from "@/api/paper";
 import { createRequest } from "@/api/request";
 import Button from "@/components/common/Button/Button";
@@ -10,7 +9,6 @@ import { usePaperById } from "@/features/library/hooks/usePaperById";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 import { formatDateLong } from "@/util/formatDate";
 import { isUserAdmin, isUserStudentOrTeacher } from "@/util/roleBasedAccess";
-
 import style from "./ResearchModal.module.css";
 
 interface ResearchModalProps {
