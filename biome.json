@@ -36,7 +36,14 @@
       "style": {
         "useSelfClosingElements": "error",
         "useBlockStatements": "error",
-        "useConsistentArrayType": "error"
+        "useConsistentArrayType": "error",
+        "noDefaultExport": "error",
+        "noEnum": "error",
+        "noExportedImports": "error",
+        "noImplicitBoolean": "error",
+        "noNegationElse": "error",
+        "noNestedTernary": "error",
+        "noParameterAssign": "error"
       },
       "a11y": "off"
     }

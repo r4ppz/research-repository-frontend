@@ -1,4 +1,5 @@
 /** @type {import('stylelint').Config} */
+// biome-ignore lint/style/noDefaultExport: < Stylint need a default here, I think... >
 export default {
   extends: ["stylelint-config-standard", "stylelint-config-recess-order"],
   rules: {

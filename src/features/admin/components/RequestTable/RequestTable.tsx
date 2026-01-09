@@ -1,12 +1,12 @@
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import clsx from "clsx";
-import Button from "@/components/common/Button/Button";
-import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
+import { Button } from "@/components/common/Button/Button";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
 import { useAdminRequests } from "../../hooks/useAdminDocumentRequest";
 import { columns } from "./columns";
 import style from "./RequestTable.module.css";
 
-export default function RequestsTable() {
+export function RequestsTable() {
   const { data, pageIndex, pageSize, pageCount, setPageIndex, loading, error } = useAdminRequests();
 
   const table = useReactTable({

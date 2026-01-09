@@ -1,6 +1,6 @@
 import type { ColumnDef } from "@tanstack/react-table";
 import { deleteRequest } from "@/api/request";
-import Button from "@/components/common/Button/Button";
+import { Button } from "@/components/common/Button/Button";
 import type { DocumentRequest, RequestStatus } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 import { formatDateShort } from "@/util/formatDate";
@@ -36,16 +36,14 @@ export const createColumns = ({ refreshData }: ColumnProps): ColumnDef<DocumentR
     header: () => "Status",
     cell: (info) => {
       const status = info.getValue<RequestStatus>();
+      const statusStyles = {
+        ACCEPTED: style["status--accepted"],
+        REJECTED: style["status--rejected"],
+        PENDING: style["status--pending"],
+      };
       return (
         <span
-          className={[
-            style.status,
-            status === "ACCEPTED"
-              ? style["status--accepted"]
-              : status === "REJECTED"
-                ? style["status--rejected"]
-                : style["status--pending"],
-          ].join(" ")}
+          className={[style.status, statusStyles[status] || style["status--pending"]].join(" ")}
         >
           {status}
         </span>

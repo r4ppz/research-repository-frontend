@@ -19,7 +19,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   className?: string;
 }
 
-const Input = forwardRef<HTMLInputElement, InputProps>(
+export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ type = "text", icon: Icon, className, disabled, ...props }, ref) => {
     return (
       <div
@@ -31,5 +31,3 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     );
   },
 );
-
-export default Input;

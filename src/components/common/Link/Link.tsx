@@ -7,7 +7,7 @@ interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   children?: ReactNode;
 }
 
-const Link = ({
+export const Link = ({
   href,
   children,
   className,
@@ -21,5 +21,3 @@ const Link = ({
     </a>
   );
 };
-
-export default Link;

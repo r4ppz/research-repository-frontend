@@ -5,7 +5,7 @@ import { useEffect } from "react";
  * This is useful for handling layout adjustments when a scrollbar is present
  * The hook adds the 'scrollable' class to the html element when the page is scrollable
  */
-const useScrollbarGutter = () => {
+export const useScrollbarGutter = () => {
   useEffect(() => {
     const update = () => {
       const isScrollable = document.body.scrollHeight > window.innerHeight;
@@ -18,5 +18,3 @@ const useScrollbarGutter = () => {
     };
   }, []);
 };
-
-export default useScrollbarGutter;

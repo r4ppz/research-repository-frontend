@@ -16,7 +16,7 @@ interface ModalProps {
   className?: string;
 }
 
-const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
+export const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
   useModalBodyClass(isOpen);
 
   if (!isOpen) {
@@ -53,5 +53,3 @@ const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
     modalRoot,
   );
 };
-
-export default Modal;

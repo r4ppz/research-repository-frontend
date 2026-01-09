@@ -3,9 +3,9 @@ import { LogOut, Menu } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import schoolLogo from "@/assets/school-logo.svg";
-import Button from "@/components/common/Button/Button";
-import CNavLink from "@/components/common/CNavLink/CNavLink";
-import ProfileButton from "@/components/layout/ProfileButton/ProfileButton";
+import { Button } from "@/components/common/Button/Button";
+import { CNavLink } from "@/components/common/CNavLink/CNavLink";
+import { ProfileButton } from "@/components/layout/ProfileButton/ProfileButton";
 import { useAuth } from "@/features/auth/context/useAuth";
 import type { Role } from "@/types";
 import style from "./Header.module.css";
@@ -33,7 +33,7 @@ interface ComponentProps {
   className?: string;
 }
 
-const Header = ({ className, ...props }: ComponentProps) => {
+export const Header = ({ className, ...props }: ComponentProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -119,5 +119,3 @@ const Header = ({ className, ...props }: ComponentProps) => {
     </header>
   );
 };
-
-export default Header;

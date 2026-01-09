@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
-import Button from "@/components/common/Button/Button";
+import { Button } from "@/components/common/Button/Button";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { ApiError } from "@/types";
 import { loadGoogleScript } from "@/util/googleAuth";
@@ -13,7 +13,7 @@ interface GoogleButtonProps {
   disabled?: boolean;
 }
 
-export default function GoogleButton({ clientId, onSuccess, onError }: GoogleButtonProps) {
+export function GoogleButton({ clientId, onSuccess, onError }: GoogleButtonProps) {
   const { setAuthError } = useAuth();
   const [initialized, setInitialized] = useState(false);
   const [googleClient, setGoogleClient] = useState<google.accounts.oauth2.CodeClient | null>(null);

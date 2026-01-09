@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import { User as UserIcon } from "lucide-react";
 import { useState } from "react";
-import Button from "@/components/common/Button/Button";
-import ProfileModal from "@/components/layout/ProfileModal/ProfileModal";
+import { Button } from "@/components/common/Button/Button";
+import { ProfileModal } from "@/components/layout/ProfileModal/ProfileModal";
 import type { Role, User } from "@/types";
 import style from "./ProfileButton.module.css";
 
@@ -19,7 +19,7 @@ const ROLE_LABEL: Record<Role, string> = {
   SUPER_ADMIN: "S Admin",
 };
 
-const ProfileButton = ({ user }: ProfileButtonProps) => {
+export const ProfileButton = ({ user }: ProfileButtonProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const roleLabel = ROLE_LABEL[user.role];
   const firstName = user.fullName.split(" ")[0];
@@ -48,5 +48,3 @@ const ProfileButton = ({ user }: ProfileButtonProps) => {
     </>
   );
 };
-
-export default ProfileButton;

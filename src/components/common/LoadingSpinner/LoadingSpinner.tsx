@@ -4,7 +4,7 @@ interface LoadingSpinnerProps {
   message?: string;
 }
 
-const LoadingSpinner = ({ message }: LoadingSpinnerProps) => {
+export const LoadingSpinner = ({ message }: LoadingSpinnerProps) => {
   return (
     <div className={style.container}>
       <div className={style.spinner} />
@@ -12,5 +12,3 @@ const LoadingSpinner = ({ message }: LoadingSpinnerProps) => {
     </div>
   );
 };
-
-export default LoadingSpinner;

@@ -1,5 +1,5 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
-import Modal from "@/components/common/Modal/Modal";
+import { Modal } from "@/components/common/Modal/Modal";
 import type { Role, User } from "@/types";
 import style from "./ProfileModal.module.css";
 
@@ -17,7 +17,7 @@ const FULL_ROLE_LABEL: Record<Role, string> = {
   SUPER_ADMIN: "Super Admin",
 };
 
-const ProfileModal = ({ isOpen, onClose, user, className }: ProfileModalProps) => {
+export const ProfileModal = ({ isOpen, onClose, user, className }: ProfileModalProps) => {
   const roleLabel = FULL_ROLE_LABEL[user.role];
 
   return (
@@ -27,7 +27,7 @@ const ProfileModal = ({ isOpen, onClose, user, className }: ProfileModalProps) =
 
         <Tooltip.Provider>
           <Tooltip.Root delayDuration={1000}>
-            <Tooltip.Trigger asChild>
+            <Tooltip.Trigger asChild={true}>
               <div className={style.profilePicture}>
                 <span>👤</span>
               </div>
@@ -53,5 +53,3 @@ const ProfileModal = ({ isOpen, onClose, user, className }: ProfileModalProps) =
     </Modal>
   );
 };
-
-export default ProfileModal;

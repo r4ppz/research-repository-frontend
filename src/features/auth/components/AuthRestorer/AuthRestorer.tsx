@@ -9,7 +9,7 @@ import {
 import { useAuth } from "@/features/auth/context/useAuth";
 import { extractApiError, isAuthError } from "@/util/errorHandler";
 
-const AuthRestorer = () => {
+export const AuthRestorer = () => {
   const { user, setUser, setAuthError, setIsLoading } = useAuth();
 
   useEffect(() => {
@@ -53,4 +53,3 @@ const AuthRestorer = () => {
 
   return null;
 };
-export default AuthRestorer;

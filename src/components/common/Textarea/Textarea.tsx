@@ -7,7 +7,7 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   icon?: ComponentType<{ className?: string }>;
 }
 
-const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
+export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
   ({ className, icon: Icon, ...props }, ref) => {
     return (
       <div className={clsx(style.textareaContainer, className)}>
@@ -17,5 +17,3 @@ const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
     );
   },
 );
-
-export default Textarea;

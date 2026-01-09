@@ -15,7 +15,7 @@ interface FileUploadProps {
   placeholder?: string;
 }
 
-const FileUpload = ({
+export const FileUpload = ({
   id,
   name,
   accept = ".pdf,.doc,.docx",
@@ -75,5 +75,3 @@ const FileUpload = ({
     </div>
   );
 };
-
-export default FileUpload;

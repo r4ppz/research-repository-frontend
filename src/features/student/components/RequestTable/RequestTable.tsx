@@ -9,7 +9,7 @@ interface Props {
   refreshData: () => void;
 }
 
-function DocumentRequestTable({ data, refreshData }: Props) {
+export function DocumentRequestTable({ data, refreshData }: Props) {
   const columns = createColumns({ refreshData });
 
   const table = useReactTable({
@@ -66,5 +66,3 @@ function DocumentRequestTable({ data, refreshData }: Props) {
     </div>
   );
 }
-
-export default DocumentRequestTable;

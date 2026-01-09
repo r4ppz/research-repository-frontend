@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import schoolLogo from "@/assets/school-logo.svg";
-import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
-import Modal from "@/components/common/Modal/Modal";
-import GoogleButton from "@/features/auth/components/GoogleButton/GoogleButton";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
+import { Modal } from "@/components/common/Modal/Modal";
+import { GoogleButton } from "@/features/auth/components/GoogleButton/GoogleButton";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
 import { ApiError } from "@/types";
@@ -13,7 +13,7 @@ import {
 } from "@/util/errorHandler";
 import style from "./LoginPage.module.css";
 
-const LoginPage = () => {
+export const LoginPage = () => {
   const { authError, setAuthError, isLoading } = useAuth();
   const [showErrorModal, setShowErrorModal] = useState(false);
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
@@ -87,5 +87,3 @@ const LoginPage = () => {
     </div>
   );
 };
-
-export default LoginPage;

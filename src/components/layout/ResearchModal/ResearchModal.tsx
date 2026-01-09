@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { getMyPaperRequest } from "@/api/paper";
 import { createRequest } from "@/api/request";
-import Button from "@/components/common/Button/Button";
-import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
-import Modal from "@/components/common/Modal/Modal";
+import { Button } from "@/components/common/Button/Button";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
+import { Modal } from "@/components/common/Modal/Modal";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { usePaperById } from "@/features/library/hooks/usePaperById";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
@@ -17,7 +17,7 @@ interface ResearchModalProps {
   onClose: () => void;
 }
 
-const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
+export const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
   const [requestExists, setRequestExists] = useState<boolean>(false);
   const [isRequestLoading, setIsRequestLoading] = useState<boolean>(false);
 
@@ -123,5 +123,3 @@ const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) => {
     </Modal>
   );
 };
-
-export default ResearchModal;

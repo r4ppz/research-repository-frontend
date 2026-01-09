@@ -1,8 +1,8 @@
-import Footer from "@/components/layout/Footer/Footer";
-import Header from "@/components/layout/Header/Header";
+import { Footer } from "@/components/layout/Footer/Footer";
+import { Header } from "@/components/layout/Header/Header";
 import style from "./RequestPage.module.css";
 
-const RequestPage = () => {
+export const RequestPage = () => {
   return (
     <div className={style.page}>
       <Header />
@@ -18,5 +18,3 @@ const RequestPage = () => {
     </div>
   );
 };
-
-export default RequestPage;

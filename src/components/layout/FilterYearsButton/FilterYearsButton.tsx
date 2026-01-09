@@ -1,6 +1,6 @@
 import * as Select from "@radix-ui/react-select";
 import { Check, ChevronDown } from "lucide-react";
-import Button from "@/components/common/Button/Button";
+import { Button } from "@/components/common/Button/Button";
 import { useYears } from "@/features/library/hooks/useYears";
 import style from "./FilterYearsButton.module.css";
 
@@ -9,7 +9,7 @@ interface FilterYearsButtonProps {
   onYearChange: (year: string | null) => void;
 }
 
-const FilterYearsButton = ({ selectedYear, onYearChange }: FilterYearsButtonProps) => {
+export const FilterYearsButton = ({ selectedYear, onYearChange }: FilterYearsButtonProps) => {
   const { years } = useYears();
 
   return (
@@ -19,7 +19,7 @@ const FilterYearsButton = ({ selectedYear, onYearChange }: FilterYearsButtonProp
         onYearChange(v === "all" ? null : v);
       }}
     >
-      <Select.Trigger asChild>
+      <Select.Trigger asChild={true}>
         <Button>
           <div className={style.buttonContent}>
             {selectedYear && <span className={style.dotIndicator} />}
@@ -53,5 +53,3 @@ const FilterYearsButton = ({ selectedYear, onYearChange }: FilterYearsButtonProp
     </Select.Root>
   );
 };
-
-export default FilterYearsButton;

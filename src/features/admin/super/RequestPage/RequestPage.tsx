@@ -1,16 +1,16 @@
-import Footer from "@/components/layout/Footer/Footer";
-import Header from "@/components/layout/Header/Header";
-import RequestTable from "@/features/admin/components/RequestTable/RequestTable";
+import { Footer } from "@/components/layout/Footer/Footer";
+import { Header } from "@/components/layout/Header/Header";
+import { RequestsTable } from "@/features/admin/components/RequestTable/RequestTable";
 import style from "./RequestPage.module.css";
 
-const RequestPage = () => {
+export const RequestPage = () => {
   return (
     <div className={style.page}>
       <Header />
       <main className={style.main}>
         <div className={style.mainContainer}>
           <section className={style.tableSection}>
-            <RequestTable />
+            <RequestsTable />
           </section>
         </div>
       </main>
@@ -18,5 +18,3 @@ const RequestPage = () => {
     </div>
   );
 };
-
-export default RequestPage;

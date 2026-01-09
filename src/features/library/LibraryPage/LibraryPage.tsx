@@ -1,18 +1,18 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { type ReactNode, useRef, useState } from "react";
-import Button from "@/components/common/Button/Button";
-import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
-import Footer from "@/components/layout/Footer/Footer";
-import Header from "@/components/layout/Header/Header";
-import ResearchModal from "@/components/layout/ResearchModal/ResearchModal";
-import ResearchCard from "@/features/library/components/ResearchCard/ResearchCard";
-import useDebounce from "@/hooks/useDebounce";
+import { Button } from "@/components/common/Button/Button";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
+import { Footer } from "@/components/layout/Footer/Footer";
+import { Header } from "@/components/layout/Header/Header";
+import { ResearchModal } from "@/components/layout/ResearchModal/ResearchModal";
+import { ResearchCard } from "@/features/library/components/ResearchCard/ResearchCard";
+import { useDebounce } from "@/hooks/useDebounce";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
-import SearchNFilter from "../components/SearchNFilter/SearchNFilter";
+import { SearchNFilter } from "../components/SearchNFilter/SearchNFilter";
 import { usePapers } from "../hooks/usePapers";
 import style from "./LibraryPage.module.css";
 
-const LibraryPage = () => {
+export const LibraryPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
@@ -167,4 +167,3 @@ const LibraryPage = () => {
     </div>
   );
 };
-export default LibraryPage;

@@ -1,7 +1,7 @@
 import { SearchIcon } from "lucide-react";
-import Input from "@/components/common/Input/Input";
-import FilterDepartmentButton from "@/components/layout/FilterDepartmentsButton/FilterDepartmentsButton";
-import FilterYearsButton from "@/components/layout/FilterYearsButton/FilterYearsButton";
+import { Input } from "@/components/common/Input/Input";
+import { FilterDepartmentButton } from "@/components/layout/FilterDepartmentsButton/FilterDepartmentsButton";
+import { FilterYearsButton } from "@/components/layout/FilterYearsButton/FilterYearsButton";
 import style from "./SearchNFilter.module.css";
 
 interface SearchNFilterProps {
@@ -14,7 +14,7 @@ interface SearchNFilterProps {
   onDepartmentChange: (departmentId: string | null) => void;
 }
 
-const SearchNFilter = ({
+export const SearchNFilter = ({
   searchQuery,
   onSearchChange,
   searchPlaceholder = "Search...",
@@ -49,5 +49,3 @@ const SearchNFilter = ({
     </section>
   );
 };
-
-export default SearchNFilter;

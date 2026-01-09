@@ -1,13 +1,13 @@
 import clsx from "clsx";
 import type { ReactNode } from "react";
-import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
-import Footer from "@/components/layout/Footer/Footer";
-import Header from "@/components/layout/Header/Header";
-import DocumentRequestTable from "../components/RequestTable/RequestTable";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
+import { Footer } from "@/components/layout/Footer/Footer";
+import { Header } from "@/components/layout/Header/Header";
+import { DocumentRequestTable } from "../components/RequestTable/RequestTable";
 import { useUserRequests } from "../hooks/useUserRequests";
 import style from "./RequestPage.module.css";
 
-const RequestPage = () => {
+export const RequestPage = () => {
   const { requests, loading, refetch } = useUserRequests();
 
   let mainContent: ReactNode;
@@ -35,5 +35,3 @@ const RequestPage = () => {
     </div>
   );
 };
-
-export default RequestPage;

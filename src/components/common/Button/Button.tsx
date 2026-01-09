@@ -6,7 +6,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary";
 }
 
-const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   ({ variant = "primary", children, className, type = "button", ...props }, ref) => {
     const buttonClass = clsx(style.button, style[variant], className);
 
@@ -17,5 +17,3 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     );
   },
 );
-
-export default Button;

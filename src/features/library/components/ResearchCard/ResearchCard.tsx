@@ -1,5 +1,5 @@
 import { Eye } from "lucide-react";
-import Button from "@/components/common/Button/Button";
+import { Button } from "@/components/common/Button/Button";
 import type { ResearchPaper } from "@/types";
 import style from "./ResearchCard.module.css";
 
@@ -8,7 +8,7 @@ interface ResearchCardProps {
   onView: () => void;
 }
 
-const ResearchCard = ({ researchPaper, onView }: ResearchCardProps) => {
+export const ResearchCard = ({ researchPaper, onView }: ResearchCardProps) => {
   const formattedDate = new Date(researchPaper.submissionDate).toLocaleDateString("en-US", {
     year: "numeric",
     month: "long",
@@ -44,5 +44,3 @@ const ResearchCard = ({ researchPaper, onView }: ResearchCardProps) => {
     </div>
   );
 };
-
-export default ResearchCard;

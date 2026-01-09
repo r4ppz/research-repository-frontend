@@ -1,16 +1,16 @@
 import { Route, Routes } from "react-router-dom";
-import ProtectedRoute from "@/components/common/Route/ProtectedRoute";
-import DepartmentAdminRequestsPage from "@/features/admin/department/RequestPage/RequestPage";
-import DepartmentAdminResearchPage from "@/features/admin/department/ResearchPage/ResearchPage";
-import SuperAdminRequestsPage from "@/features/admin/super/RequestPage/RequestPage";
-import SuperAdminResearchPage from "@/features/admin/super/ResearchPage/ResearchPage";
-import AuthRestorer from "@/features/auth/components/AuthRestorer/AuthRestorer";
-import LoginPage from "@/features/auth/LoginPage/LoginPage";
-import LibraryPage from "@/features/library/LibraryPage/LibraryPage";
-import StudentRequestsPage from "@/features/student/RequestPage/RequestPage";
-import useScrollbarGutter from "@/hooks/useScrollbarGutter";
+import { ProtectedRoute } from "@/components/common/Route/ProtectedRoute";
+import { RequestPage as DepartmentAdminRequestsPage } from "@/features/admin/department/RequestPage/RequestPage";
+import { ResearchPage as DepartmentAdminResearchPage } from "@/features/admin/department/ResearchPage/ResearchPage";
+import { RequestPage as SuperAdminRequestsPage } from "@/features/admin/super/RequestPage/RequestPage";
+import { ResearchPage as SuperAdminResearchPage } from "@/features/admin/super/ResearchPage/ResearchPage";
+import { AuthRestorer } from "@/features/auth/components/AuthRestorer/AuthRestorer";
+import { LoginPage } from "@/features/auth/LoginPage/LoginPage";
+import { LibraryPage } from "@/features/library/LibraryPage/LibraryPage";
+import { RequestPage as StudentRequestsPage } from "@/features/student/RequestPage/RequestPage";
+import { useScrollbarGutter } from "@/hooks/useScrollbarGutter";
 
-const App = () => {
+export const App = () => {
   useScrollbarGutter();
 
   return (
@@ -72,5 +72,3 @@ const App = () => {
     </>
   );
 };
-
-export default App;
