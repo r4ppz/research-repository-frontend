@@ -20,6 +20,24 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "complexity": {
+        "noExcessiveCognitiveComplexity": {
+          "level": "error",
+          "options": { "maxAllowedComplexity": 15 }
+        }
+      },
+      "correctness": {
+        "noUndeclaredDependencies": "error",
+        "noNestedComponentDefinitions": "error"
+      },
+      "suspicious": {
+        "noImplicitAnyLet": "error"
+      },
+      "style": {
+        "useSelfClosingElements": "error",
+        "useBlockStatements": "error",
+        "useConsistentArrayType": "error"
+      },
       "a11y": "off"
     }
   },
