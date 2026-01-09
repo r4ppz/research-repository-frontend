@@ -13,6 +13,9 @@ export default defineConfig(({ mode }) => {
         },
       }),
     ],
+    preview: {
+      allowedHosts: true, // for testing
+    },
     base: isDevelopment ? "/" : "/research-repository/",
     resolve: {
       alias: {
