@@ -18,9 +18,7 @@
     /* Path Aliases */
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "src/*"
-      ]
+      "@/*": ["src/*"]
     },
     /* Type Checking Behavior */
     "skipLibCheck": true,
@@ -28,13 +26,6 @@
     /* Emission */
     "noEmit": true
   },
-  "include": [
-    "src",
-    "vite.config.ts",
-    "eslint.config.js"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src", "vite.config.ts", "eslint.config.js"],
+  "exclude": ["node_modules", "dist"]
 }
