@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { getYears } from "@/api/filter";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
@@ -11,10 +11,10 @@ interface UseYearsReturn {
 
 export const useYears = (): UseYearsReturn => {
   const [years, setYears] = useState<string[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchYears = async (): Promise<void> => {
+  const fetchYears = useCallback(async (): Promise<void> => {
     setLoading(true);
     setError(null);
 
@@ -28,11 +28,11 @@ export const useYears = (): UseYearsReturn => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     void fetchYears();
-  }, []);
+  }, [fetchYears]);
 
   return {
     years,

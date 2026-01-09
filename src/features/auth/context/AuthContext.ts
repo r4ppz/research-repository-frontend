@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
-import { ApiError, TypedApiError, User } from "@/types";
+import type { ApiError, TypedApiError, User } from "@/types";
 
 export interface AuthContextValue {
   user: User | null;

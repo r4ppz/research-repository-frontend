@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 
-import { getAdminRequests, GetAdminRequestsParams } from "@/api/admin/requests";
-import { DocumentRequest } from "@/types";
-import { Page } from "@/types/api";
+import { type GetAdminRequestsParams, getAdminRequests } from "@/api/admin/requests";
+import type { DocumentRequest } from "@/types";
+import type { Page } from "@/types/api";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
 export function useAdminRequests(params: GetAdminRequestsParams = {}) {

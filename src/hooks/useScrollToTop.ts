@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from "react";
+import { type RefObject, useEffect } from "react";
 
 interface ScrollOptions<T> {
   trigger: T;
@@ -11,6 +11,7 @@ export function useScrollToTop<E extends HTMLElement, T>(
   ref: RefObject<E | null>,
   { trigger, isLoading, behavior = "smooth", delay = 50 }: ScrollOptions<T>,
 ): void {
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <I dont know>
   useEffect(() => {
     // Only scroll when loading is finished
     if (isLoading) return;

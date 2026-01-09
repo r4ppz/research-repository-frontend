@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { getPaperById } from "@/api/paper";
-import { type ResearchPaper } from "@/types";
+import type { ResearchPaper } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
 interface UsePaperByIdReturn {

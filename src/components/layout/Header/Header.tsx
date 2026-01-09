@@ -8,7 +8,7 @@ import Button from "@/components/common/Button/Button";
 import CNavLink from "@/components/common/CNavLink/CNavLink";
 import ProfileButton from "@/components/layout/ProfileButton/ProfileButton";
 import { useAuth } from "@/features/auth/context/useAuth";
-import { type Role } from "@/types";
+import type { Role } from "@/types";
 
 import style from "./Header.module.css";
 

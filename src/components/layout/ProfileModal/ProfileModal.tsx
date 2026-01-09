@@ -1,7 +1,7 @@
 import * as Tooltip from "@radix-ui/react-tooltip";
 
 import Modal from "@/components/common/Modal/Modal";
-import { type Role, type User } from "@/types";
+import type { Role, User } from "@/types";
 
 import style from "./ProfileModal.module.css";
 

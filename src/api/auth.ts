@@ -1,5 +1,5 @@
 import { axiosClient, refreshClient } from "@/api/axiosClient";
-import { AuthResponse } from "@/types";
+import type { AuthResponse } from "@/types";
 import { extractApiError } from "@/util/errorHandler";
 
 export const postLoginGoogle = async (code: string): Promise<AuthResponse> => {
@@ -10,7 +10,7 @@ export const postLoginGoogle = async (code: string): Promise<AuthResponse> => {
 let isRefreshInProgress = false;
 let refreshPromise: Promise<{ accessToken: string }> | null = null;
 
-export const postRefresh = async (): Promise<{ accessToken: string }> => {
+export const postRefresh = (): Promise<{ accessToken: string }> => {
   if (isRefreshInProgress && refreshPromise) {
     return refreshPromise;
   }

@@ -1,7 +1,7 @@
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import clsx from "clsx";
 
-import { DocumentRequest } from "@/types";
+import type { DocumentRequest } from "@/types";
 
 import { createColumns } from "./columns";
 import style from "./RequestTable.module.css";

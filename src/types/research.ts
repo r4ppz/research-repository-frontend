@@ -1,4 +1,4 @@
-import { Department, User } from "./user";
+import type { Department, User } from "./user";
 
 export type RequestStatus = "PENDING" | "ACCEPTED" | "REJECTED";
 

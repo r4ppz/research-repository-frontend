@@ -1,5 +1,5 @@
 import { axiosClient } from "@/api/axiosClient";
-import { DocumentRequest, Page, ResearchPaper } from "@/types";
+import type { DocumentRequest, Page, ResearchPaper } from "@/types";
 
 export interface GetPapersParams {
   search?: string;

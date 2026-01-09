@@ -55,7 +55,7 @@ const ResearchPage = () => {
             </Button>
           </div>
 
-          <div className={style.tableSection}></div>
+          <div className={style.tableSection} />
         </div>
       </main>
       <Footer />

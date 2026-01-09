@@ -24,7 +24,7 @@ const FilterYearsButton = ({ selectedYear, onYearChange }: FilterYearsButtonProp
       <Select.Trigger asChild>
         <Button>
           <div className={style.buttonContent}>
-            {selectedYear && <span className={style.dotIndicator}></span>}
+            {selectedYear && <span className={style.dotIndicator} />}
             <span>Year</span>
           </div>
           <ChevronDown className={style.chevronIcon} />

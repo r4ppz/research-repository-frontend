@@ -1,5 +1,5 @@
 import { axiosClient } from "@/api/axiosClient";
-import { DocumentRequest, User } from "@/types";
+import type { DocumentRequest, User } from "@/types";
 
 export const getCurrentUser = async (): Promise<User> => {
   const response = await axiosClient.get<User>("/api/users/me");

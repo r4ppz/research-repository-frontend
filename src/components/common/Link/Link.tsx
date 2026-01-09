@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { AnchorHTMLAttributes, ReactNode } from "react";
+import type { AnchorHTMLAttributes, ReactNode } from "react";
 
 import style from "./Link.module.css";
 

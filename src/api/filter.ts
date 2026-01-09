@@ -1,5 +1,5 @@
 import { axiosClient } from "@/api/axiosClient";
-import { Department } from "@/types";
+import type { Department } from "@/types";
 
 interface YearsResponse {
   years: number[];

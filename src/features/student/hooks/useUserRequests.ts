@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { getUserRequests } from "@/api/users";
-import { DocumentRequest } from "@/types";
+import type { DocumentRequest } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
 interface UseUserRequestsReturn {
@@ -13,10 +13,10 @@ interface UseUserRequestsReturn {
 
 export const useUserRequests = (): UseUserRequestsReturn => {
   const [requests, setRequests] = useState<DocumentRequest[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchUserRequests = async (): Promise<void> => {
+  const fetchUserRequests = useCallback(async (): Promise<void> => {
     setLoading(true);
     setError(null);
 
@@ -30,18 +30,16 @@ export const useUserRequests = (): UseUserRequestsReturn => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     void fetchUserRequests();
-  }, []);
+  }, [fetchUserRequests]);
 
   return {
     requests,
     loading,
     error,
-    refetch: () => {
-      void fetchUserRequests();
-    },
+    refetch: fetchUserRequests,
   };
 };

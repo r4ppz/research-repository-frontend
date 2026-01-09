@@ -1,6 +1,6 @@
 import { axiosClient } from "@/api/axiosClient";
-import { DocumentRequest } from "@/types";
-import { Page } from "@/types/api";
+import type { DocumentRequest } from "@/types";
+import type { Page } from "@/types/api";
 
 // Read the docs for details
 export interface GetAdminRequestsParams {

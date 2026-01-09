@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { getDepartments } from "@/api/filter";
-import { Department } from "@/types";
+import type { Department } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
 interface UseDepartmentsReturn {
@@ -12,10 +12,10 @@ interface UseDepartmentsReturn {
 
 export const useDepartments = (): UseDepartmentsReturn => {
   const [departments, setDepartments] = useState<Department[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchDepartments = async (): Promise<void> => {
+  const fetchDepartments = useCallback(async (): Promise<void> => {
     setLoading(true);
     setError(null);
 
@@ -29,11 +29,11 @@ export const useDepartments = (): UseDepartmentsReturn => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     void fetchDepartments();
-  }, []);
+  }, [fetchDepartments]);
 
   return {
     departments,

@@ -1,6 +1,12 @@
-import axios, { AxiosError } from "axios";
+import axios, { type AxiosError } from "axios";
 
-import { ApiError, ErrorCode, hasApiErrorStructure, isApiError, TypedApiError } from "@/types/api";
+import {
+  ApiError,
+  type ErrorCode,
+  hasApiErrorStructure,
+  isApiError,
+  type TypedApiError,
+} from "@/types/api";
 
 /**
  * Extracts and normalizes API error from various error types

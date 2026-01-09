@@ -11,7 +11,7 @@ const RequestPage = () => {
         <div className={style.mainContainer}>
           <h1 className={style.titleHeader}>Manage Document Requests (Department Admin) </h1>
           <div className={style.loadingContainer}>
-            <section className={style.tableSection}></section>
+            <section className={style.tableSection} />
           </div>
         </div>
       </main>

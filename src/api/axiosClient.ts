@@ -6,7 +6,7 @@ import {
   removeAccessToken,
   setAccessToken,
 } from "@/features/auth/context/tokenStore";
-import { ApiError } from "@/types/api";
+import type { ApiError } from "@/types/api";
 import { extractApiError, isAuthError } from "@/util/errorHandler";
 
 const BASE_URL = import.meta.env.VITE_BACKEND_API_BASE_URL;

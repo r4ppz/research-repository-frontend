@@ -1,10 +1,10 @@
-import { ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 import { postLoginGoogle, postLogout } from "@/api/auth";
-import { ApiError, AuthResponse, User } from "@/types";
+import type { ApiError, AuthResponse, User } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
-import { AuthContext, AuthContextValue } from "./AuthContext";
+import { AuthContext, type AuthContextValue } from "./AuthContext";
 import { getAccessToken, removeAccessToken, setAccessToken } from "./tokenStore";
 
 export function AuthProvider({ children }: { children: ReactNode }) {

@@ -1,5 +1,5 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useRef, useState } from "react";
+import { type ReactNode, useRef, useState } from "react";
 
 import Button from "@/components/common/Button/Button";
 import LoadingSpinner from "@/components/common/LoadingSpinner/LoadingSpinner";
@@ -81,7 +81,7 @@ const LibraryPage = () => {
     );
   }
 
-  let researchContent;
+  let researchContent: ReactNode;
   if (loading) {
     researchContent = (
       <div className={style.loadingContainer}>

@@ -32,7 +32,7 @@ const FilterDepartmentButton = ({
       <Select.Trigger asChild>
         <Button>
           <div className={style.buttonContent}>
-            {selectedDepartment && <span className={style.dotIndicator}></span>}
+            {selectedDepartment && <span className={style.dotIndicator} />}
             <span>Department</span>
           </div>
           <ChevronDown className={style.chevronIcon} />

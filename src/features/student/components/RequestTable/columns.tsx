@@ -1,8 +1,8 @@
-import { ColumnDef } from "@tanstack/react-table";
+import type { ColumnDef } from "@tanstack/react-table";
 
 import { deleteRequest } from "@/api/request";
 import Button from "@/components/common/Button/Button";
-import { DocumentRequest, RequestStatus } from "@/types";
+import type { DocumentRequest, RequestStatus } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 import { formatDateShort } from "@/util/formatDate";
 
@@ -71,7 +71,7 @@ export const createColumns = ({ refreshData }: ColumnProps): ColumnDef<DocumentR
         } catch (error) {
           const apiError = extractApiError(error);
           const errorMessage = getUserErrorMessage(apiError);
-          alert("Request removed successfully" + errorMessage);
+          alert(`Request removed successfully${errorMessage}`);
         }
       };
 

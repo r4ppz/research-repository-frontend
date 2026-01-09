@@ -1,7 +1,7 @@
 import { clsx } from "clsx";
 import { X } from "lucide-react";
-import React from "react";
-import ReactDOM from "react-dom";
+import type React from "react";
+import ReactDom from "react-dom";
 
 import { useModalBodyClass } from "@/hooks/useModalBodyClass";
 
@@ -30,7 +30,7 @@ const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
     throw new Error("Modal root element not found");
   }
 
-  return ReactDOM.createPortal(
+  return ReactDom.createPortal(
     <div className={style.overlay} onClick={onClose}>
       <div
         className={clsx(style.modal, className)}
@@ -40,7 +40,12 @@ const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
         role="dialog"
         aria-modal="true"
       >
-        <button className={style.closeButton} onClick={onClose} aria-label="Close modal">
+        <button
+          className={style.closeButton}
+          onClick={onClose}
+          aria-label="Close modal"
+          type="button"
+        >
           <X className={style.iconClose} />
         </button>
 
