@@ -21,35 +21,50 @@ const LibraryPage = () => {
   const [selectedPaperId, setSelectedPaperId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Lifted page state to handle reset logic
+  const [currentPage, setCurrentPage] = useState(0);
+
   const debouncedSearchQuery = useDebounce(searchQuery, 500);
 
-  const { papers, error, pagination, loading, currentPage, goToNextPage, goToPrevPage } = usePapers(
-    {
-      search: debouncedSearchQuery,
-      departmentId: selectedDepartment ?? undefined,
-      year: selectedYear ?? undefined,
-      size: 12,
-    },
-  );
+  // Using tanstack query yay :)
+  const { papers, error, pagination, loading } = usePapers({
+    search: debouncedSearchQuery,
+    departmentId: selectedDepartment ?? undefined,
+    year: selectedYear ?? undefined,
+    page: currentPage,
+    size: 12,
+  });
 
   const pageRef = useRef<HTMLDivElement>(null);
   useScrollToTop(pageRef, { trigger: currentPage, isLoading: loading });
 
+  // Handlers updated to reset page
   const handleSearchChange = (query: string) => {
     setSearchQuery(query);
+    setCurrentPage(0);
   };
 
   const handleYearChange = (year: string | null) => {
     setSelectedYear(year);
+    setCurrentPage(0);
   };
 
   const handleDepartmentChange = (departmentId: string | null) => {
     setSelectedDepartment(departmentId);
+    setCurrentPage(0);
   };
 
   const handleCloseModal = () => {
     setSelectedPaperId(null);
     setIsModalOpen(false);
+  };
+
+  // Pagination triggers
+  const goToNextPage = () => {
+    setCurrentPage((prev) => prev + 1);
+  };
+  const goToPrevPage = () => {
+    setCurrentPage((prev) => Math.max(0, prev - 1));
   };
 
   if (error) {
@@ -66,27 +81,14 @@ const LibraryPage = () => {
     );
   }
 
-  // Determine research section content
   let researchContent;
-
-  // flow
-  // - Show loading spinner ONLY when API is actively loading
-  // - Handle empty arrays properly after loading completes
   if (loading) {
     researchContent = (
       <div className={style.loadingContainer}>
         <LoadingSpinner message="Loading papers..." />
       </div>
     );
-  } else if (papers.length === 0 && debouncedSearchQuery) {
-    researchContent = (
-      <div className={style.emptyState}>
-        <p>No papers found matching your search :(</p>
-      </div>
-    );
-  } else if (papers.length === 0 && !debouncedSearchQuery) {
-    // API returned empty array with no search query
-    // Preserve original UI structure but with correct behavior
+  } else if (papers.length === 0) {
     researchContent = (
       <div className={style.emptyState}>
         <p>No papers found matching your search :(</p>
@@ -139,20 +141,20 @@ const LibraryPage = () => {
               <Button
                 className={style.pagingButton}
                 onClick={goToPrevPage}
-                disabled={pagination.currentPage === 0}
+                disabled={currentPage === 0}
               >
                 <ChevronLeft className={style.iconChevron} />
                 Previous
               </Button>
 
               <p className={style.pagingIndicator}>
-                Page {pagination.currentPage + 1} of {pagination.totalPages}
+                Page {currentPage + 1} of {pagination.totalPages}
               </p>
 
               <Button
                 className={style.pagingButton}
                 onClick={goToNextPage}
-                disabled={pagination.currentPage >= pagination.totalPages - 1}
+                disabled={currentPage >= pagination.totalPages - 1}
               >
                 Next
                 <ChevronRight className={style.iconChevron} />
@@ -167,5 +169,4 @@ const LibraryPage = () => {
     </div>
   );
 };
-
 export default LibraryPage;

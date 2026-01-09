@@ -50,7 +50,7 @@ export function useAdminRequests(params: GetAdminRequestsParams = {}) {
 
   useEffect(() => {
     setPageIndex(0);
-  }, [departmentId, status, sortBy, sortOrder]);
+  }, []);
 
   const pageCount = Math.ceil(totalElements / pageSize);
 

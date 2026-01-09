@@ -1,3 +1,4 @@
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Route, Routes } from "react-router-dom";
 
 import ProtectedRoute from "@/components/common/Route/ProtectedRoute";
@@ -70,6 +71,7 @@ const App = () => {
         />
       </Routes>
       <div id="modal-root" />
+      <ReactQueryDevtools initialIsOpen={false} />
     </>
   );
 };
