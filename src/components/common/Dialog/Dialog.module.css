@@ -16,7 +16,6 @@
 }
 
 .dialogContent {
-  pointer-events: auto;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -24,7 +23,7 @@
   max-height: 90vh;
   padding: var(--space-xl);
   overflow-y: auto;
-
+  pointer-events: auto;
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-resting);
@@ -50,10 +49,10 @@
   top: var(--space-md);
   right: var(--space-md);
   z-index: 10;
+  color: var(--color-text-secondary);
   cursor: pointer;
   background: transparent;
   border: none;
-  color: var(--color-text-secondary);
   transition: var(--transition-elevation);
 }
 .closeButton:hover {
