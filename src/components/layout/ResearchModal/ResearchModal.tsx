@@ -69,7 +69,6 @@ export const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) 
     }
   };
 
-  // --- 1. LOADING STATE ---
   if (loading) {
     return (
       <Dialog open={isOpen} onOpenChange={handleOpenChange}>
@@ -84,7 +83,6 @@ export const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) 
     );
   }
 
-  // --- 2. ERROR STATE ---
   if (error || !paper) {
     return (
       <Dialog open={isOpen} onOpenChange={handleOpenChange}>
@@ -100,7 +98,6 @@ export const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) 
     );
   }
 
-  // --- 3. HAPPY PATH (DATA EXISTS) ---
   const formattedDate = formatDateLong(paper.submissionDate);
   const department = paper.department.departmentName;
 
