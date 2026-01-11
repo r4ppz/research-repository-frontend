@@ -27,7 +27,6 @@ tsconfig.tsbuildinfo
 *.sln
 *.sw?
 
-.github/
 .qwen/
 QWEN.md
 
