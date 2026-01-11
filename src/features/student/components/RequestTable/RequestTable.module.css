@@ -1,5 +1,6 @@
 .tableContainer {
   min-height: 200px;
+  min-width: 80vw;
 }
 
 .table {
