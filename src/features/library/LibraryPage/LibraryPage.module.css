@@ -16,7 +16,6 @@
   grid-template-rows: auto 1fr auto;
   height: 100vh;
   min-height: 100dvh;
-  overflow-y: auto; /* HOLY MONEY PATCH */
 }
 
 .main {

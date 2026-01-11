@@ -8,11 +8,8 @@ import { AuthRestorer } from "@/features/auth/components/AuthRestorer/AuthRestor
 import { LoginPage } from "@/features/auth/LoginPage/LoginPage";
 import { LibraryPage } from "@/features/library/LibraryPage/LibraryPage";
 import { StudentRequestPage } from "@/features/student/StudentRequestPage/StudentRequestPage";
-import { useScrollbarGutter } from "@/hooks/useScrollbarGutter";
 
 export const App = () => {
-  useScrollbarGutter();
-
   return (
     <>
       <AuthRestorer />
