@@ -6,7 +6,7 @@ import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 export function useAdminRequests(params: GetAdminRequestsParams = {}) {
   // 1. Manage pagination state locally
   const [pageIndex, setPageIndex] = useState(params.page ?? 0);
-  const [pageSize, setPageSize] = useState(params.size ?? 6);
+  const [pageSize, setPageSize] = useState(params.size ?? 5);
 
   // 2. Destructure other filters to include in the Query Key
   const { departmentId, status, sortBy, sortOrder } = params;

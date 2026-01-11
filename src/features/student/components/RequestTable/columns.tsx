@@ -1,79 +1,63 @@
-import type { ColumnDef } from "@tanstack/react-table";
-import { deleteRequest } from "@/api/request";
+import { createColumnHelper } from "@tanstack/react-table";
 import { Button } from "@/components/common/Button/Button";
-import type { DocumentRequest, RequestStatus } from "@/types";
-import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
+import type { DocumentRequest } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
 import style from "./column.module.css";
 
-// TODO: use createColumnHelper instead
-
-interface ColumnProps {
-  refreshData: () => void;
+export interface TableMeta {
+  onDownload: () => void;
+  onRemove: () => void;
 }
 
-export const createColumns = ({ refreshData }: ColumnProps): ColumnDef<DocumentRequest>[] => [
-  {
-    accessorKey: "paper.title",
-    header: () => "Paper Title",
+const columnHelper = createColumnHelper<DocumentRequest>();
+
+export const columns = [
+  columnHelper.accessor((row) => row.paper.title, {
+    id: "paperTitle",
+    header: "Paper Title",
     cell: (info) => info.getValue(),
-  },
-  {
-    accessorKey: "paper.authorName",
-    header: () => "Author",
-  },
-  {
-    accessorKey: "paper.department.departmentName",
-    header: () => "Department",
-  },
-  {
-    accessorKey: "createdAt",
-    header: () => "Request Date",
+  }),
+
+  columnHelper.accessor((row) => row.paper.authorName, {
+    id: "author",
+    header: "Author",
+    cell: (info) => info.getValue(),
+  }),
+
+  columnHelper.accessor((row) => row.paper.department.departmentName, {
+    id: "department",
+    header: "Department",
+  }),
+
+  columnHelper.accessor("createdAt", {
+    header: "Request Date",
     cell: (info) => formatDateShort(info.getValue<string>()),
-  },
-  {
-    accessorKey: "status",
-    header: () => "Status",
+  }),
+
+  columnHelper.accessor("status", {
+    header: "Status",
     cell: (info) => {
-      const status = info.getValue<RequestStatus>();
+      const status = info.getValue();
       const statusStyles = {
         ACCEPTED: style["status--accepted"],
         REJECTED: style["status--rejected"],
         PENDING: style["status--pending"],
       };
-      return (
-        <span
-          className={[style.status, statusStyles[status] || style["status--pending"]].join(" ")}
-        >
-          {status}
-        </span>
-      );
+
+      return <span className={[style.status, statusStyles[status]].join(" ")}>{status}</span>;
     },
-  },
-  {
-    id: "action",
-    header: () => "Action",
-    cell: ({ row }) => {
-      const doc = row.original;
-      const isAccepted = doc.status === "ACCEPTED";
-      const isRejected = doc.status === "REJECTED";
-      const isPending = doc.status === "PENDING";
+  }),
 
-      const handleDeleteRequest = async () => {
-        try {
-          await deleteRequest(doc.requestId);
-          alert("Request removed successfully");
-          refreshData();
-        } catch (error) {
-          const apiError = extractApiError(error);
-          const errorMessage = getUserErrorMessage(apiError);
-          alert(`Request removed successfully${errorMessage}`);
-        }
-      };
+  columnHelper.display({
+    id: "actions",
+    header: "Actions",
+    cell: ({ row, table }) => {
+      const request = row.original;
+      const meta = table.options.meta as TableMeta;
 
-      const handleDeleteClick = () => {
-        void handleDeleteRequest();
-      };
+      const isAccepted = request.status === "ACCEPTED";
+      const isRejected = request.status === "REJECTED";
+      const isPending = request.status === "PENDING";
 
       return (
         <div className={style.actionButtonContainer}>
@@ -81,20 +65,19 @@ export const createColumns = ({ refreshData }: ColumnProps): ColumnDef<DocumentR
             <Button
               className={style.actionButton}
               disabled={isPending}
-              onClick={() => {
-                console.log("TODO: API call to download file");
-              }}
+              onClick={() => meta?.onDownload()}
             >
               Download
             </Button>
           )}
+
           {isRejected && (
-            <Button className={style.actionButton} onClick={handleDeleteClick}>
+            <Button className={style.actionButton} onClick={() => meta?.onRemove()}>
               Remove
             </Button>
           )}
         </div>
       );
     },
-  },
+  }),
 ];
