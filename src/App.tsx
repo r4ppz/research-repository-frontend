@@ -5,9 +5,9 @@ import { DepartmentResearchPage } from "@/features/admin/pages/DepartmentResearc
 import { SuperRequestPage } from "@/features/admin/pages/SuperRequestPage/SuperRequestPage";
 import { SuperResearchPage } from "@/features/admin/pages/SuperResearchPage/SuperResearchPage";
 import { AuthRestorer } from "@/features/auth/components/AuthRestorer/AuthRestorer";
-import { LoginPage } from "@/features/auth/pages/LoginPage/LoginPage";
-import { LibraryPage } from "@/features/library/pages/LibraryPage/LibraryPage";
-import { StudentRequestPage } from "@/features/student/pages/StudentRequestPage/StudentRequestPage";
+import { LoginPage } from "@/features/auth/LoginPage/LoginPage";
+import { LibraryPage } from "@/features/library/LibraryPage/LibraryPage";
+import { StudentRequestPage } from "@/features/student/StudentRequestPage/StudentRequestPage";
 import { useScrollbarGutter } from "@/hooks/useScrollbarGutter";
 
 export const App = () => {

@@ -56,5 +56,12 @@
       "jsxQuoteStyle": "double",
       "trailingCommas": "all"
     }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
   }
 }
