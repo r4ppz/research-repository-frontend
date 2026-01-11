@@ -1,5 +1,6 @@
 import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 import clsx from "clsx";
+import type { ReactNode } from "react";
 import { Button } from "@/components/common/Button/Button";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
 import { useAdminRequests } from "../../hooks/useAdminDocumentRequest";
@@ -38,6 +39,36 @@ export function RequestsTable() {
   const isLastPage = pageIndex + 1 >= pageCount;
   const hasNoData = data.length === 0 && !loading;
 
+  let tableBody: ReactNode;
+  if (hasNoData) {
+    tableBody = (
+      <tbody className={style.tableBody}>
+        <tr className={style.tableRow}>
+          <td
+            className={clsx(style.tableData, style.tableBodyData, style.emptyStateCell)}
+            colSpan={table.getAllLeafColumns().length}
+          >
+            No data available
+          </td>
+        </tr>
+      </tbody>
+    );
+  } else {
+    tableBody = (
+      <tbody className={style.tableBody}>
+        {table.getRowModel().rows.map((row) => (
+          <tr className={style.tableRow} key={row.id}>
+            {row.getVisibleCells().map((cell) => (
+              <td className={clsx(style.tableData, style.tableBodyData)} key={cell.id}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    );
+  }
+
   if (loading) {
     return <LoadingSpinner message="Loading requests..." />;
   } else if (error) {
@@ -58,24 +89,7 @@ export function RequestsTable() {
               </tr>
             ))}
           </thead>
-
-          <tbody className={style.tableBody}>
-            {table.getRowModel().rows.map((row) => (
-              <tr className={style.tableRow} key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td className={clsx(style.tableData, style.tableBodyData)} key={cell.id}>
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                  </td>
-                ))}
-              </tr>
-            ))}
-
-            {hasNoData && (
-              <tr>
-                <td>No data available</td>
-              </tr>
-            )}
-          </tbody>
+          {tableBody}
         </table>
 
         {/* Pagination Controls */}
