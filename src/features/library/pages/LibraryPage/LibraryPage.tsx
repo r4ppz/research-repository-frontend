@@ -8,8 +8,8 @@ import { ResearchModal } from "@/components/layout/ResearchModal/ResearchModal";
 import { ResearchCard } from "@/features/library/components/ResearchCard/ResearchCard";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
-import { SearchNFilter } from "../components/SearchNFilter/SearchNFilter";
-import { usePapers } from "../hooks/usePapers";
+import { SearchNFilter } from "../../components/SearchNFilter/SearchNFilter";
+import { usePapers } from "../../hooks/usePapers";
 import style from "./LibraryPage.module.css";
 
 export const LibraryPage = () => {

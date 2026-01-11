@@ -6,6 +6,7 @@ import { useModalBodyClass } from "@/hooks/useModalBodyClass";
 import style from "./Modal.module.css";
 
 // DEPRECATED: use dialog instead
+// delete later
 // TODO: use radix primitive modal
 
 interface ModalProps {

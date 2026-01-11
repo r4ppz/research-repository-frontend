@@ -4,9 +4,9 @@ import { Button } from "@/components/common/Button/Button";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
 import { useModalBodyClass } from "@/hooks/useModalBodyClass";
-import style from "./ResearchPage.module.css";
+import style from "./SuperResearchPage.module.css";
 
-export const ResearchPage = () => {
+export const SuperResearchPage = () => {
   const [activeTab, setActiveTab] = useState<"active" | "archived">("active");
   const [isModalOpen, setIsModalOpen] = useState(false);
 

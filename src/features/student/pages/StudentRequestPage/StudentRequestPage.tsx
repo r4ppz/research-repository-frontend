@@ -1,17 +1,17 @@
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
-import style from "./RequestPage.module.css";
+import { RequestTable } from "../../components/RequestTable/RequestTable";
+import style from "./StudentRequestPage.module.css";
 
-export const RequestPage = () => {
+export const StudentRequestPage = () => {
   return (
     <div className={style.page}>
       <Header />
       <main className={style.main}>
         <div className={style.mainContainer}>
-          <h1 className={style.titleHeader}>Manage Document Requests (Department Admin) </h1>
-          <div className={style.loadingContainer}>
-            <section className={style.tableSection} />
-          </div>
+          <section className={style.tableSection}>
+            <RequestTable />
+          </section>
         </div>
       </main>
       <Footer />
