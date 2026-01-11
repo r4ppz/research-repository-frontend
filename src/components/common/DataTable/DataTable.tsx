@@ -4,14 +4,15 @@ import {
   getCoreRowModel,
   type OnChangeFn,
   type PaginationState,
+  type RowData,
   useReactTable,
 } from "@tanstack/react-table";
 import clsx from "clsx";
 import { Button } from "@/components/common/Button/Button";
 import style from "./DataTable.module.css";
 
-interface DataTableProps<TData> {
-  // biome-ignore lint/suspicious/noExplicitAny: <I dont fucking know>
+interface DataTableProps<TData extends RowData> {
+  // biome-ignore lint/suspicious/noExplicitAny: < Standard for TanStack ColumnDef >
   columns: ColumnDef<TData, any>[];
   data: TData[];
   pageCount: number;
@@ -19,15 +20,18 @@ interface DataTableProps<TData> {
   onPaginationChange: OnChangeFn<PaginationState>;
   caption: string;
   isLoading?: boolean;
+  // biome-ignore lint/suspicious/noExplicitAny: < This is needed to make it generic >
+  meta?: any;
 }
 
-export function DataTable<TData>({
+export function DataTable<TData extends RowData>({
   columns,
   data,
   pageCount,
   pagination,
   onPaginationChange,
   caption,
+  meta,
 }: DataTableProps<TData>) {
   const table = useReactTable({
     data,
@@ -37,6 +41,7 @@ export function DataTable<TData>({
     state: { pagination },
     onPaginationChange,
     getCoreRowModel: getCoreRowModel(),
+    meta,
   });
 
   const { pageIndex } = pagination;

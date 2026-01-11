@@ -1,7 +1,11 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Button } from "@/components/common/Button/Button";
-import type { DocumentRequest } from "@/types";
+import type { DocumentRequest, ResearchPaper } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
+
+export interface TableMeta {
+  onView: (paper: ResearchPaper) => void;
+}
 
 const columnHelper = createColumnHelper<DocumentRequest>();
 
@@ -31,17 +35,15 @@ export const columns = [
   columnHelper.display({
     id: "actions",
     header: "Action",
-    cell: (props) => (
-      // temporary add later
-      <div>
-        <Button
-          onClick={() => {
-            console.log("Action for:", props.row.original.requestId);
-          }}
-        >
-          View
-        </Button>
-      </div>
-    ),
+    cell: ({ row, table }) => {
+      const meta = table.options.meta as TableMeta;
+
+      return (
+        <div>
+          {/* Now TypeScript knows that row.original.paper is a Paper object */}
+          <Button onClick={() => meta?.onView(row.original.paper)}>View</Button>
+        </div>
+      );
+    },
   }),
 ];
