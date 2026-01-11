@@ -4,6 +4,21 @@ import clsx from "clsx";
 import { type ComponentProps, type ComponentRef, forwardRef } from "react";
 import style from "./Dialog.module.css";
 
+/**
+ * Dialog component primitives based on Radix UI Dialog.
+ * Provides accessible modal dialog functionality with custom styling.
+ *
+ * Components:
+ * - Dialog: Root dialog state provider.
+ * - DialogTrigger: Element that opens the dialog.
+ * - DialogPortal: Portal for rendering dialog outside DOM hierarchy.
+ * - DialogOverlay: Styled overlay behind the dialog.
+ * - DialogContent: Main dialog content area with close button.
+ * - DialogTitle: Dialog title element.
+ * - DialogDescription: Dialog description element.
+ * - DialogClose: Button to close the dialog.
+ */
+
 const Dialog = DialogPrimitive.Root;
 const DialogTrigger = DialogPrimitive.Trigger;
 const DialogPortal = DialogPrimitive.Portal;
