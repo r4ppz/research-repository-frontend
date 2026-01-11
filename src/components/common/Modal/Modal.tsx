@@ -5,8 +5,7 @@ import ReactDom from "react-dom";
 import { useModalBodyClass } from "@/hooks/useModalBodyClass";
 import style from "./Modal.module.css";
 
-// pls help me fix this shitty modal
-
+// DEPRECATED: use dialog instead
 // TODO: use radix primitive modal
 
 interface ModalProps {
