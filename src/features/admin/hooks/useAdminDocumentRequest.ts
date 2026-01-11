@@ -1,67 +1,51 @@
-import { useCallback, useEffect, useState } from "react";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import { type GetAdminRequestsParams, getAdminRequests } from "@/api/admin/requests";
-import type { DocumentRequest } from "@/types";
-import type { Page } from "@/types/api";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
+
 export function useAdminRequests(params: GetAdminRequestsParams = {}) {
-  const [data, setData] = useState<DocumentRequest[]>([]);
-  const [totalElements, setTotalElements] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  // 1. Manage pagination state locally
+  const [pageIndex, setPageIndex] = useState(params.page ?? 0);
+  const [pageSize, setPageSize] = useState(params.size ?? 6);
 
-  // Sync internal pagination state with initial params if provided
-  const [pageIndex, setPageIndex] = useState<number>(params.page ?? 0);
-  const [pageSize, setPageSize] = useState<number>(params.size ?? 6);
-
-  // Destructure for dependency tracking
+  // 2. Destructure other filters to include in the Query Key
   const { departmentId, status, sortBy, sortOrder } = params;
 
-  const fetchData = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const result: Page<DocumentRequest> = await getAdminRequests({
-        departmentId,
-        status,
+  // 3. TanStack Query implementation
+  const query = useQuery({
+    // The queryKey is the "ID" for this specific request.
+    // When pageIndex or filters change, a new request is triggered.
+    queryKey: ["adminRequests", { departmentId, status, pageIndex, pageSize, sortBy, sortOrder }],
+    queryFn: () =>
+      getAdminRequests({
+        ...params,
         page: pageIndex,
         size: pageSize,
-        sortBy,
-        sortOrder,
-      });
+      }),
+    // placeholderData: keepPreviousData prevents the UI from jumping to
+    // a loading spinner when moving between pages.
+    placeholderData: keepPreviousData,
+  });
 
-      setData(result.content);
-      setTotalElements(result.totalElements);
-    } catch (err) {
-      const apiError = extractApiError(err);
-      setError(getUserErrorMessage(apiError));
-      setData([]);
-      setTotalElements(0);
-    } finally {
-      setLoading(false);
-    }
-  }, [departmentId, status, pageIndex, pageSize, sortBy, sortOrder]);
-
-  useEffect(() => {
-    void fetchData();
-  }, [fetchData]);
-
-  useEffect(() => {
-    setPageIndex(0);
-  }, []);
-
+  const totalElements = query.data?.totalElements ?? 0;
   const pageCount = Math.ceil(totalElements / pageSize);
 
   return {
-    data,
-    pageIndex,
-    pageSize,
+    // Data and Status
+    data: query.data?.content ?? [],
     totalCount: totalElements,
     pageCount,
+    isLoading: query.isLoading, // First time loading
+    isFetching: query.isFetching, // Any time background fetching happens
+    error: query.error ? getUserErrorMessage(extractApiError(query.error)) : null,
+
+    // Pagination State & Setters
+    pageIndex,
+    pageSize,
     setPageIndex,
     setPageSize,
-    loading,
-    error,
-    refresh: fetchData,
+
+    // Manual Refresh (Query Client refetch)
+    refresh: query.refetch,
   };
 }

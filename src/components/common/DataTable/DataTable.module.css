@@ -1,0 +1,79 @@
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  min-width: 80vw;
+  min-height: 80vh;
+  padding: var(--space-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-active);
+}
+
+.table {
+  width: 100%;
+  margin-bottom: auto;
+  border-spacing: 0;
+  border-collapse: separate;
+}
+
+.tableCaption {
+  padding-left: var(--space-sm);
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  text-align: left;
+  caption-side: top;
+}
+
+.tableHead {
+  font-size: var(--font-size-md);
+  background: var(--color-surface);
+}
+
+.tableData {
+  padding: var(--space-md) var(--space-lg);
+}
+
+.tableHeaderData {
+  text-align: left;
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.tableBodyData {
+  text-align: left;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--color-border-default);
+  transition: background 0.15s;
+}
+
+/* Joined selector for high specificity centering */
+.tableBodyData.emptyStateCell {
+  padding: var(--space-xl) 0;
+  font-style: italic;
+  color: var(--color-gray-500);
+  text-align: center;
+}
+
+.tableRow:hover .tableBodyData {
+  background: var(--color-bg);
+}
+
+.pagination {
+  display: flex;
+  gap: var(--space-md);
+  align-items: center;
+  justify-content: flex-end;
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--color-border-default);
+}
+
+.paginationButton {
+  width: fit-content;
+}
+
+.pageIndicator {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
