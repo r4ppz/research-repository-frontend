@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import schoolLogo from "@/assets/school-logo.svg";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/common/Dialog/Dialog";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
-import { Modal } from "@/components/common/Modal/Modal";
 import { GoogleButton } from "@/features/auth/components/GoogleButton/GoogleButton";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { useGoogleLogin } from "@/features/auth/hooks/useGoogleLogin";
@@ -18,7 +23,6 @@ export const LoginPage = () => {
   const [showErrorModal, setShowErrorModal] = useState(false);
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
 
-  // To show modal
   useEffect(() => {
     if (authError && !isLoading) {
       setShowErrorModal(true);
@@ -37,6 +41,12 @@ export const LoginPage = () => {
     setAuthError(null);
   };
 
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      handleCloseModal();
+    }
+  };
+
   if (isLoading) {
     return (
       <div className={style.page}>
@@ -45,12 +55,18 @@ export const LoginPage = () => {
     );
   }
 
-  const errorMessage = authError && getUserErrorMessage(authError);
+  // Logic to determine modal content
   let modalTitle = "Login Error";
-  if (authError && isAuthorizationError(authError)) {
-    modalTitle = "Access Denied";
-  } else if (authError && isBackendNotRunning(authError)) {
-    modalTitle = "Service Unavailable";
+  let errorMessage = "An unexpected error occurred.";
+
+  if (authError) {
+    errorMessage = getUserErrorMessage(authError);
+
+    if (isAuthorizationError(authError)) {
+      modalTitle = "Access Denied";
+    } else if (isBackendNotRunning(authError)) {
+      modalTitle = "Service Unavailable";
+    }
   }
 
   return (
@@ -75,15 +91,18 @@ export const LoginPage = () => {
           />
         </div>
 
-        <p className={style.textNotice}>Single Sign-On via Google Workspace for Education</p>
+        <p className={style.textNotice}>Single Sign-On via Google Workspace</p>
       </div>
 
-      <Modal className={style.errorModal} isOpen={showErrorModal} onClose={handleCloseModal}>
-        <h2 className={style.modalTitle}>{modalTitle}</h2>
-        <div className={style.descriptionContainer}>
-          <p className={style.modalDescription}>{errorMessage}</p>
-        </div>
-      </Modal>
+      <Dialog open={showErrorModal} onOpenChange={handleOpenChange}>
+        <DialogContent className={style.errorModal}>
+          <DialogTitle className={style.modalTitle}>{modalTitle}</DialogTitle>
+
+          <div className={style.descriptionContainer}>
+            <DialogDescription className={style.modalDescription}>{errorMessage}</DialogDescription>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

@@ -20,7 +20,6 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 95vw;
   max-width: 600px;
   max-height: 90vh;
   padding: var(--space-xl);
