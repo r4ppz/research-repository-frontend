@@ -5,10 +5,6 @@ import ReactDom from "react-dom";
 import { useModalBodyClass } from "@/hooks/useModalBodyClass";
 import style from "./Modal.module.css";
 
-// DEPRECATED: use dialog instead
-// delete later
-// TODO: use radix primitive modal
-
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -16,6 +12,10 @@ interface ModalProps {
   className?: string;
 }
 
+/**
+ * @deprecated Use Dialog instead.
+ * Delete later once I'm comfortable with dialog api.
+ */
 export const Modal = ({ isOpen, onClose, children, className }: ModalProps) => {
   useModalBodyClass(isOpen);
 

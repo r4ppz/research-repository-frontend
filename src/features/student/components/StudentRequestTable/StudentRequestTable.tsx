@@ -3,7 +3,7 @@ import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinne
 import { useUserRequests } from "../../hooks/useUserRequests";
 import { columns, type TableMeta } from "./columns";
 
-export function RequestTable() {
+export function StudentRequestTable() {
   const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } =
     useUserRequests();
 

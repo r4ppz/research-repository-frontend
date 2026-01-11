@@ -1,6 +1,6 @@
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
-import { RequestTable } from "../../components/RequestTable/RequestTable";
+import { StudentRequestTable } from "@/features/student/components/StudentRequestTable/StudentRequestTable";
 import style from "./StudentRequestPage.module.css";
 
 export const StudentRequestPage = () => {
@@ -10,7 +10,7 @@ export const StudentRequestPage = () => {
       <main className={style.main}>
         <div className={style.mainContainer}>
           <section className={style.tableSection}>
-            <RequestTable />
+            <StudentRequestTable />
           </section>
         </div>
       </main>
