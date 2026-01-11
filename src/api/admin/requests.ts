@@ -10,6 +10,7 @@ export interface GetAdminRequestsParams {
   size?: number;
   sortBy?: string;
   sortOrder?: string;
+  search?: string;
 }
 
 export const getAdminRequests = async (
