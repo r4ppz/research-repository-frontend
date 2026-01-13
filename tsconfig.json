@@ -20,6 +20,7 @@
     "paths": {
       "@/*": ["src/*"]
     },
+    "ignoreDeprecations": "6.0",
     /* Type Checking Behavior */
     "skipLibCheck": true,
     "isolatedModules": true,
