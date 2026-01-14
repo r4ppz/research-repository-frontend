@@ -6,11 +6,28 @@ export const getCurrentUser = async (): Promise<User> => {
   return response.data;
 };
 
-export interface GetUserRequestsResponse {
-  requests: DocumentRequest[];
+export interface GetUserRequestsParams {
+  page?: number;
+  size?: number;
+  status?: "PENDING" | "ACCEPTED" | "REJECTED";
+  search?: string;
+  sortBy?: "createdAt" | "paper.title" | "status";
+  sortOrder?: "asc" | "desc";
 }
 
-export const getUserRequests = async (): Promise<GetUserRequestsResponse> => {
-  const response = await axiosClient.get<GetUserRequestsResponse>("/api/users/me/requests");
+export interface GetUserRequestsResponse {
+  content: DocumentRequest[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+}
+
+export const getUserRequests = async (
+  params?: GetUserRequestsParams,
+): Promise<GetUserRequestsResponse> => {
+  const response = await axiosClient.get<GetUserRequestsResponse>("/api/users/me/requests", {
+    params,
+  });
   return response.data;
 };

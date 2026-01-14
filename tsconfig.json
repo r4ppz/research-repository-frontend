@@ -16,9 +16,9 @@
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     /* Path Aliases */
-    "baseUrl": ".",
+    /* Path Aliases */
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     },
     /* Type Checking Behavior */
     "skipLibCheck": true,

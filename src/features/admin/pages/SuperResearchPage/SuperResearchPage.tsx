@@ -3,14 +3,15 @@ import { useState } from "react";
 import { Button } from "@/components/common/Button/Button";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
-import { useModalBodyClass } from "@/hooks/useModalBodyClass";
-import style from "./ResearchPage.module.css";
+import style from "./SuperResearchPage.module.css";
 
-export const ResearchPage = () => {
+export const SuperResearchPage = () => {
   const [activeTab, setActiveTab] = useState<"active" | "archived">("active");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [_isModalOpen, setIsModalOpen] = useState(false);
 
-  useModalBodyClass(isModalOpen);
+  const handleCreate = () => {
+    setIsModalOpen(true);
+  };
 
   return (
     <div className={style.page}>
@@ -18,13 +19,8 @@ export const ResearchPage = () => {
       <main className={style.main}>
         <div className={style.mainContainer}>
           <div className={style.headerSection}>
-            <h1 className={style.titleHeader}>Manage Research Papers (Department Admin)</h1>
-            <Button
-              onClick={() => {
-                setIsModalOpen(true);
-              }}
-              className={style.createButton}
-            >
+            <h1 className={style.titleHeader}>Manage All Research Papers (Super Admin)</h1>
+            <Button onClick={handleCreate} className={style.createButton}>
               <FilePlus2 className={style.iconTab} />
               Add Paper
             </Button>
@@ -38,7 +34,7 @@ export const ResearchPage = () => {
                 setActiveTab("active");
               }}
             >
-              <RotateCcw className={style.iconTab} />
+              <Archive className={style.iconTab} />
               Active Papers
             </Button>
             <Button
@@ -48,7 +44,7 @@ export const ResearchPage = () => {
                 setActiveTab("archived");
               }}
             >
-              <Archive className={style.iconTab} />
+              <RotateCcw className={style.iconTab} />
               Archived Papers
             </Button>
           </div>

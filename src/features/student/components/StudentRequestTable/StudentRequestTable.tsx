@@ -1,22 +1,26 @@
 import { DataTable } from "@/components/common/DataTable/DataTable";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
-import { useAdminRequests } from "../../hooks/useAdminDocumentRequest";
+import { useUserRequests } from "../../hooks/useUserRequests";
 import { columns, type TableMeta } from "./columns";
 
-export function RequestsTable() {
-  const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } =
-    useAdminRequests();
+export function StudentRequestTable() {
+  const {
+    data,
+    pageIndex,
+    pageSize,
+    pageCount,
+    setPageIndex,
+    isLoading,
+    error,
+  } = useUserRequests();
 
   const tableMeta: TableMeta = {
-    onView: (paper) => {
-      console.log("Button clicked! Here is the paper object:", paper);
-      console.log("Title:", paper.title);
-      console.log("File Path:", paper.filePath);
-    },
+    onDownload: () => {},
+    onRemove: () => {},
   };
 
-  if (isLoading) {
-    return <LoadingSpinner message="Loading requests..." />;
+  if (isLoading && data.length === 0) {
+    return <LoadingSpinner message="Loading your requests..." />;
   }
 
   if (error) {
@@ -25,14 +29,16 @@ export function RequestsTable() {
 
   return (
     <DataTable
-      caption="Document Requests"
+      caption="My Research Requests"
       columns={columns}
       data={data}
       pageCount={pageCount}
       pagination={{ pageIndex, pageSize }}
       onPaginationChange={(updater) => {
         const nextState =
-          typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
+          typeof updater === "function"
+            ? updater({ pageIndex, pageSize })
+            : updater;
         setPageIndex(nextState.pageIndex);
       }}
       meta={tableMeta}

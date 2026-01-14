@@ -65,8 +65,3 @@ hr {
   background-color: var(--color-border-default);
   border: none;
 }
-
-body.modal-open,
-html.modal-open {
-  overflow: hidden;
-}

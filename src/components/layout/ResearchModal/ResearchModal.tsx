@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { getMyPaperRequest } from "@/api/paper";
 import { createRequest } from "@/api/request";
 import { Button } from "@/components/common/Button/Button";
+import { Dialog, DialogContent, DialogTitle } from "@/components/common/Dialog/Dialog";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
-import { Modal } from "@/components/common/Modal/Modal";
 import { useAuth } from "@/features/auth/context/useAuth";
 import { usePaperById } from "@/features/library/hooks/usePaperById";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
@@ -34,8 +34,8 @@ export const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) 
         try {
           await getMyPaperRequest(paperId);
           setRequestExists(true);
-        } catch (error: unknown) {
-          const apiError = extractApiError(error);
+        } catch (err: unknown) {
+          const apiError = extractApiError(err);
           console.log(getUserErrorMessage(apiError));
           setRequestExists(false);
         }
@@ -48,16 +48,11 @@ export const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) 
   }, [paperId, user]);
 
   const requestDocument = async () => {
-    if (isUserAdmin(user)) {
-      return;
-    }
-
-    if (requestExists || isRequestLoading || !paperId) {
+    if (isUserAdmin(user) || requestExists || isRequestLoading || !paperId) {
       return;
     }
 
     setIsRequestLoading(true);
-
     try {
       await createRequest({ paperId });
       setRequestExists(true);
@@ -68,24 +63,38 @@ export const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) 
     }
   };
 
-  const handleRequestDocument = () => {
-    void requestDocument();
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      onClose();
+    }
   };
 
   if (loading) {
     return (
-      <Modal className={style.modalLoadingOrError} isOpen={isOpen} onClose={onClose}>
-        <LoadingSpinner message="Loading..." />
-      </Modal>
+      <Dialog open={isOpen} onOpenChange={handleOpenChange}>
+        <DialogContent
+          className={`${style.modalLoadingOrError} ${style.modal}`}
+          aria-describedby={undefined}
+        >
+          <DialogTitle className={style.title}>Loading...</DialogTitle>
+          <LoadingSpinner message="Fetching details" />
+        </DialogContent>
+      </Dialog>
     );
   }
 
   if (error || !paper) {
     return (
-      <Modal className={style.modalLoadingOrError} isOpen={isOpen} onClose={onClose}>
-        <p>{error ?? "Paper not found"}</p>
-        <Button onClick={onClose}>Close</Button>
-      </Modal>
+      <Dialog open={isOpen} onOpenChange={handleOpenChange}>
+        <DialogContent
+          className={`${style.modalLoadingOrError} ${style.modal}`}
+          aria-describedby={undefined}
+        >
+          <DialogTitle className={style.title}>Error</DialogTitle>
+          <p>{error ?? "Paper not found"}</p>
+          <Button onClick={onClose}>Close</Button>
+        </DialogContent>
+      </Dialog>
     );
   }
 
@@ -93,33 +102,43 @@ export const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) 
   const department = paper.department.departmentName;
 
   return (
-    <Modal className={style.modal} isOpen={isOpen} onClose={onClose}>
-      <div className={style.infoWrapper}>
-        <h1 className={style.title}>{paper.title}</h1>
-        <div className={style.authordateWrapper}>
-          <p className={style.author}>{paper.authorName}</p>
-          <p className={style.date}>{formattedDate}</p>
-        </div>
-      </div>
-      <div className={style.departmentArchivedContainer}>
-        <div className={style.departmentContainer}>
-          <p className={style.department}>{department}</p>
-        </div>
-        {paper.archived && (
-          <div className={style.archivedContainer}>
-            <p className={style.archived}>Archived</p>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
+      <DialogContent className={style.modal} aria-describedby={undefined}>
+        <div className={style.infoWrapper}>
+          <DialogTitle className={style.title}>{paper.title}</DialogTitle>
+          <div className={style.authordateWrapper}>
+            <p className={style.author}>{paper.authorName}</p>
+            <p className={style.date}>{formattedDate}</p>
           </div>
+        </div>
+
+        <div className={style.departmentArchivedContainer}>
+          <div className={style.departmentContainer}>
+            <p className={style.department}>{department}</p>
+          </div>
+          {paper.archived && (
+            <div className={style.archivedContainer}>
+              <p className={style.archived}>Archived</p>
+            </div>
+          )}
+        </div>
+
+        <div className={style.abstractWrapper}>
+          <h3 className={style.abtractHeader}>Abstract</h3>
+          <p className={style.abstractText}>{paper.abstractText}</p>
+        </div>
+
+        {isUserStudentOrTeacher(user) && (
+          <Button
+            onClick={() => {
+              void requestDocument();
+            }}
+            disabled={requestExists || isRequestLoading}
+          >
+            {requestExists ? "Request Submitted" : "Request Document"}
+          </Button>
         )}
-      </div>
-      <div className={style.abstractWrapper}>
-        <h3 className={style.abtractHeader}>Abstract</h3>
-        <p className={style.abstractText}>{paper.abstractText}</p>
-      </div>
-      {isUserStudentOrTeacher(user) && (
-        <Button onClick={handleRequestDocument} disabled={requestExists || isRequestLoading}>
-          {requestExists ? "Request Submitted" : "Request Document"}
-        </Button>
-      )}
-    </Modal>
+      </DialogContent>
+    </Dialog>
   );
 };

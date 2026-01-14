@@ -24,7 +24,8 @@
         "noExcessiveCognitiveComplexity": {
           "level": "error",
           "options": { "maxAllowedComplexity": 15 }
-        }
+        },
+        "noUselessTernary": "error"
       },
       "correctness": {
         "noUndeclaredDependencies": "error",
@@ -54,6 +55,13 @@
       "quoteStyle": "double",
       "jsxQuoteStyle": "double",
       "trailingCommas": "all"
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
     }
   }
 }

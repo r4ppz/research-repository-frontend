@@ -1,31 +1,36 @@
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100dvh;
+  inset: 0;
+  z-index: 50;
   background: var(--color-overlay);
 }
 
-.modal {
+.contentWrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 51;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.dialogContent {
   position: relative;
   display: flex;
   flex-direction: column;
+  max-width: 600px;
   max-height: 90vh;
-  padding: var(--space-xl) var(--space-lg);
-  margin: var(--space-lg);
-  overflow: hidden;
+  padding: var(--space-xl);
   overflow-y: auto;
+  pointer-events: auto;
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-resting);
   transition: var(--transition-elevation);
 }
 @media (min-width: 768px) {
-  .modal {
+  .dialogContent {
     min-width: 25%;
     max-height: 90%;
     padding: var(--space-xl) var(--space-2xl);
@@ -33,7 +38,7 @@
     transition: var(--transition-elevation);
   }
 
-  .modal:hover {
+  .dialogContent:hover {
     box-shadow: var(--elevation-shadow-hover);
     transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
   }
@@ -41,11 +46,13 @@
 
 .closeButton {
   position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 1;
+  top: var(--space-md);
+  right: var(--space-md);
+  z-index: 10;
+  color: var(--color-text-secondary);
+  cursor: pointer;
   background: transparent;
-  border: transparent;
+  border: none;
   transition: var(--transition-elevation);
 }
 .closeButton:hover {
@@ -58,4 +65,10 @@
 .iconClose {
   width: var(--icon-size-xl);
   height: var(--icon-size-xl);
+}
+
+.title {
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
 }

@@ -6,10 +6,10 @@ import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
 import { ResearchModal } from "@/components/layout/ResearchModal/ResearchModal";
 import { ResearchCard } from "@/features/library/components/ResearchCard/ResearchCard";
+import { SearchNFilter } from "@/features/library/components/SearchNFilter/SearchNFilter";
+import { usePapers } from "@/features/library/hooks/usePapers";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
-import { SearchNFilter } from "../components/SearchNFilter/SearchNFilter";
-import { usePapers } from "../hooks/usePapers";
 import style from "./LibraryPage.module.css";
 
 export const LibraryPage = () => {

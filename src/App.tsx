@@ -1,18 +1,15 @@
 import { Route, Routes } from "react-router-dom";
-import { ProtectedRoute } from "@/components/common/Route/ProtectedRoute";
-import { RequestPage as DepartmentAdminRequestsPage } from "@/features/admin/department/RequestPage/RequestPage";
-import { ResearchPage as DepartmentAdminResearchPage } from "@/features/admin/department/ResearchPage/ResearchPage";
-import { RequestPage as SuperAdminRequestsPage } from "@/features/admin/super/RequestPage/RequestPage";
-import { ResearchPage as SuperAdminResearchPage } from "@/features/admin/super/ResearchPage/ResearchPage";
+import { ProtectedRoute } from "@/components/layout/ProtectedRoute/ProtectedRoute";
+import { DepartmentRequestPage } from "@/features/admin/pages/DepartmentRequestPage/DepartmentRequestPage";
+import { DepartmentResearchPage } from "@/features/admin/pages/DepartmentResearchPage/DepartmentResearchPage";
+import { SuperRequestPage } from "@/features/admin/pages/SuperRequestPage/SuperRequestPage";
+import { SuperResearchPage } from "@/features/admin/pages/SuperResearchPage/SuperResearchPage";
 import { AuthRestorer } from "@/features/auth/components/AuthRestorer/AuthRestorer";
 import { LoginPage } from "@/features/auth/LoginPage/LoginPage";
 import { LibraryPage } from "@/features/library/LibraryPage/LibraryPage";
-import { RequestPage as StudentRequestsPage } from "@/features/student/RequestPage/RequestPage";
-import { useScrollbarGutter } from "@/hooks/useScrollbarGutter";
+import { StudentRequestPage } from "@/features/student/StudentRequestPage/StudentRequestPage";
 
 export const App = () => {
-  useScrollbarGutter();
-
   return (
     <>
       <AuthRestorer />
@@ -31,7 +28,7 @@ export const App = () => {
           path="/student/requests"
           element={
             <ProtectedRoute allowedRoles={["STUDENT"]}>
-              <StudentRequestsPage />
+              <StudentRequestPage />
             </ProtectedRoute>
           }
         />
@@ -39,7 +36,7 @@ export const App = () => {
           path="/department-admin/requests"
           element={
             <ProtectedRoute allowedRoles={["DEPARTMENT_ADMIN"]}>
-              <DepartmentAdminRequestsPage />
+              <DepartmentRequestPage />
             </ProtectedRoute>
           }
         />
@@ -47,7 +44,7 @@ export const App = () => {
           path="/department-admin/research"
           element={
             <ProtectedRoute allowedRoles={["DEPARTMENT_ADMIN"]}>
-              <DepartmentAdminResearchPage />
+              <DepartmentResearchPage />
             </ProtectedRoute>
           }
         />
@@ -55,7 +52,7 @@ export const App = () => {
           path="/super-admin/requests"
           element={
             <ProtectedRoute allowedRoles={["SUPER_ADMIN"]}>
-              <SuperAdminRequestsPage />
+              <SuperRequestPage />
             </ProtectedRoute>
           }
         />
@@ -63,7 +60,7 @@ export const App = () => {
           path="/super-admin/research"
           element={
             <ProtectedRoute allowedRoles={["SUPER_ADMIN"]}>
-              <SuperAdminResearchPage />
+              <SuperResearchPage />
             </ProtectedRoute>
           }
         />
