@@ -4,15 +4,8 @@ import { useUserRequests } from "../../hooks/useUserRequests";
 import { columns, type TableMeta } from "./columns";
 
 export function StudentRequestTable() {
-  const {
-    data,
-    pageIndex,
-    pageSize,
-    pageCount,
-    setPageIndex,
-    isLoading,
-    error,
-  } = useUserRequests();
+  const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } =
+    useUserRequests();
 
   const tableMeta: TableMeta = {
     onDownload: () => {},
@@ -36,9 +29,7 @@ export function StudentRequestTable() {
       pagination={{ pageIndex, pageSize }}
       onPaginationChange={(updater) => {
         const nextState =
-          typeof updater === "function"
-            ? updater({ pageIndex, pageSize })
-            : updater;
+          typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
         setPageIndex(nextState.pageIndex);
       }}
       meta={tableMeta}
