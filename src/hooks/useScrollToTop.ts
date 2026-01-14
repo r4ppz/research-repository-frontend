@@ -6,6 +6,5 @@ export function useScrollToTop(ref: RefObject<HTMLElement | null>, deps: readonl
     if (el) {
       el.scrollTo({ top: 0, behavior: "smooth" });
     }
-    // biome-ignore lint/correctness/useExhaustiveDependencies: < it's fine >
-  }, deps);
+  }, [ref, ...deps]);
 }
