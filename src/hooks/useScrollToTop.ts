@@ -1,6 +1,6 @@
 import { type RefObject, useEffect } from "react";
 
-export function useScrollToTop(ref: RefObject<HTMLElement | null>, deps: readonly unknown[]) {
+export function useScrollToTop(ref: RefObject<HTMLElement | null>, deps: readonly unknown[]): void {
   useEffect(() => {
     const el = ref.current;
     if (el) {
