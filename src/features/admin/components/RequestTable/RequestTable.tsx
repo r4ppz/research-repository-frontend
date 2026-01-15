@@ -1,3 +1,4 @@
+import type { PaginationState } from "@tanstack/react-table";
 import { DataTable } from "@/components/common/DataTable/DataTable";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
 import { useAdminRequests } from "../../hooks/useAdminDocumentRequest";
@@ -31,8 +32,14 @@ export function RequestsTable() {
       pageCount={pageCount}
       pagination={{ pageIndex, pageSize }}
       onPaginationChange={(updater) => {
-        const nextState =
-          typeof updater === "function" ? updater({ pageIndex, pageSize }) : updater;
+        let nextState: PaginationState;
+
+        if (typeof updater === "function") {
+          nextState = updater({ pageIndex, pageSize });
+        } else {
+          nextState = updater;
+        }
+
         setPageIndex(nextState.pageIndex);
       }}
       meta={tableMeta}
