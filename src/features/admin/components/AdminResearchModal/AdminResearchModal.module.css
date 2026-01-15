@@ -1,0 +1,131 @@
+.modalLoadingOrError {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  min-height: 60vh;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: left;
+}
+@media (min-width: 768px) {
+  .modalLoadingOrError {
+    width: 100%;
+    max-width: 700px;
+    max-height: 90%;
+  }
+}
+
+.modal {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  text-align: left;
+}
+
+@media (min-width: 768px) {
+  .modal {
+    width: 100%;
+    max-width: 700px;
+    max-height: 90%;
+  }
+}
+
+.infoWrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+}
+@media (min-width: 768px) {
+  .title {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.authordateWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+  font-size: var(--font-size-sm);
+}
+@media (min-width: 768px) {
+  .authordateWrapper {
+    flex-direction: row;
+    gap: 0;
+    justify-content: space-between;
+  }
+}
+
+.author,
+.date {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+}
+
+.departmentArchivedContainer {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-sm);
+}
+
+.departmentContainer {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: var(--space-xs) var(--space-md);
+  background-color: var(--color-gray-300);
+  border-radius: var(--radius-lg);
+}
+
+.department {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+}
+
+.archivedContainer {
+  align-self: flex-start;
+  padding: var(--space-xs) var(--space-md);
+  background-color: var(--color-orange-500);
+  border-radius: var(--radius-lg);
+}
+
+.archived {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-normal);
+}
+
+.abstractWrapper {
+  margin-bottom: var(--space-lg);
+  overflow-y: auto;
+}
+
+.abtractHeader {
+  margin-bottom: var(--space-xs);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+}
+@media (min-width: 768px) {
+  .abtractHeader {
+    font-size: var(--font-size-lg);
+  }
+}
+
+.abstractText {
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+  color: var(--color-text);
+  text-align: justify;
+}
+@media (min-width: 600px) {
+  .abstractText {
+    font-size: var(--font-size-md);
+  }
+}

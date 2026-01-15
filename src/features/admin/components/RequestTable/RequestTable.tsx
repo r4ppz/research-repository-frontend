@@ -1,18 +1,21 @@
 import type { PaginationState } from "@tanstack/react-table";
+import { useState } from "react";
 import { DataTable } from "@/components/common/DataTable/DataTable";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
+import type { ResearchPaper } from "@/types";
 import { useAdminRequests } from "../../hooks/useAdminDocumentRequest";
+import { AdminResearchModal } from "../AdminResearchModal/AdminResearchModal";
 import { columns, type TableMeta } from "./columns";
 
 export function RequestsTable() {
+  const [selectedPaper, setSelectedPaper] = useState<ResearchPaper | null>(null);
+
   const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } =
     useAdminRequests();
 
   const tableMeta: TableMeta = {
     onView: (paper) => {
-      console.log("Button clicked! Here is the paper object:", paper);
-      console.log("Title:", paper.title);
-      console.log("File Path:", paper.filePath);
+      setSelectedPaper(paper);
     },
   };
 
@@ -25,24 +28,32 @@ export function RequestsTable() {
   }
 
   return (
-    <DataTable
-      caption="Document Requests"
-      columns={columns}
-      data={data}
-      pageCount={pageCount}
-      pagination={{ pageIndex, pageSize }}
-      onPaginationChange={(updater) => {
-        let nextState: PaginationState;
+    <>
+      <DataTable
+        caption="Document Requests"
+        columns={columns}
+        data={data}
+        pageCount={pageCount}
+        pagination={{ pageIndex, pageSize }}
+        onPaginationChange={(updater) => {
+          let nextState: PaginationState;
 
-        if (typeof updater === "function") {
-          nextState = updater({ pageIndex, pageSize });
-        } else {
-          nextState = updater;
-        }
+          if (typeof updater === "function") {
+            nextState = updater({ pageIndex, pageSize });
+          } else {
+            nextState = updater;
+          }
 
-        setPageIndex(nextState.pageIndex);
-      }}
-      meta={tableMeta}
-    />
+          setPageIndex(nextState.pageIndex);
+        }}
+        meta={tableMeta}
+      />
+
+      <AdminResearchModal
+        isOpen={!!selectedPaper}
+        paper={selectedPaper}
+        onClose={() => setSelectedPaper(null)}
+      />
+    </>
   );
 }
