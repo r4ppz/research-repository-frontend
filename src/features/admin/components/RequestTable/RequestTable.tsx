@@ -13,6 +13,8 @@ export function RequestsTable() {
   const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } =
     useAdminRequests();
 
+  // TODO: add reject accept func in here
+  // NOTE: still working on backend endpoint for this
   const tableMeta: TableMeta = {
     onView: (paper) => {
       setSelectedPaper(paper);
