@@ -2,9 +2,12 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { Button } from "@/components/common/Button/Button";
 import type { DocumentRequest, ResearchPaper } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
+import style from "./columns.module.css";
 
 export interface TableMeta {
   onView: (paper: ResearchPaper) => void;
+  onReject: (requestId: number) => void;
+  onAccept: (requestId: number) => void;
 }
 
 const columnHelper = createColumnHelper<DocumentRequest>();
@@ -39,9 +42,10 @@ export const columns = [
       const meta = table.options.meta as TableMeta;
 
       return (
-        <div>
-          {/* Now TypeScript knows that row.original.paper is a Paper object */}
+        <div className={style.actionButtonContainer}>
           <Button onClick={() => meta?.onView(row.original.paper)}>View</Button>
+          <Button onClick={() => meta?.onReject(row.original.requestId)}>Reject</Button>
+          <Button onClick={() => meta?.onAccept(row.original.requestId)}>Accept</Button>
         </div>
       );
     },

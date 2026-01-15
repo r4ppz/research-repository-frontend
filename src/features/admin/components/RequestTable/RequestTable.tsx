@@ -17,6 +17,12 @@ export function RequestsTable() {
     onView: (paper) => {
       setSelectedPaper(paper);
     },
+    onReject: () => {
+      console.log("Reject");
+    },
+    onAccept: () => {
+      console.log("Accept");
+    },
   };
 
   if (isLoading) {
