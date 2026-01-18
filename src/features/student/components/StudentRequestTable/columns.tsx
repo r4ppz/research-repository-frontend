@@ -7,6 +7,7 @@ import style from "./column.module.css";
 export interface TableMeta {
   onDownload: () => void;
   onRemove: (requestId: number) => void;
+  removingIds?: Set<number>;
 }
 
 const columnHelper = createColumnHelper<DocumentRequest>();
@@ -71,14 +72,19 @@ export const columns = [
             </Button>
           )}
 
-          {isRejected && (
-            <Button
-              className={style.actionButton}
-              onClick={() => meta?.onRemove(request.requestId)}
-            >
-              Remove
-            </Button>
-          )}
+          {isRejected &&
+            (() => {
+              const isRemoving = !!meta.removingIds && meta.removingIds.has(request.requestId);
+              return (
+                <Button
+                  className={style.actionButton}
+                  onClick={() => meta?.onRemove(request.requestId)}
+                  disabled={isRemoving}
+                >
+                  {isRemoving ? "Removing..." : "Remove"}
+                </Button>
+              );
+            })()}
         </div>
       );
     },

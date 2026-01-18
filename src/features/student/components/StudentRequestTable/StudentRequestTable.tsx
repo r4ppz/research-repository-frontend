@@ -8,10 +8,11 @@ import { useUserRequests } from "../../hooks/useUserRequests";
 import { columns, type TableMeta } from "./columns";
 
 export function StudentRequestTable() {
+  const [removalError, setRemovalError] = useState<string | null>(null);
+  const [removingIds, setRemovingIds] = useState<Set<number>>(new Set());
+
   const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error, refresh } =
     useUserRequests();
-
-  const [removalError, setRemovalError] = useState<string | null>(null);
 
   const tableMeta: TableMeta = {
     onDownload: () => {},
@@ -19,12 +20,29 @@ export function StudentRequestTable() {
     // TODO: test once onReject is good enough
     onRemove: async (requestId: number) => {
       setRemovalError(null);
+      // Check before mutating state or firing network
+      if (removingIds.has(requestId)) {
+        return;
+      }
+
+      setRemovingIds((prev) => {
+        const newSet = new Set(prev);
+        newSet.add(requestId);
+        return newSet;
+      });
+
       try {
         await deleteRequest(requestId);
         await refresh();
       } catch (error) {
         const errorMessage = extractApiError(error);
         setRemovalError(getUserErrorMessage(errorMessage));
+      } finally {
+        setRemovingIds((prev) => {
+          const newSet = new Set(prev);
+          newSet.delete(requestId);
+          return newSet;
+        });
       }
     },
   };
@@ -55,7 +73,7 @@ export function StudentRequestTable() {
 
         setPageIndex(nextState.pageIndex);
       }}
-      meta={tableMeta}
+      meta={{ ...tableMeta, removingIds }}
     />
   );
 }
