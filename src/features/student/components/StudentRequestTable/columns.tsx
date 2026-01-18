@@ -6,7 +6,7 @@ import style from "./column.module.css";
 
 export interface TableMeta {
   onDownload: () => void;
-  onRemove: () => void;
+  onRemove: (requestId: number) => void;
 }
 
 const columnHelper = createColumnHelper<DocumentRequest>();
@@ -72,7 +72,10 @@ export const columns = [
           )}
 
           {isRejected && (
-            <Button className={style.actionButton} onClick={() => meta?.onRemove()}>
+            <Button
+              className={style.actionButton}
+              onClick={() => meta?.onRemove(request.requestId)}
+            >
               Remove
             </Button>
           )}

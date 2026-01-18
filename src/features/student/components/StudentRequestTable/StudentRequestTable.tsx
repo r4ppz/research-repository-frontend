@@ -1,24 +1,40 @@
 import type { PaginationState } from "@tanstack/react-table";
+import { useState } from "react";
+import { deleteRequest } from "@/api/request";
 import { DataTable } from "@/components/common/DataTable/DataTable";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
+import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 import { useUserRequests } from "../../hooks/useUserRequests";
 import { columns, type TableMeta } from "./columns";
 
 export function StudentRequestTable() {
-  const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } =
+  const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error, refresh } =
     useUserRequests();
+
+  const [removalError, setRemovalError] = useState<string | null>(null);
 
   const tableMeta: TableMeta = {
     onDownload: () => {},
-    onRemove: () => {},
+    // NOTE: this is still not tested
+    // TODO: test once onReject is good enough
+    onRemove: async (requestId: number) => {
+      setRemovalError(null);
+      try {
+        await deleteRequest(requestId);
+        await refresh();
+      } catch (error) {
+        const errorMessage = extractApiError(error);
+        setRemovalError(getUserErrorMessage(errorMessage));
+      }
+    },
   };
 
   if (isLoading && data.length === 0) {
     return <LoadingSpinner message="Loading your requests..." />;
   }
 
-  if (error) {
-    return <p>Failed to load: {error}</p>;
+  if (error || removalError) {
+    return <p>Failed to load: {error || removalError}</p>;
   }
 
   return (
