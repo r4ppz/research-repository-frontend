@@ -4,6 +4,9 @@
   width: 100%;
   min-height: 100dvh;
   background-color: var(--color-bg);
+  height: 100vh;
+  /* I need this for the useScrollToTop hook works. idk why */
+  overflow-y: auto;
 }
 
 .main {
