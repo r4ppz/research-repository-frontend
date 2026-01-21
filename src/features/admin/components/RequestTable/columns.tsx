@@ -58,16 +58,17 @@ const actionsColumn = columnHelper.display({
         </Button>
         <Button
           className={style.actionButtonContainer}
-          disabled={isRejecting}
+          disabled={isRejecting || isAccepting}
           onClick={() => {
             meta.onReject(requestId);
           }}
         >
           <X size={16} />
         </Button>
+
         <Button
           className={style.actionButtonContainer}
-          disabled={isAccepting}
+          disabled={isAccepting || isRejecting}
           onClick={() => {
             meta.onAccept(requestId);
           }}

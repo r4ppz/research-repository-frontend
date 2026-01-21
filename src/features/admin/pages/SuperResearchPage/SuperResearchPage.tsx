@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/common/Button/Button";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
+import { PapersTable } from "../../components/PapersTable/PapersTable";
 import style from "./SuperResearchPage.module.css";
 
 export const SuperResearchPage = () => {
@@ -49,7 +50,9 @@ export const SuperResearchPage = () => {
             </Button>
           </div>
 
-          <div className={style.tableSection} />
+          <div className={style.tableSection}>
+            <PapersTable archived={activeTab === "archived"} showDepartment={true} />
+          </div>
         </div>
       </main>
       <Footer />
