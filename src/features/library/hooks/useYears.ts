@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getYears } from "@/api/filter";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
@@ -13,25 +13,25 @@ export const useYears = (): UseYearsReturn => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchYears = useCallback(async (): Promise<void> => {
-    setLoading(true);
-    setError(null);
-
-    try {
-      const result = await getYears();
-      setYears(result.map(String));
-    } catch (err) {
-      const apiError = extractApiError(err);
-      setError(getUserErrorMessage(apiError));
-      setYears([]);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
   useEffect(() => {
+    const fetchYears = async (): Promise<void> => {
+      setLoading(true);
+      setError(null);
+
+      try {
+        const result = await getYears();
+        setYears(result.map(String));
+      } catch (err) {
+        const apiError = extractApiError(err);
+        setError(getUserErrorMessage(apiError));
+        setYears([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     void fetchYears();
-  }, [fetchYears]);
+  }, []);
 
   return {
     years,

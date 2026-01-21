@@ -15,6 +15,7 @@ export default [
   // Base TypeScript configs (these return arrays, so we spread them)
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
+
   {
     files: ["src/**/*.{ts,tsx}", "vite.config.ts", "eslint.config.js"],
     languageOptions: {
@@ -41,8 +42,8 @@ export default [
         { args: "after-used", argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
 
-      // React Hooks
-      ...reactHooks.configs.recommended.rules,
+      // React Compiler compatible ESLint rules (recommended-latest preset)
+      ...reactHooks.configs["recommended-latest"].rules,
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
 
       // Sorting (native ESLint)
