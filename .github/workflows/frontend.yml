@@ -40,8 +40,11 @@ jobs:
         run: npm run check
 
       # 5. Build the production files into the /dist folder
+      # Injects the production API URL from GitHub Secrets
       - name: Build Project
         run: npm run build
+        env:
+          VITE_BACKEND_API_BASE_URL: ${{ secrets.VITE_BACKEND_API_BASE_URL }}
 
       # 6. Only deploy if we are on the 'main' branch (not on a Pull Request)
       - name: Deploy to GitHub Pages
