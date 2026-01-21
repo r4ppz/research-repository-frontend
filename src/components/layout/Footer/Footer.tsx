@@ -48,8 +48,8 @@ export const Footer = ({ className, ...props }: ComponentProps) => {
             <div className={style.linksContainer}>
               <h3 className={style.linkText}>Links</h3>
               <Link href="https://www.facebook.com/assumptiondavao.edu.ph">Facebook</Link>
-              <Link href="https://github.com/r4ppz19/research-repository">Github</Link>
-              <Link href="https://github.com/r4ppz/research-repo-docs">About</Link>
+              <Link href="https://github.com/r4ppz/research-repository">Github</Link>
+              <Link href="https://r4ppz.github.io/research-repo-docs/">Docs</Link>
             </div>
 
             <div className={style.contactContainer}>
@@ -68,11 +68,7 @@ export const Footer = ({ className, ...props }: ComponentProps) => {
               >
                 +63 82 123 4567
               </Link>
-              <Link
-                href={
-                  "https://www.google.com/maps/place/Assumption+College+of+Davao/@7.0878009,125.6237942,19.61z/data=!4m6!3m5!1s0x32f9115554d3f877:0x88ff74ef25a00438!8m2!3d7.087841!4d125.6238969!16s%2Fm%2F04657vd?entry=ttu&g_ep=EgoyMDI1MTAwNC4wIKXMDSoASAFQAw%3D%3D"
-                }
-              >
+              <Link href={"https://maps.app.goo.gl/3UeRN9nsPBYVUYyLA"}>
                 Cabaguio Avenue, Davao City
               </Link>
             </div>
