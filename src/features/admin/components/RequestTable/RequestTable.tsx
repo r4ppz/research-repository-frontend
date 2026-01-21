@@ -6,9 +6,13 @@ import type { ResearchPaper } from "@/types";
 import { useAdminRequests } from "../../hooks/useAdminDocumentRequest";
 import { useAcceptRequest, useRejectRequest } from "../../hooks/useAdminRequestMutations";
 import { AdminResearchModal } from "../AdminResearchModal/AdminResearchModal";
-import { columns, type TableMeta } from "./columns";
+import { columns, columnsWithoutDepartment, type TableMeta } from "./columns";
 
-export function RequestsTable() {
+interface RequestsTableProps {
+  showDepartment?: boolean;
+}
+
+export function RequestsTable({ showDepartment = true }: RequestsTableProps) {
   const [selectedPaper, setSelectedPaper] = useState<ResearchPaper | null>(null);
 
   const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } = useAdminRequests(
@@ -32,6 +36,8 @@ export function RequestsTable() {
     pendingRejectId: rejectMutation.isPending ? rejectMutation.variables : null,
   };
 
+  const tableColumns = showDepartment ? columns : columnsWithoutDepartment;
+
   if (isLoading) {
     return <LoadingSpinner message="Loading requests..." />;
   }
@@ -44,7 +50,7 @@ export function RequestsTable() {
     <>
       <DataTable
         caption="Document Requests"
-        columns={columns}
+        columns={tableColumns}
         data={data}
         pageCount={pageCount}
         pagination={{ pageIndex, pageSize }}
