@@ -17,6 +17,9 @@ tsconfig.tsbuildinfo
 .env
 .env*
 
+# ESLint cache
+.eslintcache
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
