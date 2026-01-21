@@ -18,6 +18,7 @@ export interface DocumentRequest {
   user?: User;
   requestId: number;
   status: RequestStatus;
+  reason?: string; // Present when status is REJECTED
   createdAt: string; // ISO datetime
   updatedAt: string; // ISO datetime
   paper: ResearchPaper;

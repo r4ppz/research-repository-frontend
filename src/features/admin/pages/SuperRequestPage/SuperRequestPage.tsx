@@ -10,7 +10,7 @@ export const SuperRequestPage = () => {
       <main className={style.main}>
         <div className={style.mainContainer}>
           <section className={style.tableSection}>
-            <RequestsTable />
+            <RequestsTable showDepartment={true} />
           </section>
         </div>
       </main>

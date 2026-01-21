@@ -32,8 +32,15 @@ export const AdminResearchModal = ({ isOpen, paper, onClose }: AdminResearchModa
           </div>
         </div>
 
-        <div className={style.departmentContainer}>
-          <p className={style.department}>{paper.department.departmentName}</p>
+        <div className={style.departmentArchivedContainer}>
+          <div className={style.departmentContainer}>
+            <p className={style.department}>{paper.department.departmentName}</p>
+          </div>
+          {paper.archived && (
+            <div className={style.archivedContainer}>
+              <p className={style.archived}>Archived</p>
+            </div>
+          )}
         </div>
 
         <div className={style.abstractWrapper}>
