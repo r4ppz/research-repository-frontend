@@ -1,23 +1,26 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { getAdminRequests, type GetAdminRequestsParams } from "@/api/admin/requests";
+import { getAdminPapers, type GetAdminPapersParams } from "@/api/admin/papers";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
-export function useAdminRequests(params: GetAdminRequestsParams = {}) {
+export function useAdminPapers(params: GetAdminPapersParams = {}) {
   // Manage pagination state locally
   const [pageIndex, setPageIndex] = useState(params.page ?? 0);
   const [pageSize, setPageSize] = useState(params.size ?? 5);
 
   // Destructure other filters to include in the Query Key
-  const { departmentId, status, sortBy, sortOrder } = params;
+  const { departmentId, archived, search, year, sortBy, sortOrder } = params;
 
   // TanStack Query implementation
   const query = useQuery({
     // The queryKey is the "ID" for this specific request.
     // When pageIndex or filters change, a new request is triggered.
-    queryKey: ["adminRequests", { departmentId, status, pageIndex, pageSize, sortBy, sortOrder }],
+    queryKey: [
+      "adminPapers",
+      { departmentId, archived, search, year, pageIndex, pageSize, sortBy, sortOrder },
+    ],
     queryFn: () =>
-      getAdminRequests({
+      getAdminPapers({
         ...params,
         page: pageIndex,
         size: pageSize,

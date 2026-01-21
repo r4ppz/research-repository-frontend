@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/common/Button/Button";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
+import { PapersTable } from "../../components/PapersTable/PapersTable";
 import style from "./DepartmentResearchPage.module.css";
 
 export const DepartmentResearchPage = () => {
@@ -50,7 +51,9 @@ export const DepartmentResearchPage = () => {
             </Button>
           </div>
 
-          <div className={style.tableSection} />
+          <div className={style.tableSection}>
+            <PapersTable archived={activeTab === "archived"} showDepartment={false} />
+          </div>
         </div>
       </main>
       <Footer />

@@ -3,43 +3,54 @@ import { useState } from "react";
 import { DataTable } from "@/components/common/DataTable/DataTable";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
 import type { ResearchPaper } from "@/types";
-import { useAdminRequests } from "../../hooks/useAdminDocumentRequest";
-import { useAcceptRequest, useRejectRequest } from "../../hooks/useAdminRequestMutations";
+import { useAdminPapers } from "../../hooks/useAdminPapers";
 import { AdminResearchModal } from "../AdminResearchModal/AdminResearchModal";
-import { columns, columnsWithoutDepartment, type TableMeta } from "./columns";
+import {
+  columnsActive,
+  columnsActiveWithoutDepartment,
+  columnsArchived,
+  columnsArchivedWithoutDepartment,
+  type TableMeta,
+} from "./columns";
 
-interface RequestsTableProps {
+interface PapersTableProps {
+  archived: boolean;
   showDepartment?: boolean;
 }
 
-export function RequestsTable({ showDepartment = true }: RequestsTableProps) {
+export function PapersTable({ archived, showDepartment = true }: PapersTableProps) {
   const [selectedPaper, setSelectedPaper] = useState<ResearchPaper | null>(null);
 
-  const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } = useAdminRequests(
-    { status: "PENDING" },
-  );
-
-  const acceptMutation = useAcceptRequest();
-  const rejectMutation = useRejectRequest();
+  const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } = useAdminPapers({
+    archived,
+  });
 
   const tableMeta: TableMeta = {
     onView: (paper) => {
       setSelectedPaper(paper);
     },
-    onReject: (requestId) => {
-      rejectMutation.mutate(requestId);
+    onArchive: (paperId) => {
+      // TODO: Implement archive API when available
+      console.log("Archive paper:", paperId);
     },
-    onAccept: (requestId) => {
-      acceptMutation.mutate(requestId);
+    onRestore: (paperId) => {
+      // TODO: Implement restore API when available
+      console.log("Restore paper:", paperId);
     },
-    pendingAcceptId: acceptMutation.isPending ? acceptMutation.variables : null,
-    pendingRejectId: rejectMutation.isPending ? rejectMutation.variables : null,
   };
 
-  const tableColumns = showDepartment ? columns : columnsWithoutDepartment;
+  // Select the appropriate columns based on archived and showDepartment
+  const getColumns = () => {
+    if (archived) {
+      return showDepartment ? columnsArchived : columnsArchivedWithoutDepartment;
+    }
+    return showDepartment ? columnsActive : columnsActiveWithoutDepartment;
+  };
 
   if (isLoading) {
-    return <LoadingSpinner message="Loading requests..." />;
+    return (
+      <LoadingSpinner message={archived ? "Loading archived papers..." : "Loading papers..."} />
+    );
   }
 
   if (error) {
@@ -49,8 +60,8 @@ export function RequestsTable({ showDepartment = true }: RequestsTableProps) {
   return (
     <>
       <DataTable
-        caption="Document Requests"
-        columns={tableColumns}
+        caption={archived ? "Archived Papers" : "Active Papers"}
+        columns={getColumns()}
         data={data}
         pageCount={pageCount}
         pagination={{ pageIndex, pageSize }}

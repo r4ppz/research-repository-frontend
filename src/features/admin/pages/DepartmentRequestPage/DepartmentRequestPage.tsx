@@ -1,5 +1,6 @@
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
+import { RequestsTable } from "@/features/admin/components/RequestTable/RequestTable";
 import style from "./DepartmentRequestPage.module.css";
 
 export const DepartmentRequestPage = () => {
@@ -8,10 +9,9 @@ export const DepartmentRequestPage = () => {
       <Header />
       <main className={style.main}>
         <div className={style.mainContainer}>
-          <h1 className={style.titleHeader}>Manage Document Requests (Department Admin) </h1>
-          <div className={style.loadingContainer}>
-            <section className={style.tableSection} />
-          </div>
+          <section className={style.tableSection}>
+            <RequestsTable showDepartment={false} />
+          </section>
         </div>
       </main>
       <Footer />

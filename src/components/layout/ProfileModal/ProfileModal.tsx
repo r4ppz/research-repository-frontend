@@ -1,4 +1,4 @@
-import * as Tooltip from "@radix-ui/react-tooltip";
+import { Avatar } from "@/components/common/Avatar/Avatar";
 import { Dialog, DialogContent, DialogTitle } from "@/components/common/Dialog/Dialog";
 import type { Role, User } from "@/types";
 import style from "./ProfileModal.module.css";
@@ -32,21 +32,13 @@ export const ProfileModal = ({ isOpen, onClose, user, className }: ProfileModalP
         <div className={style.profileContainer}>
           <DialogTitle className={style.modalTitle}>Profile Information</DialogTitle>
 
-          <Tooltip.Provider>
-            <Tooltip.Root delayDuration={1000}>
-              <Tooltip.Trigger asChild={true}>
-                <div className={style.profilePicture}>
-                  <span>👤</span>
-                </div>
-              </Tooltip.Trigger>
-              <Tooltip.Portal>
-                <Tooltip.Content className={style.tooltipContent}>
-                  Theres no API for this... I forgor :(
-                  <Tooltip.Arrow />
-                </Tooltip.Content>
-              </Tooltip.Portal>
-            </Tooltip.Root>
-          </Tooltip.Provider>
+          <Avatar
+            src={user.profilePictureUrl}
+            alt={`${user.fullName}'s profile picture`}
+            fallbackName={user.fullName}
+            size="lg"
+            className={style.profilePicture}
+          />
 
           <div className={style.userInfo}>
             <h3 className={style.name}>{user.fullName}</h3>

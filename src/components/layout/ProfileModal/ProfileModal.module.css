@@ -16,24 +16,7 @@
 }
 
 .profilePicture {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 80px;
-  height: 80px;
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  object-fit: cover;
-  background-color: var(--color-surface);
   border: 2px solid var(--color-border-default);
-  border-radius: var(--radius-full);
-}
-
-.tooltipContent {
-  padding: var(--space-sm);
-  background-color: var(--color-input-bg);
-  border: 1px solid var(--color-primary);
-  border-radius: var(--radius-lg);
 }
 
 .userInfo {
