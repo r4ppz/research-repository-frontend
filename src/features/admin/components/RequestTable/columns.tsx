@@ -1,4 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
+import { Check, Eye, X } from "lucide-react";
 import { Button } from "@/components/common/Button/Button";
 import type { DocumentRequest, ResearchPaper } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
@@ -43,9 +44,24 @@ export const columns = [
 
       return (
         <div className={style.actionButtonContainer}>
-          <Button onClick={() => meta?.onView(row.original.paper)}>View</Button>
-          <Button onClick={() => meta?.onReject(row.original.requestId)}>Reject</Button>
-          <Button onClick={() => meta?.onAccept(row.original.requestId)}>Accept</Button>
+          <Button
+            className={style.actionButtonContainer}
+            onClick={() => meta?.onView(row.original.paper)}
+          >
+            <Eye size={16} />
+          </Button>
+          <Button
+            className={style.actionButtonContainer}
+            onClick={() => meta?.onReject(row.original.requestId)}
+          >
+            <X size={16} />
+          </Button>
+          <Button
+            className={style.actionButtonContainer}
+            onClick={() => meta?.onAccept(row.original.requestId)}
+          >
+            <Check size={16} />
+          </Button>
         </div>
       );
     },

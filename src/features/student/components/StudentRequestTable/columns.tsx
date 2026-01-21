@@ -1,4 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
+import { Download, Trash2 } from "lucide-react";
 import { Button } from "@/components/common/Button/Button";
 import type { DocumentRequest } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
@@ -68,7 +69,7 @@ export const columns = [
               disabled={isPending}
               onClick={() => meta?.onDownload()}
             >
-              Download
+              <Download size={16} />
             </Button>
           )}
 
@@ -81,7 +82,7 @@ export const columns = [
                   onClick={() => meta?.onRemove(request.requestId)}
                   disabled={isRemoving}
                 >
-                  {isRemoving ? "Removing..." : "Remove"}
+                  <Trash2 size={16} />
                 </Button>
               );
             })()}
