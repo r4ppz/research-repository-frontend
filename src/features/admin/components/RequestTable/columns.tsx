@@ -1,10 +1,14 @@
 import { createColumnHelper } from "@tanstack/react-table";
+import { Check, Eye, X } from "lucide-react";
 import { Button } from "@/components/common/Button/Button";
 import type { DocumentRequest, ResearchPaper } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
+import style from "./columns.module.css";
 
 export interface TableMeta {
   onView: (paper: ResearchPaper) => void;
+  onReject: (requestId: number) => void;
+  onAccept: (requestId: number) => void;
 }
 
 const columnHelper = createColumnHelper<DocumentRequest>();
@@ -39,9 +43,31 @@ export const columns = [
       const meta = table.options.meta as TableMeta;
 
       return (
-        <div>
-          {/* Now TypeScript knows that row.original.paper is a Paper object */}
-          <Button onClick={() => meta?.onView(row.original.paper)}>View</Button>
+        <div className={style.actionButtonContainer}>
+          <Button
+            className={style.actionButtonContainer}
+            onClick={() => {
+              meta.onView(row.original.paper);
+            }}
+          >
+            <Eye size={16} />
+          </Button>
+          <Button
+            className={style.actionButtonContainer}
+            onClick={() => {
+              meta.onReject(row.original.requestId);
+            }}
+          >
+            <X size={16} />
+          </Button>
+          <Button
+            className={style.actionButtonContainer}
+            onClick={() => {
+              meta.onAccept(row.original.requestId);
+            }}
+          >
+            <Check size={16} />
+          </Button>
         </div>
       );
     },

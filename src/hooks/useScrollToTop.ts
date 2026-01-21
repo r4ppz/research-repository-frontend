@@ -1,45 +1,11 @@
 import { type RefObject, useEffect } from "react";
 
-interface ScrollOptions<T> {
-  trigger: T;
-  isLoading: boolean;
-  behavior?: ScrollBehavior;
-  delay?: number;
-}
-
-export function useScrollToTop<E extends HTMLElement, T>(
-  ref: RefObject<E | null>,
-  { trigger, isLoading, behavior = "smooth", delay = 50 }: ScrollOptions<T>,
-): void {
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <I dont know>
+export function useScrollToTop(ref: RefObject<HTMLElement | null>, deps: readonly unknown[]): void {
   useEffect(() => {
-    // Only scroll when loading is finished
-    if (isLoading) {
-      return;
-    }
-
     const el = ref.current;
-    if (!el) {
-      return;
+    if (el) {
+      el.scrollTo({ top: 0, behavior: "smooth" });
     }
-
-    let timeoutId: ReturnType<typeof setTimeout>;
-
-    // Wait for the next paint cycle
-    const rafId = requestAnimationFrame(() => {
-      // Small delay allows the browser to finish layout and
-      // ensures the smooth-scroll engine can initialize properly.
-      timeoutId = setTimeout(() => {
-        el.scrollTo({
-          top: 0,
-          behavior,
-        });
-      }, delay);
-    });
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      clearTimeout(timeoutId);
-    };
-  }, [trigger, isLoading, ref, behavior, delay]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [ref, ...deps]);
 }

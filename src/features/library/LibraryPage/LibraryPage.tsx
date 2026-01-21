@@ -34,7 +34,7 @@ export const LibraryPage = () => {
   });
 
   const pageRef = useRef<HTMLDivElement>(null);
-  useScrollToTop(pageRef, { trigger: currentPage, isLoading: loading });
+  useScrollToTop(pageRef, [currentPage]);
 
   // Handlers updated to reset page
   const handleSearchChange = (query: string) => {

@@ -4,9 +4,9 @@ name: Frontend CI/CD
 # 'on' defines the triggers.
 on:
   push:
-    branches: [ main ] # Runs every time you push to the main branch
+    branches: [main] # Runs every time you push to the main branch
   pull_request:
-    branches: [ main ] # Runs every time a PR is opened against main
+    branches: [main] # Runs every time a PR is opened against main
 
 # A workflow is made of 'jobs'. They run in parallel by default.
 jobs:
@@ -28,7 +28,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm'
+          cache: "npm"
 
       # 3. Install your dependencies based on package-lock.json
       - name: Install Dependencies
@@ -48,5 +48,5 @@ jobs:
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist    # The folder Vite created
+          folder: dist # The folder Vite created
           branch: gh-pages # The branch GitHub Pages serves from

@@ -1,4 +1,5 @@
 import { createColumnHelper } from "@tanstack/react-table";
+import { Download, Trash2 } from "lucide-react";
 import { Button } from "@/components/common/Button/Button";
 import type { DocumentRequest } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
@@ -6,7 +7,8 @@ import style from "./column.module.css";
 
 export interface TableMeta {
   onDownload: () => void;
-  onRemove: () => void;
+  onRemove: (requestId: number) => void;
+  removingIds?: Set<number>;
 }
 
 const columnHelper = createColumnHelper<DocumentRequest>();
@@ -65,17 +67,29 @@ export const columns = [
             <Button
               className={style.actionButton}
               disabled={isPending}
-              onClick={() => meta?.onDownload()}
+              onClick={() => {
+                meta.onDownload();
+              }}
             >
-              Download
+              <Download size={16} />
             </Button>
           )}
 
-          {isRejected && (
-            <Button className={style.actionButton} onClick={() => meta?.onRemove()}>
-              Remove
-            </Button>
-          )}
+          {isRejected &&
+            (() => {
+              const isRemoving = (meta.removingIds ?? new Set()).has(request.requestId);
+              return (
+                <Button
+                  className={style.actionButton}
+                  onClick={() => {
+                    meta.onRemove(request.requestId);
+                  }}
+                  disabled={isRemoving}
+                >
+                  <Trash2 size={16} />
+                </Button>
+              );
+            })()}
         </div>
       );
     },

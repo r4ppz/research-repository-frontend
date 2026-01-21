@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { getMyPaperRequest } from "@/api/paper";
 import { createRequest } from "@/api/request";
@@ -73,10 +74,9 @@ export const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) 
     return (
       <Dialog open={isOpen} onOpenChange={handleOpenChange}>
         <DialogContent
-          className={`${style.modalLoadingOrError} ${style.modal}`}
+          className={clsx(style.modalLoadingOrError, style.moda)}
           aria-describedby={undefined}
         >
-          <DialogTitle className={style.title}>Loading...</DialogTitle>
           <LoadingSpinner message="Fetching details" />
         </DialogContent>
       </Dialog>
@@ -87,7 +87,7 @@ export const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) 
     return (
       <Dialog open={isOpen} onOpenChange={handleOpenChange}>
         <DialogContent
-          className={`${style.modalLoadingOrError} ${style.modal}`}
+          className={clsx(style.modalLoadingOrError, style.modal)}
           aria-describedby={undefined}
         >
           <DialogTitle className={style.title}>Error</DialogTitle>
