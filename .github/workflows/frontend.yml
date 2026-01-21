@@ -44,6 +44,7 @@ jobs:
       - name: Build Project
         run: npm run build
         env:
+          VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
           VITE_BACKEND_API_BASE_URL: ${{ secrets.VITE_BACKEND_API_BASE_URL }}
 
       # 6. Only deploy if we are on the 'main' branch (not on a Pull Request)
