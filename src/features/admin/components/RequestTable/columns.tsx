@@ -9,6 +9,8 @@ export interface TableMeta {
   onView: (paper: ResearchPaper) => void;
   onReject: (requestId: number) => void;
   onAccept: (requestId: number) => void;
+  pendingAcceptId: number | null;
+  pendingRejectId: number | null;
 }
 
 const columnHelper = createColumnHelper<DocumentRequest>();
@@ -41,6 +43,9 @@ export const columns = [
     header: "Action",
     cell: ({ row, table }) => {
       const meta = table.options.meta as TableMeta;
+      const requestId = row.original.requestId;
+      const isAccepting = meta.pendingAcceptId === requestId;
+      const isRejecting = meta.pendingRejectId === requestId;
 
       return (
         <div className={style.actionButtonContainer}>
@@ -54,16 +59,18 @@ export const columns = [
           </Button>
           <Button
             className={style.actionButtonContainer}
+            disabled={isRejecting}
             onClick={() => {
-              meta.onReject(row.original.requestId);
+              meta.onReject(requestId);
             }}
           >
             <X size={16} />
           </Button>
           <Button
             className={style.actionButtonContainer}
+            disabled={isAccepting}
             onClick={() => {
-              meta.onAccept(row.original.requestId);
+              meta.onAccept(requestId);
             }}
           >
             <Check size={16} />

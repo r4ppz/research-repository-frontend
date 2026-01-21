@@ -4,27 +4,32 @@ import { DataTable } from "@/components/common/DataTable/DataTable";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
 import type { ResearchPaper } from "@/types";
 import { useAdminRequests } from "../../hooks/useAdminDocumentRequest";
+import { useAcceptRequest, useRejectRequest } from "../../hooks/useAdminRequestMutations";
 import { AdminResearchModal } from "../AdminResearchModal/AdminResearchModal";
 import { columns, type TableMeta } from "./columns";
 
 export function RequestsTable() {
   const [selectedPaper, setSelectedPaper] = useState<ResearchPaper | null>(null);
 
-  const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } =
-    useAdminRequests();
+  const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } = useAdminRequests(
+    { status: "PENDING" },
+  );
 
-  // TODO: add reject accept func in here
-  // NOTE: still working on backend endpoint for this
+  const acceptMutation = useAcceptRequest();
+  const rejectMutation = useRejectRequest();
+
   const tableMeta: TableMeta = {
     onView: (paper) => {
       setSelectedPaper(paper);
     },
-    onReject: () => {
-      console.log("Reject");
+    onReject: (requestId) => {
+      rejectMutation.mutate(requestId);
     },
-    onAccept: () => {
-      console.log("Accept");
+    onAccept: (requestId) => {
+      acceptMutation.mutate(requestId);
     },
+    pendingAcceptId: acceptMutation.isPending ? acceptMutation.variables : null,
+    pendingRejectId: rejectMutation.isPending ? rejectMutation.variables : null,
   };
 
   if (isLoading) {

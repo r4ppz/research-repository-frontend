@@ -21,3 +21,19 @@ export const getAdminRequests = async (
   });
   return response.data;
 };
+
+export const acceptRequest = async (requestId: number): Promise<DocumentRequest> => {
+  const response = await axiosClient.put<DocumentRequest>(
+    `/api/admin/requests/${requestId.toString()}/accept`,
+    {},
+  );
+  return response.data;
+};
+
+export const rejectRequest = async (requestId: number): Promise<DocumentRequest> => {
+  const response = await axiosClient.put<DocumentRequest>(
+    `/api/admin/requests/${requestId.toString()}/reject`,
+    {},
+  );
+  return response.data;
+};
