@@ -15,10 +15,12 @@ export function StudentRequestTable() {
     useUserRequests();
 
   const tableMeta: TableMeta = {
-    onDownload: () => {},
+    onDownload: () => {
+      // TODO: Implement download functionality
+    },
     // NOTE: this is still not tested
     // TODO: test once onReject is good enough
-    onRemove: async (requestId: number) => {
+    onRemove: (requestId: number) => {
       setRemovalError(null);
       // Check before mutating state or firing network
       if (removingIds.has(requestId)) {
@@ -31,19 +33,23 @@ export function StudentRequestTable() {
         return newSet;
       });
 
-      try {
-        await deleteRequest(requestId);
-        await refresh();
-      } catch (error) {
-        const errorMessage = extractApiError(error);
-        setRemovalError(getUserErrorMessage(errorMessage));
-      } finally {
-        setRemovingIds((prev) => {
-          const newSet = new Set(prev);
-          newSet.delete(requestId);
-          return newSet;
-        });
-      }
+      // Fire and forget - no await
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
+      (async () => {
+        try {
+          await deleteRequest(requestId);
+          await refresh();
+        } catch (error) {
+          const errorMessage = extractApiError(error);
+          setRemovalError(getUserErrorMessage(errorMessage));
+        } finally {
+          setRemovingIds((prev) => {
+            const newSet = new Set(prev);
+            newSet.delete(requestId);
+            return newSet;
+          });
+        }
+      })();
     },
   };
 
@@ -52,7 +58,7 @@ export function StudentRequestTable() {
   }
 
   if (error || removalError) {
-    return <p>Failed to load: {error || removalError}</p>;
+    return <p>Failed to load: {error ?? removalError}</p>;
   }
 
   return (

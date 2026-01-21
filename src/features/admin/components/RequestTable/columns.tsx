@@ -46,19 +46,25 @@ export const columns = [
         <div className={style.actionButtonContainer}>
           <Button
             className={style.actionButtonContainer}
-            onClick={() => meta?.onView(row.original.paper)}
+            onClick={() => {
+              meta.onView(row.original.paper);
+            }}
           >
             <Eye size={16} />
           </Button>
           <Button
             className={style.actionButtonContainer}
-            onClick={() => meta?.onReject(row.original.requestId)}
+            onClick={() => {
+              meta.onReject(row.original.requestId);
+            }}
           >
             <X size={16} />
           </Button>
           <Button
             className={style.actionButtonContainer}
-            onClick={() => meta?.onAccept(row.original.requestId)}
+            onClick={() => {
+              meta.onAccept(row.original.requestId);
+            }}
           >
             <Check size={16} />
           </Button>

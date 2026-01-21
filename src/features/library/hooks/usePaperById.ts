@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getPaperById } from "@/api/paper";
 import type { ResearchPaper } from "@/types";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
@@ -14,31 +14,31 @@ export const usePaperById = (id: number | null): UsePaperByIdReturn => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchPaper = useCallback(async (): Promise<void> => {
-    if (id === null) {
-      setPaper(null);
-      setError(null);
-      return;
-    }
-
-    setLoading(true);
-    setError(null);
-
-    try {
-      const result = await getPaperById(id);
-      setPaper(result);
-    } catch (err) {
-      const apiError = extractApiError(err);
-      setError(getUserErrorMessage(apiError));
-      setPaper(null);
-    } finally {
-      setLoading(false);
-    }
-  }, [id]);
-
   useEffect(() => {
+    const fetchPaper = async (): Promise<void> => {
+      if (id === null) {
+        setPaper(null);
+        setError(null);
+        return;
+      }
+
+      setLoading(true);
+      setError(null);
+
+      try {
+        const result = await getPaperById(id);
+        setPaper(result);
+      } catch (err) {
+        const apiError = extractApiError(err);
+        setError(getUserErrorMessage(apiError));
+        setPaper(null);
+      } finally {
+        setLoading(false);
+      }
+    };
+
     void fetchPaper();
-  }, [fetchPaper]);
+  }, [id]);
 
   return {
     paper,

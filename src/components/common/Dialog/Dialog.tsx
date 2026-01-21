@@ -1,8 +1,7 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { Cross2Icon } from "@radix-ui/react-icons";
 import clsx from "clsx";
-import type { ComponentPropsWithoutRef } from "react";
-import { forwardRef } from "react";
+import type { ComponentPropsWithoutRef, Ref } from "react";
 import styles from "./Dialog.module.css";
 
 // Learn radix dialog api for more info since this is just a thin wrapper of it.
@@ -11,22 +10,25 @@ import styles from "./Dialog.module.css";
 const { Root, Trigger, Portal, Overlay, Content, Title, Description, Close } = DialogPrimitive;
 
 // Props
-type OverlayProps = ComponentPropsWithoutRef<typeof Overlay>;
-type ContentProps = ComponentPropsWithoutRef<typeof Content>;
+type OverlayProps = ComponentPropsWithoutRef<typeof Overlay> & {
+  ref?: Ref<HTMLDivElement>;
+};
+type ContentProps = ComponentPropsWithoutRef<typeof Content> & {
+  ref?: Ref<HTMLDivElement>;
+};
 type TitleProps = ComponentPropsWithoutRef<typeof Title>;
 type DescriptionProps = ComponentPropsWithoutRef<typeof Description>;
 
 // Components
 
 // Overlay renders a <div>
-const DialogOverlay = forwardRef<HTMLDivElement, OverlayProps>(({ className, ...props }, ref) => (
-  <Overlay ref={ref} className={clsx(styles.overlay, className)} {...props} />
-));
-DialogOverlay.displayName = "DialogOverlay";
+function DialogOverlay({ className, ref, ...props }: OverlayProps) {
+  return <Overlay ref={ref} className={clsx(styles.overlay, className)} {...props} />;
+}
 
 // Content renders a <div>
-const DialogContent = forwardRef<HTMLDivElement, ContentProps>(
-  ({ className, children, ...props }, ref) => (
+function DialogContent({ className, children, ref, ...props }: ContentProps) {
+  return (
     <Portal>
       <DialogOverlay />
 
@@ -40,9 +42,8 @@ const DialogContent = forwardRef<HTMLDivElement, ContentProps>(
         </Content>
       </div>
     </Portal>
-  ),
-);
-DialogContent.displayName = "DialogContent";
+  );
+}
 
 // Title renders an <h2> — no ref forwarding needed
 function DialogTitle({ className, ...props }: TitleProps) {

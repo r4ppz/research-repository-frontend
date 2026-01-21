@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { type GetUserRequestsParams, getUserRequests } from "@/api/users";
+import { getUserRequests, type GetUserRequestsParams } from "@/api/users";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
 export function useUserRequests(params: GetUserRequestsParams = {}) {

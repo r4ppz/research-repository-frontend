@@ -17,7 +17,12 @@ export const AdminResearchModal = ({ isOpen, paper, onClose }: AdminResearchModa
   const formattedDate = formatDateLong(paper.submissionDate);
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
+    <Dialog
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) onClose();
+      }}
+    >
       <DialogContent className={style.modal}>
         <div className={style.infoWrapper}>
           <DialogTitle className={style.title}>{paper.title}</DialogTitle>

@@ -1,6 +1,6 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { type GetAdminRequestsParams, getAdminRequests } from "@/api/admin/requests";
+import { getAdminRequests, type GetAdminRequestsParams } from "@/api/admin/requests";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
 export function useAdminRequests(params: GetAdminRequestsParams = {}) {

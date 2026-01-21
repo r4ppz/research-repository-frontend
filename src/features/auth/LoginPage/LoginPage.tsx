@@ -25,7 +25,10 @@ export const LoginPage = () => {
 
   useEffect(() => {
     if (authError && !isLoading) {
-      setShowErrorModal(true);
+      // Use microtask to avoid cascading render warnings
+      queueMicrotask(() => {
+        setShowErrorModal(true);
+      });
     }
   }, [authError, isLoading]);
 

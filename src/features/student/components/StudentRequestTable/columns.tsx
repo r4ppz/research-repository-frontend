@@ -67,7 +67,9 @@ export const columns = [
             <Button
               className={style.actionButton}
               disabled={isPending}
-              onClick={() => meta?.onDownload()}
+              onClick={() => {
+                meta.onDownload();
+              }}
             >
               <Download size={16} />
             </Button>
@@ -75,11 +77,13 @@ export const columns = [
 
           {isRejected &&
             (() => {
-              const isRemoving = !!meta.removingIds && meta.removingIds.has(request.requestId);
+              const isRemoving = (meta.removingIds ?? new Set()).has(request.requestId);
               return (
                 <Button
                   className={style.actionButton}
-                  onClick={() => meta?.onRemove(request.requestId)}
+                  onClick={() => {
+                    meta.onRemove(request.requestId);
+                  }}
                   disabled={isRemoving}
                 >
                   <Trash2 size={16} />
