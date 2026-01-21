@@ -60,7 +60,9 @@ export function RequestsTable() {
       <AdminResearchModal
         isOpen={!!selectedPaper}
         paper={selectedPaper}
-        onClose={() => setSelectedPaper(null)}
+        onClose={() => {
+          setSelectedPaper(null);
+        }}
       />
     </>
   );

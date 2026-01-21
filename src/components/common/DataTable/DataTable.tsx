@@ -12,7 +12,7 @@ import { Button } from "@/components/common/Button/Button";
 import style from "./DataTable.module.css";
 
 interface DataTableProps<TData extends RowData> {
-  // biome-ignore lint/suspicious/noExplicitAny: < Standard for TanStack ColumnDef >
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   columns: ColumnDef<TData, any>[];
   data: TData[];
   pageCount: number;
@@ -20,7 +20,7 @@ interface DataTableProps<TData extends RowData> {
   onPaginationChange: OnChangeFn<PaginationState>;
   caption: string;
   isLoading?: boolean;
-  // biome-ignore lint/suspicious/noExplicitAny: < This is needed to make it generic >
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   meta?: any;
 }
 
@@ -33,6 +33,7 @@ export function DataTable<TData extends RowData>({
   caption,
   meta,
 }: DataTableProps<TData>) {
+  // eslint-disable-next-line react-hooks/incompatible-library
   const table = useReactTable({
     data,
     columns,
@@ -41,6 +42,7 @@ export function DataTable<TData extends RowData>({
     state: { pagination },
     onPaginationChange,
     getCoreRowModel: getCoreRowModel(),
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     meta,
   });
 
@@ -90,7 +92,9 @@ export function DataTable<TData extends RowData>({
       <div className={style.pagination}>
         <Button
           className={style.paginationButton}
-          onClick={() => table.previousPage()}
+          onClick={() => {
+            table.previousPage();
+          }}
           disabled={!table.getCanPreviousPage()}
         >
           Previous
@@ -102,7 +106,9 @@ export function DataTable<TData extends RowData>({
 
         <Button
           className={style.paginationButton}
-          onClick={() => table.nextPage()}
+          onClick={() => {
+            table.nextPage();
+          }}
           disabled={!table.getCanNextPage()}
         >
           Next

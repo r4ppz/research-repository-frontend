@@ -6,5 +6,6 @@ export function useScrollToTop(ref: RefObject<HTMLElement | null>, deps: readonl
     if (el) {
       el.scrollTo({ top: 0, behavior: "smooth" });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ref, ...deps]);
 }
