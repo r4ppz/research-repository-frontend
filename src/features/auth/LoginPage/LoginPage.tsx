@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import schoolLogo from "@/assets/school-logo.svg";
 import {
   Dialog,
@@ -22,15 +22,6 @@ export const LoginPage = () => {
   const { authError, setAuthError, isLoading } = useAuth();
   const [showErrorModal, setShowErrorModal] = useState(false);
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
-
-  useEffect(() => {
-    if (authError && !isLoading) {
-      // Use microtask to avoid cascading render warnings
-      queueMicrotask(() => {
-        setShowErrorModal(true);
-      });
-    }
-  }, [authError, isLoading]);
 
   const handleGoogleSuccess = useGoogleLogin(setShowErrorModal);
 
