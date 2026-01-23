@@ -4,6 +4,7 @@ import { DataTable } from "@/components/common/DataTable/DataTable";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
 import type { ResearchPaper } from "@/types";
 import { useAdminPapers } from "../../hooks/useAdminPapers";
+import { useArchivePaper, useUnarchivePaper } from "../../hooks/useAdminPaperActions";
 import { AdminResearchModal } from "../AdminResearchModal/AdminResearchModal";
 import {
   columnsActive,
@@ -25,17 +26,18 @@ export function PapersTable({ archived, showDepartment = true }: PapersTableProp
     archived,
   });
 
+  const archiveMutation = useArchivePaper();
+  const unarchiveMutation = useUnarchivePaper();
+
   const tableMeta: TableMeta = {
     onView: (paper) => {
       setSelectedPaper(paper);
     },
     onArchive: (paperId) => {
-      // TODO: Implement archive API when available
-      console.log("Archive paper:", paperId);
+      archiveMutation.mutate(paperId);
     },
     onRestore: (paperId) => {
-      // TODO: Implement restore API when available
-      console.log("Restore paper:", paperId);
+      unarchiveMutation.mutate(paperId);
     },
   };
 
