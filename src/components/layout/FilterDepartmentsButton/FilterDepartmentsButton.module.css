@@ -42,6 +42,11 @@
   cursor: pointer;
 }
 
+.dropdownItem[data-highlighted] {
+  background-color: var(--color-surface-hover);
+  outline: none;
+}
+
 .dropdownItem[data-state="checked"] {
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-inverted);
