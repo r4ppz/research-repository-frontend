@@ -9,6 +9,7 @@ import {
   useDeletePaper,
   useUnarchivePaper,
 } from "../../hooks/useAdminPaperActions";
+import { AdminEditPaperModal } from "../AdminEditPaperModal/AdminEditPaperModal";
 import { AdminResearchModal } from "../AdminResearchModal/AdminResearchModal";
 import {
   columnsActive,
@@ -25,6 +26,7 @@ interface PapersTableProps {
 
 export function PapersTable({ archived, showDepartment = true }: PapersTableProps) {
   const [selectedPaper, setSelectedPaper] = useState<ResearchPaper | null>(null);
+  const [editingPaper, setEditingPaper] = useState<ResearchPaper | null>(null);
 
   const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } = useAdminPapers({
     archived,
@@ -37,6 +39,9 @@ export function PapersTable({ archived, showDepartment = true }: PapersTableProp
   const tableMeta: TableMeta = {
     onView: (paper) => {
       setSelectedPaper(paper);
+    },
+    onEdit: (paper) => {
+      setEditingPaper(paper);
     },
     onArchive: (paperId) => {
       archiveMutation.mutate(paperId);
@@ -96,6 +101,14 @@ export function PapersTable({ archived, showDepartment = true }: PapersTableProp
         paper={selectedPaper}
         onClose={() => {
           setSelectedPaper(null);
+        }}
+      />
+
+      <AdminEditPaperModal
+        isOpen={!!editingPaper}
+        paper={editingPaper}
+        onClose={() => {
+          setEditingPaper(null);
         }}
       />
     </>

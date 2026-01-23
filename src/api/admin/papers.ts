@@ -71,3 +71,22 @@ export const createPaper = async (
 export const deletePaper = async (id: number): Promise<void> => {
   await axiosClient.delete(`/api/admin/papers/${id.toString()}`);
 };
+
+export interface UpdatePaperMetadata {
+  title: string;
+  authorName: string;
+  abstractText: string;
+  departmentId: number;
+  submissionDate: string;
+}
+
+export const updatePaper = async (
+  id: number,
+  metadata: UpdatePaperMetadata,
+): Promise<ResearchPaper> => {
+  const response = await axiosClient.put<ResearchPaper>(
+    `/api/admin/papers/${id.toString()}`,
+    metadata,
+  );
+  return response.data;
+};

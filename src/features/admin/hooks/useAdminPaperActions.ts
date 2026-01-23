@@ -5,10 +5,26 @@ import {
   type CreatePaperMetadata,
   deletePaper,
   unarchivePaper,
+  updatePaper,
+  type UpdatePaperMetadata,
 } from "@/api/admin/papers";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
 
-// UI error later, im thinking modal? idk
+export function useUpdatePaper() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, metadata }: { id: number; metadata: UpdatePaperMetadata }) =>
+      updatePaper(id, metadata),
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["adminPapers"] });
+    },
+    onError: (error: unknown) => {
+      const apiError = extractApiError(error);
+      console.error("Failed to update paper:", getUserErrorMessage(apiError));
+    },
+  });
+}
 
 export function useCreatePaper() {
   const queryClient = useQueryClient();
