@@ -37,8 +37,7 @@ export const AdminEditPaperModal = ({ isOpen, onClose, paper }: AdminEditPaperMo
       setDepartmentId(paper.department.departmentId);
       setSubmissionDate(paper.submissionDate.split("T")[0]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isOpen]);
+  }, [isOpen, paper]);
 
   const { data: departments } = useQuery({
     queryKey: ["departments"],
