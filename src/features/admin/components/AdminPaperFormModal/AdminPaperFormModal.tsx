@@ -84,6 +84,7 @@ export const AdminPaperFormModal = ({ isOpen, onClose }: AdminPaperFormModalProp
       open={isOpen}
       onOpenChange={(open) => {
         if (!open) {
+          resetForm();
           onClose();
         }
       }}
