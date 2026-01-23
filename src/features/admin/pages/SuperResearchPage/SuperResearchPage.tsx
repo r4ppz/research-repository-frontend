@@ -3,12 +3,13 @@ import { useState } from "react";
 import { Button } from "@/components/common/Button/Button";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
+import { AdminPaperFormModal } from "../../components/AdminPaperFormModal/AdminPaperFormModal";
 import { PapersTable } from "../../components/PapersTable/PapersTable";
 import style from "./SuperResearchPage.module.css";
 
 export const SuperResearchPage = () => {
   const [activeTab, setActiveTab] = useState<"active" | "archived">("active");
-  const [_isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleCreate = () => {
     setIsModalOpen(true);
@@ -55,6 +56,13 @@ export const SuperResearchPage = () => {
           </div>
         </div>
       </main>
+
+      <AdminPaperFormModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
+      />
       <Footer />
     </div>
   );

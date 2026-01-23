@@ -4,7 +4,12 @@ import { DataTable } from "@/components/common/DataTable/DataTable";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
 import type { ResearchPaper } from "@/types";
 import { useAdminPapers } from "../../hooks/useAdminPapers";
-import { useArchivePaper, useUnarchivePaper } from "../../hooks/useAdminPaperActions";
+import {
+  useArchivePaper,
+  useDeletePaper,
+  useUnarchivePaper,
+} from "../../hooks/useAdminPaperActions";
+import { AdminEditPaperModal } from "../AdminEditPaperModal/AdminEditPaperModal";
 import { AdminResearchModal } from "../AdminResearchModal/AdminResearchModal";
 import {
   columnsActive,
@@ -21,6 +26,7 @@ interface PapersTableProps {
 
 export function PapersTable({ archived, showDepartment = true }: PapersTableProps) {
   const [selectedPaper, setSelectedPaper] = useState<ResearchPaper | null>(null);
+  const [editingPaper, setEditingPaper] = useState<ResearchPaper | null>(null);
 
   const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } = useAdminPapers({
     archived,
@@ -28,16 +34,25 @@ export function PapersTable({ archived, showDepartment = true }: PapersTableProp
 
   const archiveMutation = useArchivePaper();
   const unarchiveMutation = useUnarchivePaper();
+  const deleteMutation = useDeletePaper();
 
   const tableMeta: TableMeta = {
     onView: (paper) => {
       setSelectedPaper(paper);
+    },
+    onEdit: (paper) => {
+      setEditingPaper(paper);
     },
     onArchive: (paperId) => {
       archiveMutation.mutate(paperId);
     },
     onRestore: (paperId) => {
       unarchiveMutation.mutate(paperId);
+    },
+    onDelete: (paperId) => {
+      if (window.confirm("Are you sure you want to permanently delete this paper?")) {
+        deleteMutation.mutate(paperId);
+      }
     },
   };
 
@@ -86,6 +101,14 @@ export function PapersTable({ archived, showDepartment = true }: PapersTableProp
         paper={selectedPaper}
         onClose={() => {
           setSelectedPaper(null);
+        }}
+      />
+
+      <AdminEditPaperModal
+        isOpen={!!editingPaper}
+        paper={editingPaper}
+        onClose={() => {
+          setEditingPaper(null);
         }}
       />
     </>
