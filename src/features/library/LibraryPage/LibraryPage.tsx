@@ -87,9 +87,14 @@ export const LibraryPage = () => {
       </div>
     );
   } else if (papers.length === 0) {
+    const isFiltering = searchQuery.trim().length > 0 || !!selectedDepartment || !!selectedYear;
     researchContent = (
       <div className={style.emptyState}>
-        <p>No papers found matching your search :(</p>
+        <p>
+          {isFiltering
+            ? "No papers found matching your search :("
+            : "No research papers available at the moment."}
+        </p>
       </div>
     );
   } else {

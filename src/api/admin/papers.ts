@@ -21,3 +21,25 @@ export const getAdminPapers = async (
   });
   return response.data;
 };
+
+export interface ArchiveResponse {
+  paperId: number;
+  archived: boolean;
+  archivedAt: string | null;
+}
+
+export const archivePaper = async (id: number): Promise<ArchiveResponse> => {
+  const response = await axiosClient.put<ArchiveResponse>(
+    `/api/admin/papers/${id.toString()}/archive`,
+    {},
+  );
+  return response.data;
+};
+
+export const unarchivePaper = async (id: number): Promise<ArchiveResponse> => {
+  const response = await axiosClient.put<ArchiveResponse>(
+    `/api/admin/papers/${id.toString()}/unarchive`,
+    {},
+  );
+  return response.data;
+};
