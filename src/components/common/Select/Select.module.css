@@ -1,0 +1,96 @@
+.selectTrigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 40px;
+  padding: 0 var(--space-md);
+  font-family: inherit;
+  font-size: var(--font-size-md);
+  color: var(--color-input-text);
+  cursor: pointer;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+@media (min-width: 768px) {
+  .selectTrigger {
+    box-shadow: var(--shadow-resting);
+    transition: var(--transition-elevation);
+  }
+
+  .selectTrigger:hover {
+    background-color: var(--color-input-bg-hover);
+    box-shadow: var(--shadow-hover);
+    transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
+  }
+
+  .selectTrigger:active {
+    box-shadow: var(--shadow-active);
+    transform: translateY(var(--translate-active)) scale(var(--scale-active));
+  }
+}
+
+.selectTrigger:focus {
+  border-radius: var(--radius-md);
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 1px;
+}
+
+.selectTriggerDisabled {
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+  background-color: var(--color-surface-disabled);
+  border-color: var(--color-border-disabled);
+}
+
+.chevronIcon {
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
+  margin-left: var(--space-sm);
+  color: var(--color-text-muted);
+}
+
+.selectContent {
+  z-index: 1000;
+  min-width: var(--radix-select-trigger-width);
+  max-width: min(var(--radix-select-content-available-width), 400px);
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-resting);
+}
+
+.selectViewport {
+  max-height: 200px;
+  padding: var(--space-xs);
+  overflow-y: auto;
+}
+
+.selectItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-sm) var(--space-md);
+  cursor: pointer;
+}
+
+.selectItem[data-highlighted] {
+  background-color: var(--color-surface-hover);
+  outline: none;
+}
+
+.selectItem[data-state="checked"] {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-inverted);
+  background-color: var(--color-primary);
+}
+
+.selectItemIndicator {
+  display: flex;
+  align-items: center;
+}
