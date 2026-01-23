@@ -51,7 +51,7 @@ export const AdminPaperFormModal = ({ isOpen, onClose }: AdminPaperFormModalProp
           title,
           authorName,
           abstractText,
-          departmentId: departmentId,
+          departmentId,
           submissionDate,
         },
         file,
