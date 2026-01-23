@@ -33,8 +33,9 @@
 }
 
 .textarea {
-  display: flex;
+  flex: 1;
   width: 100%;
+  min-height: 120px;
   padding: var(--space-sm) var(--space-md);
   font-family: inherit;
   font-size: var(--font-size-md);
