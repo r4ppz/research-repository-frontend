@@ -31,6 +31,7 @@ export interface ArchiveResponse {
 export const archivePaper = async (id: number): Promise<ArchiveResponse> => {
   const response = await axiosClient.put<ArchiveResponse>(
     `/api/admin/papers/${id.toString()}/archive`,
+    {},
   );
   return response.data;
 };
@@ -38,6 +39,7 @@ export const archivePaper = async (id: number): Promise<ArchiveResponse> => {
 export const unarchivePaper = async (id: number): Promise<ArchiveResponse> => {
   const response = await axiosClient.put<ArchiveResponse>(
     `/api/admin/papers/${id.toString()}/unarchive`,
+    {},
   );
   return response.data;
 };
