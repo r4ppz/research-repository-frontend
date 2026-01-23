@@ -120,7 +120,7 @@ export const AdminPaperFormModal = ({ isOpen, onClose }: AdminPaperFormModalProp
             <div className={style.field}>
               <label htmlFor="department">Department</label>
               <Select
-                value={departmentId.toString()}
+                value={departmentId ? departmentId.toString() : undefined}
                 onValueChange={(v) => {
                   setDepartmentId(Number(v));
                 }}
