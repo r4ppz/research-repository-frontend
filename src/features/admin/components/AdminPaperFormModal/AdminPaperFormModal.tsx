@@ -167,8 +167,9 @@ export const AdminPaperFormModal = ({ isOpen, onClose }: AdminPaperFormModalProp
             </div>
 
             <div className={style.field}>
-              <label>Paper File (PDF/DOCX)</label>
+              <label htmlFor="paper-file">Paper File (PDF/DOCX)</label>
               <FileUpload
+                id="paper-file"
                 value={file}
                 onChange={(f) => {
                   setFile(f);
