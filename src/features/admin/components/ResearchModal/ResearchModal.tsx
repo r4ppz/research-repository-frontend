@@ -1,15 +1,15 @@
 import { Dialog, DialogContent, DialogTitle } from "@/components/common/Dialog/Dialog";
 import type { ResearchPaper } from "@/types";
 import { formatDateLong } from "@/util/formatDate";
-import style from "./AdminResearchModal.module.css";
+import style from "./ResearchModal.module.css";
 
-interface AdminResearchModalProps {
+interface ResearchModalProps {
   isOpen: boolean;
   paper: ResearchPaper | null;
   onClose: () => void;
 }
 
-export const AdminResearchModal = ({ isOpen, paper, onClose }: AdminResearchModalProps) => {
+export const ResearchModal = ({ isOpen, paper, onClose }: ResearchModalProps) => {
   if (!paper) {
     return null;
   }

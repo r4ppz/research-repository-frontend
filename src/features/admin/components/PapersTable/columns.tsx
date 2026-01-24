@@ -1,5 +1,6 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import { Archive, Eye, RotateCcw } from "lucide-react";
+import clsx from "clsx";
+import { Archive, Edit, Eye, RotateCcw, Trash2 } from "lucide-react";
 import { Button } from "@/components/common/Button/Button";
 import type { ResearchPaper } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
@@ -7,8 +8,10 @@ import style from "./columns.module.css";
 
 export interface TableMeta {
   onView: (paper: ResearchPaper) => void;
+  onEdit: (paper: ResearchPaper) => void;
   onArchive: (paperId: number) => void;
   onRestore: (paperId: number) => void;
+  onDelete: (paperId: number) => void;
 }
 
 const columnHelper = createColumnHelper<ResearchPaper>();
@@ -54,10 +57,26 @@ const actionsActiveColumn = columnHelper.display({
         <Button
           className={style.actionButtonContainer}
           onClick={() => {
+            meta.onEdit(paper);
+          }}
+        >
+          <Edit size={16} />
+        </Button>
+        <Button
+          className={style.actionButtonContainer}
+          onClick={() => {
             meta.onArchive(paper.paperId);
           }}
         >
           <Archive size={16} />
+        </Button>
+        <Button
+          className={clsx(style.actionButtonContainer, style.deleteButton)}
+          onClick={() => {
+            meta.onDelete(paper.paperId);
+          }}
+        >
+          <Trash2 size={16} />
         </Button>
       </div>
     );
@@ -85,10 +104,26 @@ const actionsArchivedColumn = columnHelper.display({
         <Button
           className={style.actionButtonContainer}
           onClick={() => {
+            meta.onEdit(paper);
+          }}
+        >
+          <Edit size={16} />
+        </Button>
+        <Button
+          className={style.actionButtonContainer}
+          onClick={() => {
             meta.onRestore(paper.paperId);
           }}
         >
           <RotateCcw size={16} />
+        </Button>
+        <Button
+          className={clsx(style.actionButtonContainer, style.deleteButton)}
+          onClick={() => {
+            meta.onDelete(paper.paperId);
+          }}
+        >
+          <Trash2 size={16} />
         </Button>
       </div>
     );

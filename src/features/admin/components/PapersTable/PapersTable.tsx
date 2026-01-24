@@ -4,7 +4,13 @@ import { DataTable } from "@/components/common/DataTable/DataTable";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
 import type { ResearchPaper } from "@/types";
 import { useAdminPapers } from "../../hooks/useAdminPapers";
-import { AdminResearchModal } from "../AdminResearchModal/AdminResearchModal";
+import {
+  useArchivePaper,
+  useDeletePaper,
+  useUnarchivePaper,
+} from "../../hooks/useAdminPaperActions";
+import { EditPaperModal } from "../EditPaperModal/EditPaperModal";
+import { ResearchModal } from "../ResearchModal/ResearchModal";
 import {
   columnsActive,
   columnsActiveWithoutDepartment,
@@ -20,22 +26,33 @@ interface PapersTableProps {
 
 export function PapersTable({ archived, showDepartment = true }: PapersTableProps) {
   const [selectedPaper, setSelectedPaper] = useState<ResearchPaper | null>(null);
+  const [editingPaper, setEditingPaper] = useState<ResearchPaper | null>(null);
 
   const { data, pageIndex, pageSize, pageCount, setPageIndex, isLoading, error } = useAdminPapers({
     archived,
   });
 
+  const archiveMutation = useArchivePaper();
+  const unarchiveMutation = useUnarchivePaper();
+  const deleteMutation = useDeletePaper();
+
   const tableMeta: TableMeta = {
     onView: (paper) => {
       setSelectedPaper(paper);
     },
+    onEdit: (paper) => {
+      setEditingPaper(paper);
+    },
     onArchive: (paperId) => {
-      // TODO: Implement archive API when available
-      console.log("Archive paper:", paperId);
+      archiveMutation.mutate(paperId);
     },
     onRestore: (paperId) => {
-      // TODO: Implement restore API when available
-      console.log("Restore paper:", paperId);
+      unarchiveMutation.mutate(paperId);
+    },
+    onDelete: (paperId) => {
+      if (window.confirm("Are you sure you want to permanently delete this paper?")) {
+        deleteMutation.mutate(paperId);
+      }
     },
   };
 
@@ -79,11 +96,19 @@ export function PapersTable({ archived, showDepartment = true }: PapersTableProp
         meta={tableMeta}
       />
 
-      <AdminResearchModal
+      <ResearchModal
         isOpen={!!selectedPaper}
         paper={selectedPaper}
         onClose={() => {
           setSelectedPaper(null);
+        }}
+      />
+
+      <EditPaperModal
+        isOpen={!!editingPaper}
+        paper={editingPaper}
+        onClose={() => {
+          setEditingPaper(null);
         }}
       />
     </>
