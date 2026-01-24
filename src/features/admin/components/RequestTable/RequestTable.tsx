@@ -5,7 +5,7 @@ import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinne
 import type { ResearchPaper } from "@/types";
 import { useAdminRequests } from "../../hooks/useAdminDocumentRequest";
 import { useAcceptRequest, useRejectRequest } from "../../hooks/useAdminRequestMutations";
-import { AdminResearchModal } from "../AdminResearchModal/AdminResearchModal";
+import { ResearchModal } from "../ResearchModal/ResearchModal";
 import { columns, columnsWithoutDepartment, type TableMeta } from "./columns";
 
 interface RequestsTableProps {
@@ -68,7 +68,7 @@ export function RequestsTable({ showDepartment = true }: RequestsTableProps) {
         meta={tableMeta}
       />
 
-      <AdminResearchModal
+      <ResearchModal
         isOpen={!!selectedPaper}
         paper={selectedPaper}
         onClose={() => {

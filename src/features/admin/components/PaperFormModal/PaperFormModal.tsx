@@ -8,51 +8,45 @@ import { Input } from "@/components/common/Input/Input";
 import { Select } from "@/components/common/Select/Select";
 import { Textarea } from "@/components/common/Textarea/Textarea";
 import { useAuth } from "@/features/auth/context/useAuth";
-import type { ResearchPaper } from "@/types";
-import { useUpdatePaper } from "../../hooks/useAdminPaperActions";
-import style from "./AdminEditPaperModal.module.css";
+import { useCreatePaper } from "../../hooks/useAdminPaperActions";
+import { FileUpload } from "../FileUpload/FileUpload";
+import style from "./PaperFormModal.module.css";
 
-interface AdminEditPaperModalProps {
+interface PaperFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  paper: ResearchPaper | null;
 }
 
-export const AdminEditPaperModal = ({ isOpen, onClose, paper }: AdminEditPaperModalProps) => {
+export const PaperFormModal = ({ isOpen, onClose }: PaperFormModalProps) => {
   const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [authorName, setAuthorName] = useState("");
   const [abstractText, setAbstractText] = useState("");
   const [departmentId, setDepartmentId] = useState<number | "">("");
   const [submissionDate, setSubmissionDate] = useState("");
+  const [file, setFile] = useState<File | null>(null);
 
-  const isDepartmentDisabled = user?.role === "DEPARTMENT_ADMIN";
-
-  // Sync state when paper changes or modal opens
+  // Auto-set department for Department Admin
   useEffect(() => {
-    if (paper && isOpen) {
-      setTitle(paper.title);
-      setAuthorName(paper.authorName);
-      setAbstractText(paper.abstractText);
-      setDepartmentId(paper.department.departmentId);
-      setSubmissionDate(paper.submissionDate.split("T")[0]);
+    if (isOpen && user?.role === "DEPARTMENT_ADMIN" && user.department) {
+      setDepartmentId(user.department.departmentId);
     }
-  }, [isOpen, paper]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isOpen]);
 
   const { data: departments } = useQuery({
     queryKey: ["departments"],
     queryFn: getDepartments,
   });
 
-  const updateMutation = useUpdatePaper();
+  const createMutation = useCreatePaper();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!paper || departmentId === "") return;
+    if (!file || departmentId === "") return;
 
-    updateMutation.mutate(
+    createMutation.mutate(
       {
-        id: paper.paperId,
         metadata: {
           title,
           authorName,
@@ -60,26 +54,43 @@ export const AdminEditPaperModal = ({ isOpen, onClose, paper }: AdminEditPaperMo
           departmentId,
           submissionDate,
         },
+        file,
       },
       {
         onSuccess: () => {
           onClose();
+          resetForm();
         },
       },
     );
   };
+
+  const resetForm = () => {
+    setTitle("");
+    setAuthorName("");
+    setAbstractText("");
+    // Only reset department if user is Super Admin
+    if (user?.role === "SUPER_ADMIN") {
+      setDepartmentId("");
+    }
+    setSubmissionDate("");
+    setFile(null);
+  };
+
+  const isDepartmentDisabled = user?.role === "DEPARTMENT_ADMIN";
 
   return (
     <Dialog
       open={isOpen}
       onOpenChange={(open) => {
         if (!open) {
+          resetForm();
           onClose();
         }
       }}
     >
       <DialogContent className={style.modal}>
-        <DialogTitle className={style.modalTitle}>Edit Research Paper</DialogTitle>
+        <DialogTitle className={style.modalTitle}>Add New Research Paper</DialogTitle>
         <form onSubmit={handleSubmit} className={style.form}>
           <div className={style.leftColumn}>
             <div className={style.field}>
@@ -109,7 +120,7 @@ export const AdminEditPaperModal = ({ isOpen, onClose, paper }: AdminEditPaperMo
             <div className={style.field}>
               <label htmlFor="department">Department</label>
               <Select
-                value={departmentId ? departmentId.toString() : undefined}
+                value={departmentId ? departmentId.toString() : ""}
                 onValueChange={(v) => {
                   setDepartmentId(Number(v));
                 }}
@@ -121,8 +132,8 @@ export const AdminEditPaperModal = ({ isOpen, onClose, paper }: AdminEditPaperMo
                   })) ?? []
                 }
                 placeholder={
-                  isDepartmentDisabled && paper
-                    ? paper.department.departmentName
+                  isDepartmentDisabled && user.department
+                    ? user.department.departmentName
                     : "Select Department"
                 }
               />
@@ -155,14 +166,26 @@ export const AdminEditPaperModal = ({ isOpen, onClose, paper }: AdminEditPaperMo
                 required
               />
             </div>
+
+            <div className={style.field}>
+              <label htmlFor="paper-file">Paper File (PDF/DOCX)</label>
+              <FileUpload
+                id="paper-file"
+                value={file}
+                onChange={(f) => {
+                  setFile(f);
+                }}
+                required
+              />
+            </div>
           </div>
 
           <div className={clsx(style.actions, style.fullWidth)}>
             <Button variant="secondary" onClick={onClose} type="button">
               Cancel
             </Button>
-            <Button type="submit" disabled={updateMutation.isPending}>
-              {updateMutation.isPending ? "Updating..." : "Update Paper"}
+            <Button type="submit" disabled={createMutation.isPending}>
+              {createMutation.isPending ? "Adding..." : "Add Paper"}
             </Button>
           </div>
         </form>

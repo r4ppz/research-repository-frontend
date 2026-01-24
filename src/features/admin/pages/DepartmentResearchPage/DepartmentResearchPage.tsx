@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/common/Button/Button";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
-import { AdminPaperFormModal } from "../../components/AdminPaperFormModal/AdminPaperFormModal";
+import { PaperFormModal } from "../../components/PaperFormModal/PaperFormModal";
 import { PapersTable } from "../../components/PapersTable/PapersTable";
 import style from "./DepartmentResearchPage.module.css";
 
@@ -57,7 +57,7 @@ export const DepartmentResearchPage = () => {
           </div>
         </div>
       </main>
-      <AdminPaperFormModal
+      <PaperFormModal
         isOpen={isModalOpen}
         onClose={() => {
           setIsModalOpen(false);

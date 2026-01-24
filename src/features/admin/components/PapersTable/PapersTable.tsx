@@ -9,8 +9,8 @@ import {
   useDeletePaper,
   useUnarchivePaper,
 } from "../../hooks/useAdminPaperActions";
-import { AdminEditPaperModal } from "../AdminEditPaperModal/AdminEditPaperModal";
-import { AdminResearchModal } from "../AdminResearchModal/AdminResearchModal";
+import { EditPaperModal } from "../EditPaperModal/EditPaperModal";
+import { ResearchModal } from "../ResearchModal/ResearchModal";
 import {
   columnsActive,
   columnsActiveWithoutDepartment,
@@ -96,7 +96,7 @@ export function PapersTable({ archived, showDepartment = true }: PapersTableProp
         meta={tableMeta}
       />
 
-      <AdminResearchModal
+      <ResearchModal
         isOpen={!!selectedPaper}
         paper={selectedPaper}
         onClose={() => {
@@ -104,7 +104,7 @@ export function PapersTable({ archived, showDepartment = true }: PapersTableProp
         }}
       />
 
-      <AdminEditPaperModal
+      <EditPaperModal
         isOpen={!!editingPaper}
         paper={editingPaper}
         onClose={() => {
