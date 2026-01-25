@@ -8,6 +8,7 @@
   border: 1px solid var(--color-border-default);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-active);
+  font-size: var(--font-size-md);
 }
 
 .table {
@@ -18,8 +19,8 @@
 }
 
 .tableCaption {
+  font-size: var(--font-size-lg);
   padding: var(--space-md);
-  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   text-align: left;
   caption-side: top;
@@ -27,7 +28,6 @@
 }
 
 .tableHead {
-  font-size: var(--font-size-md);
   background: var(--color-surface);
 }
 
@@ -70,9 +70,11 @@
 
 .paginationButton {
   width: fit-content;
+  font-size: var(--font-size-sm);
+  padding: var(--space-sm) var(--space-md);
 }
 
 .pageIndicator {
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-xs);
   color: var(--color-text-muted);
 }

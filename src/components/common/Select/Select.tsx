@@ -2,6 +2,7 @@ import * as SelectPrimitive from "@radix-ui/react-select";
 import clsx from "clsx";
 import { Check, ChevronDown } from "lucide-react";
 import style from "./Select.module.css";
+import { Button } from "../Button/Button";
 
 interface SelectOption {
   value: string;
@@ -33,11 +34,14 @@ export const Select = ({
           { [style.selectTriggerDisabled]: disabled },
           className,
         )}
+        asChild
       >
-        <SelectPrimitive.Value placeholder={placeholder} />
-        <SelectPrimitive.Icon>
-          <ChevronDown className={style.chevronIcon} />
-        </SelectPrimitive.Icon>
+        <Button>
+          <SelectPrimitive.Value placeholder={placeholder} />
+          <SelectPrimitive.Icon>
+            <ChevronDown className={style.chevronIcon} />
+          </SelectPrimitive.Icon>
+        </Button>
       </SelectPrimitive.Trigger>
 
       <SelectPrimitive.Portal>

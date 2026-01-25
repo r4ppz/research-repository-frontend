@@ -2,7 +2,7 @@
 
 This is the frontend codebase for the Research Repository System
 
-Please read the [documentation](https://r4ppz.github.io/research-repo-docs/) for more info.
+Read the [documentation](https://r4ppz.github.io/research-repo-docs/) for more info.
 
 ---
 
