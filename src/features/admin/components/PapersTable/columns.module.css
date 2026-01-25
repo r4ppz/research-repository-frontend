@@ -1,8 +1,0 @@
-.actionButtonContainer {
-  display: flex;
-  gap: var(--space-xs);
-}
-
-.actionButtonContainer button {
-  font-size: var(--font-size-sm);
-}

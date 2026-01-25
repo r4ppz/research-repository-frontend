@@ -1,10 +1,9 @@
 import { createColumnHelper } from "@tanstack/react-table";
-import clsx from "clsx";
 import { Archive, Edit, Eye, RotateCcw, Trash2 } from "lucide-react";
 import { Button } from "@/components/common/Button/Button";
 import type { ResearchPaper } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
-import style from "./columns.module.css";
+import style from "../shared/columns.module.css";
 
 export interface TableMeta {
   onView: (paper: ResearchPaper) => void;
@@ -47,36 +46,36 @@ const actionsActiveColumn = columnHelper.display({
     return (
       <div className={style.actionButtonContainer}>
         <Button
-          className={style.actionButtonContainer}
+          className={style.actionButton}
           onClick={() => {
             meta.onView(paper);
           }}
         >
-          <Eye size={16} />
+          <Eye className={style.actionIcon} />
         </Button>
         <Button
-          className={style.actionButtonContainer}
+          className={style.actionButton}
           onClick={() => {
             meta.onEdit(paper);
           }}
         >
-          <Edit size={16} />
+          <Edit className={style.actionIcon} />
         </Button>
         <Button
-          className={style.actionButtonContainer}
+          className={style.actionButton}
           onClick={() => {
             meta.onArchive(paper.paperId);
           }}
         >
-          <Archive size={16} />
+          <Archive className={style.actionIcon} />
         </Button>
         <Button
-          className={clsx(style.actionButtonContainer, style.deleteButton)}
+          className={style.actionButton}
           onClick={() => {
             meta.onDelete(paper.paperId);
           }}
         >
-          <Trash2 size={16} />
+          <Trash2 className={style.actionIcon} />
         </Button>
       </div>
     );
@@ -94,36 +93,36 @@ const actionsArchivedColumn = columnHelper.display({
     return (
       <div className={style.actionButtonContainer}>
         <Button
-          className={style.actionButtonContainer}
+          className={style.actionButton}
           onClick={() => {
             meta.onView(paper);
           }}
         >
-          <Eye size={16} />
+          <Eye className={style.actionIcon} />
         </Button>
         <Button
-          className={style.actionButtonContainer}
+          className={style.actionButton}
           onClick={() => {
             meta.onEdit(paper);
           }}
         >
-          <Edit size={16} />
+          <Edit className={style.actionIcon} />
         </Button>
         <Button
-          className={style.actionButtonContainer}
+          className={style.actionButton}
           onClick={() => {
             meta.onRestore(paper.paperId);
           }}
         >
-          <RotateCcw size={16} />
+          <RotateCcw className={style.actionIcon} />
         </Button>
         <Button
-          className={clsx(style.actionButtonContainer, style.deleteButton)}
+          className={style.actionButton}
           onClick={() => {
             meta.onDelete(paper.paperId);
           }}
         >
-          <Trash2 size={16} />
+          <Trash2 className={style.actionIcon} />
         </Button>
       </div>
     );

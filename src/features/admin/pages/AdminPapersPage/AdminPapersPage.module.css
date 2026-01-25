@@ -81,3 +81,7 @@
   width: var(--icon-size-md);
   height: var(--icon-size-md);
 }
+
+.tableSection {
+  width: 100%;
+}

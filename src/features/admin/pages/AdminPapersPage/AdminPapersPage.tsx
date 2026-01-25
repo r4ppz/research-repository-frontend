@@ -5,9 +5,11 @@ import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
 import { PaperFormModal } from "../../components/PaperFormModal/PaperFormModal";
 import { PapersTable } from "../../components/PapersTable/PapersTable";
-import style from "./SuperResearchPage.module.css";
+import { useAuth } from "@/features/auth/context/useAuth";
+import style from "./AdminPapersPage.module.css";
 
-export const SuperResearchPage = () => {
+export const AdminPapersPage = () => {
+  const { user } = useAuth();
   const [tab, setTab] = useState<"active" | "archived">("active");
   const [isPaperModalOpen, setPaperModalOpen] = useState(false);
 
@@ -24,6 +26,7 @@ export const SuperResearchPage = () => {
   };
 
   const isArchived = tab === "archived";
+  const showDepartment = user?.role === "SUPER_ADMIN";
 
   return (
     <div className={style.page}>
@@ -63,7 +66,7 @@ export const SuperResearchPage = () => {
           </div>
 
           <div className={style.tableSection}>
-            <PapersTable archived={isArchived} showDepartment={true} />
+            <PapersTable archived={isArchived} showDepartment={showDepartment} />
           </div>
         </div>
       </main>

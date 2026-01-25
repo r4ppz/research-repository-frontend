@@ -1,16 +1,20 @@
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
-import { RequestsTable } from "@/features/admin/components/RequestTable/RequestTable";
-import style from "./DepartmentRequestPage.module.css";
+import { RequestsTable } from "../../components/RequestTable/RequestTable";
+import { useAuth } from "@/features/auth/context/useAuth";
+import style from "./AdminRequestsPage.module.css";
 
-export const DepartmentRequestPage = () => {
+export const AdminRequestsPage = () => {
+  const { user } = useAuth();
+  const showDepartment = user?.role === "SUPER_ADMIN";
+
   return (
     <div className={style.page}>
       <Header />
       <main className={style.main}>
         <div className={style.mainContainer}>
           <section className={style.tableSection}>
-            <RequestsTable showDepartment={false} />
+            <RequestsTable showDepartment={showDepartment} />
           </section>
         </div>
       </main>
