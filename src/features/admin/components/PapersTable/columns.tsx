@@ -3,7 +3,7 @@ import { Archive, Edit, Eye, RotateCcw, Trash2 } from "lucide-react";
 import { Button } from "@/components/common/Button/Button";
 import type { ResearchPaper } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
-import style from "../shared/columns.module.css";
+import style from "../RequestTable/columns.module.css";
 
 export interface TableMeta {
   onView: (paper: ResearchPaper) => void;

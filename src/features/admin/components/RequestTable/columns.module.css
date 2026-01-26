@@ -5,6 +5,7 @@
 
 .actionButton {
   font-size: var(--font-size-sm);
+  max-width: 50px;
 }
 
 .actionIcon {
