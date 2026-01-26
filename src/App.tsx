@@ -1,9 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "@/components/layout/ProtectedRoute/ProtectedRoute";
-import { DepartmentRequestPage } from "@/features/admin/pages/DepartmentRequestPage/DepartmentRequestPage";
-import { DepartmentResearchPage } from "@/features/admin/pages/DepartmentResearchPage/DepartmentResearchPage";
-import { SuperRequestPage } from "@/features/admin/pages/SuperRequestPage/SuperRequestPage";
-import { SuperResearchPage } from "@/features/admin/pages/SuperResearchPage/SuperResearchPage";
+import { AdminRequestsPage } from "@/features/admin/pages/AdminRequestsPage/AdminRequestsPage";
+import { AdminPapersPage } from "@/features/admin/pages/AdminPapersPage/AdminPapersPage";
 import { AuthRestorer } from "@/features/auth/components/AuthRestorer/AuthRestorer";
 import { LoginPage } from "@/features/auth/LoginPage/LoginPage";
 import { LibraryPage } from "@/features/library/LibraryPage/LibraryPage";
@@ -36,7 +34,7 @@ export const App = () => {
           path="/department-admin/requests"
           element={
             <ProtectedRoute allowedRoles={["DEPARTMENT_ADMIN"]}>
-              <DepartmentRequestPage />
+              <AdminRequestsPage />
             </ProtectedRoute>
           }
         />
@@ -44,7 +42,7 @@ export const App = () => {
           path="/department-admin/research"
           element={
             <ProtectedRoute allowedRoles={["DEPARTMENT_ADMIN"]}>
-              <DepartmentResearchPage />
+              <AdminPapersPage />
             </ProtectedRoute>
           }
         />
@@ -52,7 +50,7 @@ export const App = () => {
           path="/super-admin/requests"
           element={
             <ProtectedRoute allowedRoles={["SUPER_ADMIN"]}>
-              <SuperRequestPage />
+              <AdminRequestsPage />
             </ProtectedRoute>
           }
         />
@@ -60,7 +58,7 @@ export const App = () => {
           path="/super-admin/research"
           element={
             <ProtectedRoute allowedRoles={["SUPER_ADMIN"]}>
-              <SuperResearchPage />
+              <AdminPapersPage />
             </ProtectedRoute>
           }
         />

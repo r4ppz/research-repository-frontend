@@ -74,9 +74,15 @@
 .abstract {
   display: -webkit-box;
   flex: 1;
+  min-width: 0;
   overflow: hidden;
-  -webkit-line-clamp: 6;
-  line-clamp: 3;
+  -webkit-line-clamp: 6; /* vendor-prefixed */
+  line-clamp: 6; /* standardized property (compatibility) */
+  word-break: break-word;
+
+  /* fixes for very long words  */
+  overflow-wrap: break-word;
+  white-space: normal;
   -webkit-box-orient: vertical;
 }
 

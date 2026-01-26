@@ -80,14 +80,17 @@
 }
 
 .selectItem[data-highlighted] {
-  background-color: var(--color-surface-hover);
+  color: var(--color-text-inverted);
+  background-color: var(--color-primary-hover);
+  border-radius: var(--radius-md);
   outline: none;
 }
 
 .selectItem[data-state="checked"] {
   font-weight: var(--font-weight-semibold);
   color: var(--color-text-inverted);
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-hover);
+  border-radius: var(--radius-md);
 }
 
 .selectItemIndicator {

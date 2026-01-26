@@ -49,31 +49,31 @@ const actionsColumn = columnHelper.display({
     return (
       <div className={style.actionButtonContainer}>
         <Button
-          className={style.actionButtonContainer}
+          className={style.actionButton}
           onClick={() => {
             meta.onView(row.original.paper);
           }}
         >
-          <Eye size={16} />
+          <Eye className={style.actionIcon} />
         </Button>
         <Button
-          className={style.actionButtonContainer}
+          className={style.actionButton}
           disabled={isRejecting || isAccepting}
           onClick={() => {
             meta.onReject(requestId);
           }}
         >
-          <X size={16} />
+          <X className={style.actionIcon} />
         </Button>
 
         <Button
-          className={style.actionButtonContainer}
+          className={style.actionButton}
           disabled={isAccepting || isRejecting}
           onClick={() => {
             meta.onAccept(requestId);
           }}
         >
-          <Check size={16} />
+          <Check className={style.actionIcon} />
         </Button>
       </div>
     );

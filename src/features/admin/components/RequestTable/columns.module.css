@@ -3,6 +3,12 @@
   gap: var(--space-xs);
 }
 
-.actionButtonContainer button {
+.actionButton {
+  max-width: 50px;
   font-size: var(--font-size-sm);
+}
+
+.actionIcon {
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
 }
