@@ -74,16 +74,16 @@
 .abstract {
   display: -webkit-box;
   flex: 1;
-  -webkit-box-orient: vertical;
+  min-width: 0;
   overflow: hidden;
   -webkit-line-clamp: 6; /* vendor-prefixed */
   line-clamp: 6; /* standardized property (compatibility) */
+  word-break: break-word;
 
   /* fixes for very long words  */
   overflow-wrap: break-word;
-  word-break: break-word;
   white-space: normal;
-  min-width: 0;
+  -webkit-box-orient: vertical;
 }
 
 .iconEye {

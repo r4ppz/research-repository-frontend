@@ -25,29 +25,29 @@
 
 .leftColumn {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: var(--space-sm);
-  flex: 1;
 }
 
 .rightColumn {
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: var(--space-sm);
-  flex: 1;
 }
 
 .field {
-  font-weight: var(--font-weight-semibold);
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
+  font-weight: var(--font-weight-semibold);
 }
 
 .actionsContainer {
-  font-size: var(--font-size-sm);
   display: flex;
   gap: var(--space-sm);
   justify-content: flex-end;
   margin-top: var(--space-md);
+  font-size: var(--font-size-sm);
 }
