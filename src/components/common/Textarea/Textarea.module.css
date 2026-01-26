@@ -1,7 +1,7 @@
 .textareaContainer {
   display: flex;
-  align-items: flex-start;
   flex: 1;
+  align-items: flex-start;
   width: 100%;
   height: 100%;
   padding: 0;
