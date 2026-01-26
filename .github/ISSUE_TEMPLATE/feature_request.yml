@@ -1,0 +1,25 @@
+name: Feature Request
+description: Suggest an improvement or a new capability.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: What is the goal of this feature?
+      description: Who is this for and what problem does it solve?
+      placeholder: "Example: As a Teacher, I want to see a list of all archived papers in my department..."
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Describe the proposed solution
+      placeholder: "How should this work in the UI?"
+  - type: checkboxes
+    id: stakeholders
+    attributes:
+      label: Who does this benefit?
+      options:
+        - label: Students
+        - label: Teachers
+        - label: Admins

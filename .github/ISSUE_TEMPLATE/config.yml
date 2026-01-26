@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: System Documentation
+    url: https://r4ppz.github.io/research-repo-docs/
+    about: Read the docs/specs first. Especially if you want to contribute or ask about project architecture.
