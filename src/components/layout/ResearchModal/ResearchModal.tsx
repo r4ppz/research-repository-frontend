@@ -5,7 +5,7 @@ import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinne
 import { useAuth } from "@/features/auth/context/useAuth";
 import { usePaperById } from "@/features/library/hooks/usePaperById";
 import { formatDateLong } from "@/util/formatDate";
-import { isUserStudentOrTeacher } from "@/util/roleBasedAccess";
+import { isUserStudent } from "@/util/roleBasedAccess";
 import { usePaperRequest } from "./hook/usePaperRequest";
 import style from "./ResearchModal.module.css";
 
@@ -84,7 +84,7 @@ export const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) 
           <p className={style.abstractText}>{paper.abstractText}</p>
         </div>
 
-        {isUserStudentOrTeacher(user) && (
+        {isUserStudent(user) && (
           <Button onClick={requestDocument} disabled={requestExists || isRequestLoading}>
             {requestExists ? "Request Submitted" : "Request Document"}
           </Button>
