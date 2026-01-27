@@ -18,8 +18,6 @@ export function StudentRequestTable() {
     onDownload: () => {
       // TODO: Implement download functionality
     },
-    // NOTE: this is still not tested
-    // TODO: test once onReject is good enough
     onRemove: (requestId: number) => {
       setRemovalError(null);
       // Check before mutating state or firing network
