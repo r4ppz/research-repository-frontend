@@ -6,6 +6,7 @@ import { AuthRestorer } from "@/features/auth/components/AuthRestorer/AuthRestor
 import { LoginPage } from "@/features/auth/LoginPage/LoginPage";
 import { LibraryPage } from "@/features/library/LibraryPage/LibraryPage";
 import { StudentRequestPage } from "@/features/student/StudentRequestPage/StudentRequestPage";
+import { TeacherRequestPage } from "@/features/teacher/TeacherRequestPage/TeacherRequestPage";
 
 export const App = () => {
   return (
@@ -17,7 +18,9 @@ export const App = () => {
         <Route
           path="/"
           element={
-            <ProtectedRoute allowedRoles={["STUDENT", "DEPARTMENT_ADMIN", "SUPER_ADMIN"]}>
+            <ProtectedRoute
+              allowedRoles={["STUDENT", "TEACHER", "DEPARTMENT_ADMIN", "SUPER_ADMIN"]}
+            >
               <LibraryPage />
             </ProtectedRoute>
           }
@@ -35,6 +38,14 @@ export const App = () => {
           element={
             <ProtectedRoute allowedRoles={["DEPARTMENT_ADMIN"]}>
               <AdminRequestsPage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/teacher/requests"
+          element={
+            <ProtectedRoute allowedRoles={["TEACHER"]}>
+              <TeacherRequestPage />
             </ProtectedRoute>
           }
         />
