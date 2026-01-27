@@ -10,6 +10,7 @@ export const TeacherRequestPage = () => {
       <main className={style.main}>
         <div className={style.mainContainer}>
           <section className={style.tableSection}>
+            {/* Just reuse the student table cause I am lazy as shit */}
             <StudentRequestTable />
           </section>
         </div>

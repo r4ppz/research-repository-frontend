@@ -34,6 +34,7 @@
   gap: var(--space-xl);
   max-width: var(--container-max-width);
   margin: 0 auto;
+  padding: var(--space-xl) var(--space-xl);
 }
 @media (min-width: 768px) {
   .mainContainer {
