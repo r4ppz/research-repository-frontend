@@ -1,0 +1,78 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: var(--color-overlay);
+}
+
+.contentWrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 51;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.dialogContent {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-width: 600px;
+  max-height: 90vh;
+  padding: var(--space-xl);
+  overflow-y: auto;
+  pointer-events: auto;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-resting);
+  transition: var(--transition-elevation);
+}
+@media (min-width: 768px) {
+  .dialogContent {
+    min-width: 25%;
+    max-height: 90%;
+    padding: var(--space-xl) var(--space-2xl);
+    box-shadow: var(--shadow-resting);
+    transition: var(--transition-elevation);
+  }
+
+  .dialogContent:hover {
+    box-shadow: var(--elevation-shadow-hover);
+    transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
+  }
+}
+
+.closeButton {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  z-index: 10;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  transition: var(--transition-elevation);
+}
+.closeButton:hover {
+  transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
+}
+.closeButton:active {
+  transform: translateY(var(--translate-active)) scale(var(--scale-active));
+}
+
+.iconClose {
+  width: var(--icon-size-xl);
+  height: var(--icon-size-xl);
+}
+
+.title {
+  margin-bottom: var(--space-md);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.actionContainer {
+  display: flex;
+}
