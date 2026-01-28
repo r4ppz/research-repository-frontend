@@ -9,6 +9,7 @@ import { ProfileButton } from "@/components/layout/ProfileButton/ProfileButton";
 import { useAuth } from "@/features/auth/context/useAuth";
 import type { Role } from "@/types";
 import style from "./Header.module.css";
+import { ConfirmDialog } from "@/components/common/AlertDialog/ConfirmDialog";
 
 const GENERAL_ROLE_LABEL: Record<Role, string> = {
   STUDENT: "Student",
@@ -79,14 +80,18 @@ export const Header = ({ className, ...props }: ComponentProps) => {
 
             <div className={style.profileNLogoutWrapper}>
               <ProfileButton user={user} />
-              <Button
-                type="button"
-                variant="secondary"
-                className={style.logoutButton}
-                onClick={handleLogout}
-              >
-                <LogOut className={style.iconLogout} />
-              </Button>
+              <ConfirmDialog
+                title="Log out of your account?"
+                description="You will need to enter your credentials to access the portal again."
+                confirmText="Log out"
+                cancelText="Stay logged in"
+                onConfirm={handleLogout}
+                trigger={
+                  <Button type="button" variant="secondary" className={style.logoutButton}>
+                    <LogOut className={style.iconLogout} />
+                  </Button>
+                }
+              />
             </div>
 
             <Button
@@ -114,6 +119,7 @@ export const Header = ({ className, ...props }: ComponentProps) => {
 
           {/* NOTE: theres no profile button on mobile since I dont know how to style it lol */}
           {/* TODO: add mobile profile button */}
+          {/* TODO: fix logout on mobile to make it consistent on desktop */}
         </div>
       )}
     </header>

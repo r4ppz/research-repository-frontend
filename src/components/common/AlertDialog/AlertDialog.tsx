@@ -22,7 +22,7 @@ function AlertDialogContent({ className, children, ref, ...props }: ContentProps
     <Portal>
       <AlertDialogOverlay />
       <div className={styles.contentWrapper}>
-        <Content ref={ref} className={clsx(styles.content, className)} {...props}>
+        <Content ref={ref} className={clsx(styles.dialogContent, className)} {...props}>
           {children}
         </Content>
       </div>
