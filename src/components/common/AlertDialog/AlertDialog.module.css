@@ -19,7 +19,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  max-width: 600px;
+  max-width: 400px;
   max-height: 90vh;
   padding: var(--space-xl);
   overflow-y: auto;
@@ -76,5 +76,5 @@
 .actionContainer {
   display: flex;
   gap: var(--space-md);
-  margin-top: var(--space-md);
+  margin-top: var(--space-xl);
 }
