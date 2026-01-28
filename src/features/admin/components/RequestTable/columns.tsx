@@ -1,6 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Check, Eye, X } from "lucide-react";
 import { Button } from "@/components/common/Button/Button";
+import { ConfirmDialog } from "@/components/common/AlertDialog/ConfirmDialog";
 import type { DocumentRequest, ResearchPaper } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
 import style from "./columns.module.css";
@@ -56,25 +57,35 @@ const actionsColumn = columnHelper.display({
         >
           <Eye className={style.actionIcon} />
         </Button>
-        <Button
-          className={style.actionButton}
-          disabled={isRejecting || isAccepting}
-          onClick={() => {
+        <ConfirmDialog
+          title="Reject document request?"
+          description="Are you sure you want to reject this document request? This action cannot be undone."
+          confirmText="Reject"
+          cancelText="Cancel"
+          onConfirm={() => {
             meta.onReject(requestId);
           }}
-        >
-          <X className={style.actionIcon} />
-        </Button>
+          trigger={
+            <Button className={style.actionButton} disabled={isRejecting || isAccepting}>
+              <X className={style.actionIcon} />
+            </Button>
+          }
+        />
 
-        <Button
-          className={style.actionButton}
-          disabled={isAccepting || isRejecting}
-          onClick={() => {
+        <ConfirmDialog
+          title="Accept document request?"
+          description="Are you sure you want to accept this document request? The requester will be granted access."
+          confirmText="Accept"
+          cancelText="Cancel"
+          onConfirm={() => {
             meta.onAccept(requestId);
           }}
-        >
-          <Check className={style.actionIcon} />
-        </Button>
+          trigger={
+            <Button className={style.actionButton} disabled={isAccepting || isRejecting}>
+              <Check className={style.actionIcon} />
+            </Button>
+          }
+        />
       </div>
     );
   },
