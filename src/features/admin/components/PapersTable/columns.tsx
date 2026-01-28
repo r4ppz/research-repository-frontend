@@ -1,6 +1,7 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Archive, Edit, Eye, RotateCcw, Trash2 } from "lucide-react";
 import { Button } from "@/components/common/Button/Button";
+import { ConfirmDialog } from "@/components/common/AlertDialog/ConfirmDialog";
 import type { ResearchPaper } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
 import style from "../RequestTable/columns.module.css";
@@ -61,22 +62,34 @@ const actionsActiveColumn = columnHelper.display({
         >
           <Edit className={style.actionIcon} />
         </Button>
-        <Button
-          className={style.actionButton}
-          onClick={() => {
+        <ConfirmDialog
+          title="Archive paper?"
+          description="Are you sure you want to archive this paper? It will be moved to archived papers."
+          confirmText="Archive"
+          cancelText="Cancel"
+          onConfirm={() => {
             meta.onArchive(paper.paperId);
           }}
-        >
-          <Archive className={style.actionIcon} />
-        </Button>
-        <Button
-          className={style.actionButton}
-          onClick={() => {
+          trigger={
+            <Button className={style.actionButton}>
+              <Archive className={style.actionIcon} />
+            </Button>
+          }
+        />
+        <ConfirmDialog
+          title="Delete paper?"
+          description="Are you sure you want to permanently delete this paper? This action cannot be undone."
+          confirmText="Delete"
+          cancelText="Cancel"
+          onConfirm={() => {
             meta.onDelete(paper.paperId);
           }}
-        >
-          <Trash2 className={style.actionIcon} />
-        </Button>
+          trigger={
+            <Button className={style.actionButton}>
+              <Trash2 className={style.actionIcon} />
+            </Button>
+          }
+        />
       </div>
     );
   },
@@ -108,22 +121,34 @@ const actionsArchivedColumn = columnHelper.display({
         >
           <Edit className={style.actionIcon} />
         </Button>
-        <Button
-          className={style.actionButton}
-          onClick={() => {
+        <ConfirmDialog
+          title="Restore paper?"
+          description="Are you sure you want to restore this paper to active papers?"
+          confirmText="Restore"
+          cancelText="Cancel"
+          onConfirm={() => {
             meta.onRestore(paper.paperId);
           }}
-        >
-          <RotateCcw className={style.actionIcon} />
-        </Button>
-        <Button
-          className={style.actionButton}
-          onClick={() => {
+          trigger={
+            <Button className={style.actionButton}>
+              <RotateCcw className={style.actionIcon} />
+            </Button>
+          }
+        />
+        <ConfirmDialog
+          title="Delete paper?"
+          description="Are you sure you want to permanently delete this paper? This action cannot be undone."
+          confirmText="Delete"
+          cancelText="Cancel"
+          onConfirm={() => {
             meta.onDelete(paper.paperId);
           }}
-        >
-          <Trash2 className={style.actionIcon} />
-        </Button>
+          trigger={
+            <Button className={style.actionButton}>
+              <Trash2 className={style.actionIcon} />
+            </Button>
+          }
+        />
       </div>
     );
   },
