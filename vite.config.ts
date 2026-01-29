@@ -5,8 +5,10 @@ import { defineConfig } from "vite";
 export default defineConfig(({ mode }) => {
   const isDevelopment = mode === "development";
 
-  // Note: to build the image run this: docker build --build-arg VITE_DOCKER_BUILD=true -t r4ppzf/research-repo-frontend:latest .
-  // then push to the repo: docker push r4ppzf/research-repo-backend:latest
+  // Note: to build the image run this:
+  // > docker build --build-arg VITE_DOCKER_BUILD=true -t r4ppzf/research-repo-frontend:latest .
+  // then push to the repo:
+  // > docker push r4ppzf/research-repo-frontend:latest
   const isDockerBuild = process.env.VITE_DOCKER_BUILD === "true";
 
   return {
