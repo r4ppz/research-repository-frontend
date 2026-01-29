@@ -31,10 +31,13 @@ export const LibraryPage = () => {
           <section>
             <h1 className={style.heroHeader}>Discover Academic Research</h1>
             <p className={style.mobileHeroText}>
-              Explore a growing collection of academic research papers...
+              Explore a growing collection of academic research papers and publications. Our library
+              highlights the innovative work of students and faculty across departments.
             </p>
             <p className={style.desktopHeroText}>
-              Explore a growing collection of academic research papers and publications...
+              Explore a growing collection of academic research papers and publications. Our library
+              highlights the innovative work of students and faculty across departments — advancing
+              knowledge and inspiring new ideas
             </p>
           </section>
 
