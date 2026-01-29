@@ -27,7 +27,6 @@
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-resting);
-  transition: var(--transition-elevation);
 }
 @media (min-width: 768px) {
   .dialogContent {
@@ -40,7 +39,6 @@
 
   .dialogContent:hover {
     box-shadow: var(--elevation-shadow-hover);
-    transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
   }
 }
 
