@@ -50,9 +50,7 @@ export function PapersTable({ archived, showDepartment = true }: PapersTableProp
       unarchiveMutation.mutate(paperId);
     },
     onDelete: (paperId) => {
-      if (window.confirm("Are you sure you want to permanently delete this paper?")) {
-        deleteMutation.mutate(paperId);
-      }
+      deleteMutation.mutate(paperId);
     },
   };
 

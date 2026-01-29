@@ -19,7 +19,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  max-width: 600px;
+  max-width: 400px;
   max-height: 90vh;
   padding: var(--space-xl);
   overflow-y: auto;
@@ -27,6 +27,7 @@
   background: var(--color-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-resting);
+  transition: var(--transition-elevation);
 }
 @media (min-width: 768px) {
   .dialogContent {
@@ -39,6 +40,7 @@
 
   .dialogContent:hover {
     box-shadow: var(--elevation-shadow-hover);
+    transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
   }
 }
 
@@ -69,4 +71,10 @@
   margin-bottom: var(--space-md);
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
+}
+
+.actionContainer {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
 }

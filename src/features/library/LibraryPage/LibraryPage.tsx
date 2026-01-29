@@ -1,114 +1,27 @@
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { type ReactNode, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/common/Button/Button";
-import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
 import { ResearchModal } from "@/components/layout/ResearchModal/ResearchModal";
-import { ResearchCard } from "@/features/library/components/ResearchCard/ResearchCard";
 import { SearchNFilter } from "@/features/library/components/SearchNFilter/SearchNFilter";
-import { usePapers } from "@/features/library/hooks/usePapers";
-import { useDebounce } from "@/hooks/useDebounce";
 import { useScrollToTop } from "@/hooks/useScrollToTop";
+import { useLibrary } from "../hooks/useLibrary";
+import { LibraryResults } from "../components/LibraryResults/LibraryResults";
 import style from "./LibraryPage.module.css";
 
 export const LibraryPage = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedDepartment, setSelectedDepartment] = useState<string | null>(null);
-  const [selectedYear, setSelectedYear] = useState<string | null>(null);
+  const { state, handlers, papers, loading, error, pagination } = useLibrary();
   const [selectedPaperId, setSelectedPaperId] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Lifted page state to handle reset logic
-  const [currentPage, setCurrentPage] = useState(0);
-
-  const debouncedSearchQuery = useDebounce(searchQuery, 500);
-
-  // Using tanstack query yay :)
-  const { papers, error, pagination, loading } = usePapers({
-    search: debouncedSearchQuery,
-    departmentId: selectedDepartment ?? undefined,
-    year: selectedYear ?? undefined,
-    page: currentPage,
-    size: 12,
-  });
-
   const pageRef = useRef<HTMLDivElement>(null);
-  useScrollToTop(pageRef, [currentPage]);
+  useScrollToTop(pageRef, [state.currentPage]);
 
-  // Handlers updated to reset page
-  const handleSearchChange = (query: string) => {
-    setSearchQuery(query);
-    setCurrentPage(0);
+  const handleOpenModal = (id: number) => {
+    setSelectedPaperId(id);
+    setIsModalOpen(true);
   };
-
-  const handleYearChange = (year: string | null) => {
-    setSelectedYear(year);
-    setCurrentPage(0);
-  };
-
-  const handleDepartmentChange = (departmentId: string | null) => {
-    setSelectedDepartment(departmentId);
-    setCurrentPage(0);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedPaperId(null);
-    setIsModalOpen(false);
-  };
-
-  // Pagination triggers
-  const goToNextPage = () => {
-    setCurrentPage((prev) => prev + 1);
-  };
-  const goToPrevPage = () => {
-    setCurrentPage((prev) => Math.max(0, prev - 1));
-  };
-
-  if (error) {
-    return (
-      <div className={style.page} ref={pageRef}>
-        <Header />
-        <main className={style.main}>
-          <div className={style.mainContainer}>
-            <p className={style.errorMessage}>Error: {error}</p>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    );
-  }
-
-  let researchContent: ReactNode;
-  if (loading) {
-    researchContent = (
-      <div className={style.loadingContainer}>
-        <LoadingSpinner message="Loading papers..." />
-      </div>
-    );
-  } else if (papers.length === 0) {
-    const isFiltering = searchQuery.trim().length > 0 || !!selectedDepartment || !!selectedYear;
-    researchContent = (
-      <div className={style.emptyState}>
-        <p>
-          {isFiltering
-            ? "No papers found matching your search :("
-            : "No research papers available at the moment."}
-        </p>
-      </div>
-    );
-  } else {
-    researchContent = papers.map((research) => (
-      <ResearchCard
-        key={research.paperId}
-        researchPaper={research}
-        onView={() => {
-          setSelectedPaperId(research.paperId);
-          setIsModalOpen(true);
-        }}
-      />
-    ));
-  }
 
   return (
     <div className={style.page} ref={pageRef}>
@@ -129,35 +42,45 @@ export const LibraryPage = () => {
           </section>
 
           <SearchNFilter
-            searchQuery={searchQuery}
-            onSearchChange={handleSearchChange}
-            selectedYear={selectedYear}
-            onYearChange={handleYearChange}
-            selectedDepartment={selectedDepartment}
-            onDepartmentChange={handleDepartmentChange}
+            searchQuery={state.searchQuery}
+            onSearchChange={handlers.handleSearchChange}
+            selectedYear={state.selectedYear}
+            onYearChange={handlers.handleYearChange}
+            selectedDepartment={state.selectedDepartment}
+            onDepartmentChange={handlers.handleDepartmentChange}
           />
 
-          <section className={style.researchSection}>{researchContent}</section>
+          <section className={style.researchSection}>
+            <LibraryResults
+              loading={loading}
+              error={error}
+              papers={papers}
+              searchQuery={state.searchQuery}
+              selectedDepartment={state.selectedDepartment}
+              selectedYear={state.selectedYear}
+              onViewPaper={handleOpenModal}
+            />
+          </section>
 
-          {!loading && pagination && pagination.totalPages > 1 && (
+          {!loading && !error && pagination && pagination.totalPages > 1 && (
             <section className={style.paginationSection}>
               <Button
                 className={style.pagingButton}
-                onClick={goToPrevPage}
-                disabled={currentPage === 0}
+                onClick={handlers.goToPrevPage}
+                disabled={state.currentPage === 0}
               >
                 <ChevronLeft className={style.iconChevron} />
                 Previous
               </Button>
 
               <p className={style.pagingIndicator}>
-                Page {currentPage + 1} of {pagination.totalPages}
+                Page {state.currentPage + 1} of {pagination.totalPages}
               </p>
 
               <Button
                 className={style.pagingButton}
-                onClick={goToNextPage}
-                disabled={currentPage >= pagination.totalPages - 1}
+                onClick={handlers.goToNextPage}
+                disabled={state.currentPage >= pagination.totalPages - 1}
               >
                 Next
                 <ChevronRight className={style.iconChevron} />
@@ -167,7 +90,13 @@ export const LibraryPage = () => {
         </div>
       </main>
 
-      <ResearchModal paperId={selectedPaperId} isOpen={isModalOpen} onClose={handleCloseModal} />
+      <ResearchModal
+        paperId={selectedPaperId}
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+        }}
+      />
       <Footer />
     </div>
   );

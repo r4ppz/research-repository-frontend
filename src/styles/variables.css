@@ -154,8 +154,8 @@
   /* Interaction Transforms */
   --translate-hover: -2px;
   --translate-active: -1px;
-  --scale-hover: 1.01;
-  --scale-active: 0.99;
+  --scale-hover: 1;
+  --scale-active: 1;
 
   /* Transitions */
   --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
