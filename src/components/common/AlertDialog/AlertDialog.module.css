@@ -40,7 +40,6 @@
 
   .dialogContent:hover {
     box-shadow: var(--elevation-shadow-hover);
-    transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
   }
 }
 
