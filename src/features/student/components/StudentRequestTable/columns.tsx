@@ -39,14 +39,15 @@ export const columns = [
   columnHelper.accessor("status", {
     header: "Status",
     cell: (info) => {
-      const status = info.getValue();
-      const statusStyles = {
-        ACCEPTED: style["status--accepted"],
-        REJECTED: style["status--rejected"],
-        PENDING: style["status--pending"],
+      const status = info.getValue() as "ACCEPTED" | "REJECTED" | "PENDING";
+
+      const statusStyles: Record<typeof status, string> = {
+        ACCEPTED: style.statusAccepted,
+        REJECTED: style.statusRejected,
+        PENDING: style.statusPending,
       };
 
-      return <span className={[style.status, statusStyles[status]].join(" ")}>{status}</span>;
+      return <span className={`${style.status} ${statusStyles[status]}`}>{status}</span>;
     },
   }),
 

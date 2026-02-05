@@ -2,15 +2,15 @@
   font-weight: var(--font-weight-semibold);
 }
 
-.status--accepted {
+.statusAccepted {
   color: var(--color-green-500);
 }
 
-.status--rejected {
+.statusRejected {
   color: var(--color-red-500);
 }
 
-.status--pending {
+.statusPending {
   color: var(--color-yellow-500);
 }
 
