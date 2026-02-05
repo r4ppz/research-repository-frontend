@@ -8,11 +8,13 @@
   border: 0.2px solid var(--color-border-default);
   border-radius: var(--radius-xl);
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .card {
     box-shadow: var(--shadow-resting);
     transition: var(--transition-elevation);
   }
+
   .card:hover {
     box-shadow: var(--shadow-hover);
     transform: translateY(var(--translate-hover)) scale(var(--scale-hover));

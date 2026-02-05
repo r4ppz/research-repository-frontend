@@ -1,5 +1,6 @@
 :root {
   /* scrollbar-gutter: stable both-edges; */
+
   /* scrollbar-gutter: stable; */
   scrollbar-gutter: auto;
 }
@@ -16,7 +17,7 @@ body {
   line-height: var(--line-height-normal);
   color: var(--color-text);
   background-color: var(--color-bg);
-  text-rendering: optimizeLegibility;
+  text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -25,11 +25,13 @@
   box-shadow: var(--shadow-resting);
   transition: var(--transition-elevation);
 }
+
 .loginCard:hover {
   box-shadow: var(--shadow-hover);
   transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .loginCard {
     max-width: 450px;
     padding: var(--space-2xl) var(--space-xl);

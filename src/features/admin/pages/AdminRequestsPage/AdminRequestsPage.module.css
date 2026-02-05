@@ -22,7 +22,7 @@
   padding: var(--space-lg);
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .mainContainer {
     padding: var(--space-2xl) var(--space-7xl);
   }
@@ -36,7 +36,8 @@
   color: var(--color-text);
   text-align: center;
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .titleHeader {
     font-size: var(--font-size-2xl);
     text-align: left;

@@ -7,11 +7,9 @@
   --color-brand-500: #1b1551;
   --color-brand-400: #2b1f6f;
   --color-brand-600: #120f3d;
-
   --color-accent-500: #2ea8e4;
   --color-accent-400: #4fc0f5;
   --color-accent-600: #2187c9;
-
   --color-gray-50: #f9fafb;
   --color-gray-100: #f3f4f6;
   --color-gray-200: #e5e7eb;
@@ -22,7 +20,6 @@
   --color-gray-700: #374151;
   --color-gray-800: #1f2937;
   --color-gray-900: #111827;
-
   --color-red-500: #ef4444;
   --color-green-500: #22c55e;
   --color-yellow-500: #f59e0b;
@@ -34,45 +31,35 @@
   --color-bg: var(--color-gray-100);
   --color-surface: var(--color-gray-50);
   --color-surface-hover: var(--color-gray-100);
-  --color-overlay: rgba(0, 0, 0, 0.4);
-
+  --color-overlay: rgb(0 0 0 / 40%);
   --color-primary: var(--color-brand-500);
   --color-primary-hover: var(--color-brand-400);
   --color-primary-active: var(--color-brand-600);
-
   --color-secondary: var(--color-accent-500);
   --color-secondary-hover: var(--color-accent-400);
   --color-secondary-active: var(--color-accent-600);
-
   --color-text: var(--color-brand-500);
   --color-text-muted: var(--color-gray-500);
   --color-text-inverted: var(--color-gray-50);
-
   --color-border-default: var(--color-gray-400);
   --color-border-hover: var(--color-gray-500);
   --color-border-active: var(--color-gray-600);
-
   --color-button-primary-bg: var(--color-primary);
   --color-button-primary-bg-hover: var(--color-primary-hover);
   --color-button-primary-bg-active: var(--color-primary-active);
   --color-button-primary-text: var(--color-text-inverted);
-
   --color-button-secondary-bg: var(--color-surface);
   --color-button-secondary-bg-hover: var(--color-gray-100);
   --color-button-secondary-bg-active: var(--color-gray-200);
   --color-button-secondary-text: var(--color-text);
-
   --color-input-bg: var(--color-surface);
   --color-input-bg-hover: var(--color-gray-200);
   --color-input-bg-active: var(--color-gray-300);
   --color-input-text: var(--color-text);
-
   --color-header-bg: var(--color-primary);
-
   --color-text-disabled: var(--color-gray-600);
   --color-surface-disabled: var(--color-gray-100);
   --color-border-disabled: var(--color-gray-500);
-
   --color-error: var(--color-red-500);
   --color-success: var(--color-green-500);
   --color-warning: var(--color-yellow-500);
@@ -81,10 +68,9 @@
      Typography
   ---------------------------------- */
   --font-sans:
-    "Inter", "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue",
-    Arial, sans-serif;
+    "Inter", "Segoe UI", system-ui, -apple-system, blinkmacsystemfont, roboto, "Helvetica Neue",
+    arial, sans-serif;
   --font-mono: "Fira Code", monospace;
-
   --font-size-xs: 0.75rem; /* 12px */
   --font-size-sm: 0.875rem; /* 14px */
   --font-size-md: 1rem; /* 16px */
@@ -94,12 +80,10 @@
   --font-size-3xl: 1.875rem; /* 30px */
   --font-size-4xl: 2.25rem; /* 36px */
   --font-size-5xl: 3rem; /* 48px */
-
   --line-height-supertight: 1;
   --line-height-tight: 1.25;
   --line-height-normal: 1.5;
   --line-height-loose: 1.75;
-
   --font-weight-thin: 100;
   --font-weight-extralight: 200;
   --font-weight-light: 300;
@@ -146,10 +130,10 @@
   ---------------------------------- */
 
   /* Base Shadows (by depth) */
-  --shadow-resting: 0 1px 2px rgba(0, 0, 0, 0.08);
-  --shadow-hover: 0 3px 6px rgba(0, 0, 0, 0.15);
-  --shadow-active: 0 1px 3px rgba(0, 0, 0, 0.12);
-  --shadow-modal: 0 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-resting: 0 1px 2px rgb(0 0 0 / 8%);
+  --shadow-hover: 0 3px 6px rgb(0 0 0 / 15%);
+  --shadow-active: 0 1px 3px rgb(0 0 0 / 12%);
+  --shadow-modal: 0 8px 24px rgb(0 0 0 / 25%);
 
   /* Interaction Transforms */
   --translate-hover: -2px;
@@ -160,7 +144,6 @@
   /* Transitions */
   --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-
   --transition-elevation: transform var(--transition-fast), box-shadow var(--transition-fast);
 
   /* ---------------------------------

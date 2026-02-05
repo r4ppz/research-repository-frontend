@@ -16,7 +16,7 @@
   transition: border-color 0.2s;
 }
 
-@media (min-width: 768px) {
+@media (width >= 768px) {
   .selectTrigger {
     box-shadow: var(--shadow-resting);
     transition: var(--transition-elevation);

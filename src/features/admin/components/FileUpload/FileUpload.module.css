@@ -21,7 +21,8 @@
   border: 2px dashed var(--color-border-default);
   border-radius: var(--radius-lg);
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .fileInputLabel {
     box-shadow: var(--shadow-resting);
     transition: var(--transition-elevation);

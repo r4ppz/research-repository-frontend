@@ -61,7 +61,8 @@
   display: flex;
   flex-direction: row;
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .rightWrapper {
     gap: var(--space-2xl);
   }
@@ -70,7 +71,8 @@
 .desktopNavigation {
   display: none;
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .desktopNavigation {
     display: flex;
     gap: var(--space-md);
@@ -88,7 +90,8 @@
 .logoutButton {
   display: none;
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .logoutButton {
     display: inline-flex;
     padding: var(--space-xs) var(--space-md);
@@ -105,7 +108,8 @@
   background-color: var(--color-surface);
   border-radius: var(--radius-md);
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .menuButton {
     display: none;
   }
@@ -123,7 +127,8 @@
   background-color: var(--color-header-bg);
   border-top: 1px solid var(--color-border-default);
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .dropDownMenu {
     display: none;
   }

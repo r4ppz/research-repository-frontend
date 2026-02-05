@@ -46,7 +46,7 @@
 .button[data-pending] {
   cursor: not-allowed;
   box-shadow: none;
-  opacity: 0.8;
+  opacity: 80%;
   transform: none;
 }
 
@@ -57,14 +57,17 @@
   border: 1px solid var(--color-border-default);
   box-shadow: var(--shadow-resting);
 }
+
 .primary[data-hovered] {
   background-color: var(--color-button-primary-bg-hover);
   border: 1px solid var(--color-border-hover);
 }
+
 .primary[data-pressed] {
   background-color: var(--color-button-primary-bg-active);
   border: 1px solid var(--color-border-active);
 }
+
 .primary[data-disabled],
 .primary[data-pending] {
   color: var(--color-text-disabled);
@@ -77,14 +80,17 @@
   background-color: var(--color-button-secondary-bg);
   border: 1px solid var(--color-border-default);
 }
+
 .secondary[data-hovered] {
   background-color: var(--color-button-secondary-bg-hover);
   border: 1px solid var(--color-border-hover);
 }
+
 .secondary[data-pressed] {
   background-color: var(--color-button-secondary-bg-active);
   border: 1px solid var(--color-border-active);
 }
+
 .secondary[data-disabled],
 .secondary[data-pending] {
   color: var(--color-text-disabled);
@@ -113,6 +119,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -120,7 +127,7 @@
 
 .hiddenText {
   visibility: hidden;
-  opacity: 0;
+  opacity: 0%;
 }
 
 .button svg:not(.animateSpin) {

@@ -28,7 +28,8 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-resting);
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .dialogContent {
     min-width: 25%;
     max-height: 90%;
@@ -53,9 +54,11 @@
   border: none;
   transition: var(--transition-elevation);
 }
+
 .closeButton:hover {
   transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
 }
+
 .closeButton:active {
   transform: translateY(var(--translate-active)) scale(var(--scale-active));
 }

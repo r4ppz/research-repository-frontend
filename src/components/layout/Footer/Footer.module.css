@@ -17,7 +17,8 @@ svg {
   padding: var(--space-lg);
   margin: 0 auto;
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .footerContainer {
     padding: var(--space-2xl) var(--space-7xl);
   }
@@ -30,7 +31,8 @@ svg {
   padding-bottom: var(--space-xl);
   border-bottom: 1px solid var(--color-border-default);
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .mainContainer {
     flex-direction: row;
     gap: var(--space-2xl);
@@ -44,7 +46,8 @@ svg {
   flex-direction: row;
   gap: var(--space-md);
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .titlelogoContainer {
     gap: var(--space-lg);
   }
@@ -66,7 +69,8 @@ svg {
   width: var(--size-logo-sm);
   height: auto;
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .schoolLogo {
     width: var(--size-logo-lg);
   }
@@ -93,7 +97,8 @@ svg {
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-normal);
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .mobileDescription {
     display: none;
   }
@@ -102,7 +107,8 @@ svg {
 .desktopDescription {
   display: none;
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .desktopDescription {
     display: flex;
     font-size: var(--font-size-md);
@@ -117,7 +123,8 @@ svg {
   justify-content: space-evenly;
   padding: var(--space-lg);
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .linkcontactContainer {
     flex-direction: row;
     gap: var(--space-2xl);

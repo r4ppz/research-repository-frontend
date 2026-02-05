@@ -3,7 +3,8 @@
   font-weight: var(--font-weight-normal);
   color: var(--color-secondary);
 }
-@media (min-width: 768px) {
+
+@media (width >= 768px) {
   .link {
     box-shadow: var(--shadow-resting);
     transition: var(--transition-elevation);
