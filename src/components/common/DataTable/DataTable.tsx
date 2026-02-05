@@ -95,7 +95,7 @@ export function DataTable<TData extends RowData>({
           onClick={() => {
             table.previousPage();
           }}
-          disabled={!table.getCanPreviousPage()}
+          isDisabled={!table.getCanPreviousPage()}
         >
           Previous
         </Button>
@@ -109,7 +109,7 @@ export function DataTable<TData extends RowData>({
           onClick={() => {
             table.nextPage();
           }}
-          disabled={!table.getCanNextPage()}
+          isDisabled={!table.getCanNextPage()}
         >
           Next
         </Button>

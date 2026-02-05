@@ -66,7 +66,7 @@ export const columns = [
           {(isPending || isAccepted) && (
             <Button
               className={style.actionButton}
-              disabled={isPending}
+              isDisabled={isPending}
               onClick={() => {
                 meta.onDownload();
               }}
@@ -84,7 +84,7 @@ export const columns = [
                   onClick={() => {
                     meta.onRemove(request.requestId);
                   }}
-                  disabled={isRemoving}
+                  isPending={isRemoving}
                 >
                   <Trash2 size={16} />
                 </Button>

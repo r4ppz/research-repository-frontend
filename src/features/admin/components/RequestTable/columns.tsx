@@ -66,7 +66,7 @@ const actionsColumn = columnHelper.display({
             meta.onReject(requestId);
           }}
           trigger={
-            <Button className={style.actionButton} disabled={isRejecting || isAccepting}>
+            <Button className={style.actionButton} isPending={isRejecting || isAccepting}>
               <X className={style.actionIcon} />
             </Button>
           }
@@ -81,7 +81,7 @@ const actionsColumn = columnHelper.display({
             meta.onAccept(requestId);
           }}
           trigger={
-            <Button className={style.actionButton} disabled={isAccepting || isRejecting}>
+            <Button className={style.actionButton} isPending={isAccepting || isRejecting}>
               <Check className={style.actionIcon} />
             </Button>
           }

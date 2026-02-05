@@ -85,7 +85,12 @@ export const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) 
         </div>
 
         {(isUserStudent(user) || isUserTeacher(user)) && !paper.archived && (
-          <Button onClick={requestDocument} disabled={requestExists || isRequestLoading}>
+          <Button
+            onPress={requestDocument}
+            isDisabled={requestExists}
+            isPending={isRequestLoading}
+            variant="primary"
+          >
             {requestExists ? "Request Submitted" : "Request Document"}
           </Button>
         )}

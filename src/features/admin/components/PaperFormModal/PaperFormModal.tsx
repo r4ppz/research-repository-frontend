@@ -184,7 +184,7 @@ export const PaperFormModal = ({ isOpen, onClose }: PaperFormModalProps) => {
             <Button variant="secondary" onClick={onClose} type="button">
               Cancel
             </Button>
-            <Button type="submit" disabled={createMutation.isPending}>
+            <Button type="submit" isPending={createMutation.isPending}>
               {createMutation.isPending ? "Adding..." : "Add Paper"}
             </Button>
           </div>

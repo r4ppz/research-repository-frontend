@@ -1,4 +1,5 @@
 .button {
+  position: relative;
   display: flex;
   flex-flow: row nowrap;
   gap: var(--space-sm);
@@ -8,60 +9,67 @@
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-medium);
-  color: var(--color-button-primary-text);
   text-align: center;
   white-space: nowrap;
+  appearance: none;
   cursor: pointer;
-  border: 1px solid var(--color-border-default);
+  user-select: none;
+  background: none;
+  border: none;
   border-radius: var(--radius-lg);
-}
-@media (min-width: 768px) {
-  .button {
-    box-shadow: var(--shadow-resting);
-    transition: var(--transition-elevation);
-  }
-
-  .button:hover {
-    box-shadow: var(--shadow-hover);
-    transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
-  }
+  box-shadow: var(--shadow-resting);
+  transition: var(--transition-elevation);
 }
 
-.button:active {
+/* Interaction States via React Aria */
+
+/* Hover: Using RAC [data-hovered] */
+.button[data-hovered] {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
+}
+
+/* Pressed: Replaces :active to ensure mobile reliability */
+.button[data-pressed] {
   box-shadow: var(--shadow-active);
   transform: translateY(var(--translate-active)) scale(var(--scale-active));
 }
 
-.button:focus-visible {
+/* Focus: Only triggers via keyboard */
+.button[data-focus-visible] {
   outline: 2px solid var(--color-secondary);
   outline-offset: 1px;
 }
 
-.button svg {
-  flex-shrink: 0;
+/* Disabled/Pending */
+.button[data-disabled],
+.button[data-pending] {
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.8;
+  transform: none;
 }
 
+/* Variants */
 .primary {
   color: var(--color-button-primary-text);
   background-color: var(--color-button-primary-bg);
   border: 1px solid var(--color-border-default);
+  box-shadow: var(--shadow-resting);
 }
-
-.primary:hover {
+.primary[data-hovered] {
   background-color: var(--color-button-primary-bg-hover);
   border: 1px solid var(--color-border-hover);
 }
-
-.primary:active {
+.primary[data-pressed] {
   background-color: var(--color-button-primary-bg-active);
   border: 1px solid var(--color-border-active);
 }
-
-.primary:disabled {
+.primary[data-disabled],
+.primary[data-pending] {
   color: var(--color-text-disabled);
-  cursor: not-allowed;
   background-color: var(--color-surface-disabled);
-  opacity: 0.8;
+  border-color: var(--color-border-default);
 }
 
 .secondary {
@@ -69,20 +77,61 @@
   background-color: var(--color-button-secondary-bg);
   border: 1px solid var(--color-border-default);
 }
-
-.secondary:hover {
+.secondary[data-hovered] {
   background-color: var(--color-button-secondary-bg-hover);
   border: 1px solid var(--color-border-hover);
 }
-
-.secondary:active {
+.secondary[data-pressed] {
   background-color: var(--color-button-secondary-bg-active);
   border: 1px solid var(--color-border-active);
 }
-
-.secondary:disabled {
+.secondary[data-disabled],
+.secondary[data-pending] {
   color: var(--color-text-disabled);
-  cursor: not-allowed;
   background-color: var(--color-surface-disabled);
-  opacity: 0.8;
+  border-color: var(--color-border-default);
+}
+
+/* Loading States & Icon Handling */
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%);
+}
+
+.animateSpin {
+  width: 1.25rem;
+  height: 1.25rem;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hiddenText {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.button svg:not(.animateSpin) {
+  flex-shrink: 0;
+}
+
+.inner {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-sm);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }

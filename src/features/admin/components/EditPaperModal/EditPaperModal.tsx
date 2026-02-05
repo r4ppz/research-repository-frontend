@@ -170,7 +170,7 @@ export const EditPaperModal = ({ isOpen, onClose, paper }: EditPaperModalProps) 
             <Button variant="secondary" onClick={onClose} type="button">
               Cancel
             </Button>
-            <Button type="submit" disabled={updateMutation.isPending}>
+            <Button type="submit" isPending={updateMutation.isPending}>
               {updateMutation.isPending ? "Updating..." : "Update Paper"}
             </Button>
           </div>

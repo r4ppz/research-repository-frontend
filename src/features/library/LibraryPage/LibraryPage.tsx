@@ -67,7 +67,7 @@ export const LibraryPage = () => {
               <Button
                 className={style.pagingButton}
                 onClick={handlers.goToPrevPage}
-                disabled={state.currentPage === 0}
+                isDisabled={state.currentPage === 0}
               >
                 <ChevronLeft className={style.iconChevron} />
                 Previous
@@ -80,7 +80,7 @@ export const LibraryPage = () => {
               <Button
                 className={style.pagingButton}
                 onClick={handlers.goToNextPage}
-                disabled={state.currentPage >= pagination.totalPages - 1}
+                isDisabled={state.currentPage >= pagination.totalPages - 1}
               >
                 Next
                 <ChevronRight className={style.iconChevron} />
