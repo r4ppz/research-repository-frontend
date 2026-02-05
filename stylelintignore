@@ -1,0 +1,10 @@
+# Ignore build outputs
+dist/
+dist-ssr/
+dev-dist/
+
+# Ignore dependencies
+node_modules/
+
+# Ignore cache files
+.stylelintcache/

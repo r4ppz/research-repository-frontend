@@ -11,11 +11,11 @@
     "format": "prettier --write .",
     "lint": "eslint src --cache --cache-strategy content",
     "lint:fix": "eslint src --fix --cache --cache-strategy content",
-    "lint:css": "stylelint \"src/**/*.{css,module.css}\"",
-    "lint:css:fix": "stylelint \"src/**/*.{css,module.css}\" --fix",
+    "lint:css": "stylelint \"src/**/*.css\" --cache",
+    "lint:css:fix": "stylelint \"src/**/*.css\" --fix --cache",
     "type-check": "tsc --noEmit",
     "fix": "npm run lint:fix && npm run format && npm run lint:css:fix",
-    "check": "npm run lint:css && npm run type-check && eslint .",
+    "check": "npm run lint:css && npm run type-check && npm run lint",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {

@@ -17,8 +17,9 @@ tsconfig.tsbuildinfo
 .env
 .env*
 
-# ESLint cache
+# cache
 .eslintcache
+.stylelintcache
 
 # Editor directories and files
 .vscode/*

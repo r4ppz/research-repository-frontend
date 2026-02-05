@@ -1,46 +1,47 @@
 /** @type {import('stylelint').Config} */
-// biome-ignore lint/style/noDefaultExport: < Stylint need a default here, I think... >
 export default {
   extends: ["stylelint-config-standard", "stylelint-config-recess-order"],
   rules: {
+    // Strict camelCase (Optimized regex)
     "selector-class-pattern": [
-      "^[a-z][a-zA-Z0-9]*$|^[a-z0-9]+(-[a-z0-9]+)*$",
+      "^[a-z][a-zA-Z0-9]*$",
       {
-        message: "Selectors should use either camelCase or kebab-case naming convention",
+        message: (selector) => `Expected class selector "${selector}" to be camelCase`,
       },
     ],
-    "custom-property-pattern": [
-      "^([a-z][a-zA-Z0-9]*|[a-z0-9]+(-[a-z0-9]+)*)$",
-      {
-        message:
-          "CSS custom properties should use either camelCase or kebab-case naming convention",
-      },
-    ],
+
+    // Modern CSS Features
+    "color-function-notation": "modern",
+    "alpha-value-notation": "percentage",
+    "media-feature-range-notation": "context",
+
+    // CSS Modules Specific Support
     "selector-pseudo-class-no-unknown": [
       true,
       {
-        ignorePseudoClasses: ["global"],
+        // Added 'local' and 'global'
+        ignorePseudoClasses: ["global", "local"],
       },
     ],
-    "alpha-value-notation": null,
-    "color-function-notation": null,
-    "comment-empty-line-before": null,
-    "custom-property-empty-line-before": null,
-    "value-keyword-case": null,
-    "no-empty-source": null,
-    "no-descending-specificity": null,
-    "media-feature-range-notation": null,
-    "comment-whitespace-inside": null,
-    "comment-no-empty": null,
-    "at-rule-empty-line-before": null,
-    "rule-empty-line-before": null,
-  },
-  overrides: [
-    {
-      files: ["**/*.module.css"],
-      rules: {
-        "selector-class-pattern": null,
+
+    // Allow :export blocks for passing values to JS
+    "property-no-unknown": [
+      true,
+      {
+        ignoreProperties: [":export"],
       },
-    },
-  ],
-};
+    ],
+
+    // Practicality
+    "no-descending-specificity": true,
+    "value-keyword-case": "lower",
+
+    // Disable this to allow standard CSS module imports and @value if used
+    "at-rule-no-unknown": [
+      true,
+      {
+        ignoreAtRules: ["value"],
+      },
+    ],
+  },
+}; /** @type {import('stylelint').Config} */
