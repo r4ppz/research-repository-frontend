@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { getDepartments } from "@/api/filter";
 import { Button } from "@/components/common/Button/Button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/common/Dialog/Dialog";
@@ -40,7 +40,7 @@ export const PaperFormModal = ({ isOpen, onClose }: PaperFormModalProps) => {
 
   const createMutation = useCreatePaper();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     if (!file || departmentId === "") return;
 

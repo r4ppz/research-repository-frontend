@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { getDepartments } from "@/api/filter";
 import { Button } from "@/components/common/Button/Button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/common/Dialog/Dialog";
@@ -55,7 +55,7 @@ export const EditPaperModal = ({ isOpen, onClose, paper }: EditPaperModalProps) 
 
   const updateMutation = useUpdatePaper();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     if (!paper || departmentId === "") return;
 
