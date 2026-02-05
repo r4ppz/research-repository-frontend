@@ -12,16 +12,8 @@ interface ButtonProps extends RACButtonProps {
 }
 
 export function Button({ variant = "primary", ...props }: ButtonProps) {
-  const classNameRenderProp = composeRenderProps(props.className, (className, state) =>
-    clsx(
-      style.button,
-      style[variant],
-      state.isPressed && style.pressed,
-      state.isFocusVisible && style.focusVisible,
-      state.isDisabled && style.disabled,
-      state.isPending && style.pending,
-      className,
-    ),
+  const classNameRenderProp = composeRenderProps(props.className, (className) =>
+    clsx(style.button, style[variant], className),
   );
 
   const childrenRenderProp = composeRenderProps(props.children, (children, { isPending }) => (
