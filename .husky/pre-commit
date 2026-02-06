@@ -3,3 +3,4 @@
 
 npm run check
 
+npx lint-staged
