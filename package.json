@@ -16,7 +16,8 @@
     "type-check": "tsc --noEmit",
     "fix": "npm run lint:fix && npm run format && npm run lint:css:fix",
     "check": "npm run lint:css && npm run type-check && npm run lint",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "prepare": "husky"
   },
   "dependencies": {
     "@radix-ui/react-alert-dialog": "^1.1.15",
@@ -50,6 +51,7 @@
     "eslint-plugin-react-refresh": "^0.4.26",
     "gh-pages": "^6.3.0",
     "globals": "^17.0.0",
+    "husky": "^9.1.7",
     "prettier": "^3.8.0",
     "stylelint": "^16.12.0",
     "stylelint-config-recess-order": "^5.1.1",
