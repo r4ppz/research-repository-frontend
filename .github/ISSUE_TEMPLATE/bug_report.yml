@@ -19,7 +19,7 @@ body:
   - type: dropdown
     id: area
     attributes:
-      label: Affected Area
+      label: Affected Page
       options:
         - Login Page
         - Library Page
@@ -32,12 +32,13 @@ body:
   - type: dropdown
     id: role
     attributes:
-      label: Your User Role
+      label: Your Role
       options:
         - STUDENT
         - TEACHER
         - DEPARTMENT_ADMIN
         - SUPER_ADMIN
+        - DEVELOPER
     validations:
       required: true
 
@@ -49,6 +50,17 @@ body:
         1. Log in as a Student
         2. Go to Library
         3. Click 'Request Access' on paper ID 123
+    validations:
+      required: false
+
+  - type: dropdown
+    id: problem
+    attributes:
+      label: Where do you think the problem is? (optional)
+      options:
+        - Frontend: UI/UX problem
+        - Backend: Logic/DB related
+        - Documentation: Implementation mismatched?
     validations:
       required: false
 
