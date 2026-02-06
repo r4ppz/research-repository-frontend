@@ -1,0 +1,37 @@
+name: "General Question"
+description: Ask anything! For users, devs, or anyone curious.
+title: "[Question]: "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Welcome!
+        This is a space for everyone. Whether you are a student using the portal, a developer looking at the code, or just a visitor. Ask anything :p
+
+  - type: textarea
+    id: question-content
+    attributes:
+      label: What is your question?
+      placeholder: "e.g., How do I request access to a paper? or What library did you use to make a Modal component?"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: identity
+    attributes:
+      label: Who are you? (Optional)
+      options:
+        - Student
+        - Teacher
+        - Developer
+        - Just curious
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        *Note: If you found a bug or want to suggest a specific feature, please use the other templates. Thanks!*
+        *Project docs: https://r4ppz.github.io/research-repo-docs/*

@@ -1,20 +1,44 @@
-name: Feature Request
+name: Feature Request & Improvement
 description: Suggest an improvement or a new capability.
-labels: ["enhancement"]
+labels: ["feature"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        ### Share your idea!
+        Use this template to suggest new features or improvements to the Research Repository.
+        Whether you're a student, admin, faculty or a developer, your feedback will help us :)
+
   - type: textarea
     id: goal
     attributes:
-      label: What is the goal of this feature?
-      description: Who is this for and what problem does it solve?
-      placeholder: "Example: As a Teacher, I want to see a list of all archived papers in my department..."
+      label: What is the goal of this feature or improvement?
+      placeholder: "Example: I want to see a list of all archived papers in my department..."
     validations:
       required: true
+
+  - type: dropdown
+    id: role
+    attributes:
+      label: What is your role?
+      options:
+        - STUDENT
+        - TEACHER
+        - DEPARTMENT_ADMIN
+        - SUPER_ADMIN
+        - DEVELOPER
+        - I AM NOT TELLING :/
+    validations:
+      required: true
+
   - type: textarea
     id: solution
     attributes:
-      label: Describe the proposed solution
-      placeholder: "How should this work in the UI?"
+      label: Describe the proposed solution (optional)
+      placeholder: "How should this work? Any specific UI changes in React or logic changes in Spring Boot?"
+    validations:
+      required: false
+
   - type: checkboxes
     id: stakeholders
     attributes:
@@ -23,3 +47,26 @@ body:
         - label: Students
         - label: Teachers
         - label: Admins
+        - label: Developers
+        - label: No one
+    validations:
+      required: false
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Technical Area (optional)
+      description: Where does the work happen?
+      options:
+        - "Frontend (React/Vite)"
+        - "Backend (Spring Boot/PostgreSQL)"
+        - "Documentation (Specifications/API Contract)"
+        - "Maintenance (Refactoring/Dependencies/DevOps)"
+    validations:
+      required: false
+
+  - type: markdown
+    attributes:
+      value: |
+        ---
+        *Note: If this is a bug report (something is broken), please use the Bug Report template instead.*

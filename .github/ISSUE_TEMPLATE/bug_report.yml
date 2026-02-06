@@ -1,31 +1,34 @@
 name: Bug Report
 description: Something isn't working as expected.
-labels: ["bug", "triage"]
+labels: ["bug"]
 body:
   - type: markdown
     attributes:
       value: |
-        Thanks for reporting! Please ensure you aren't sharing sensitive school data.
+        Thanks for reporting! Please ensure you aren't sharing sensitive data.
+
   - type: textarea
     id: what-happened
     attributes:
       label: What happened?
+      description: Please provide a screenshot or video recording if possible.
       placeholder: "Example: I clicked 'Download PDF' but I got a 404 error instead."
     validations:
       required: true
+
   - type: dropdown
     id: area
     attributes:
-      label: Affected System Area
+      label: Affected Area
       options:
-        - Authentication (Google SSO)
-        - Library Browsing
-        - Paper Requesting
-        - Admin Dashboard
-        - File Downloading
+        - Login Page
+        - Library Page
+        - Request Page
+        - Research Page
         - Other
     validations:
       required: true
+
   - type: dropdown
     id: role
     attributes:
@@ -37,17 +40,21 @@ body:
         - SUPER_ADMIN
     validations:
       required: true
+
   - type: textarea
     id: reproduction
     attributes:
-      label: Steps to Reproduce
+      label: Steps to Reproduce (optional)
       placeholder: |
         1. Log in as a Student
         2. Go to Library
         3. Click 'Request Access' on paper ID 123
+    validations:
+      required: false
+
   - type: input
     id: trace-id
     attributes:
       label: API Trace ID (Optional)
-      description: If you saw an error message, please paste the traceId here.
+      description: If you saw an error message (in UI or dev tool console), please paste the traceId here.
       placeholder: "e.g., 7f2c9b18c6e4"
