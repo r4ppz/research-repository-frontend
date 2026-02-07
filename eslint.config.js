@@ -41,6 +41,7 @@ export default [
         "warn",
         { args: "after-used", argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
+      "@typescript-eslint/no-deprecated": "warn",
 
       // React Compiler compatible ESLint rules (recommended-latest preset)
       ...reactHooks.configs["recommended-latest"].rules,
