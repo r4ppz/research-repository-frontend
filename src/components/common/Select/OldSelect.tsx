@@ -18,7 +18,8 @@ interface SelectProps {
   disabled?: boolean;
 }
 
-export const Select = ({
+/** @deprecated Use Select; implemented using React Aria instead. */
+export const OldSelect = ({
   value,
   onValueChange,
   options,

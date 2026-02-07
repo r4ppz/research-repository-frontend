@@ -5,7 +5,7 @@ import { getDepartments } from "@/api/filter";
 import { Button } from "@/components/common/Button/Button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/common/Dialog/Dialog";
 import { Input } from "@/components/common/Input/Input";
-import { Select } from "@/components/common/Select/Select";
+import { OldSelect } from "@/components/common/Select/OldSelect";
 import { Textarea } from "@/components/common/Textarea/Textarea";
 import { useAuth } from "@/features/auth/context/useAuth";
 import type { ResearchPaper } from "@/types";
@@ -117,7 +117,7 @@ export const EditPaperModal = ({ isOpen, onClose, paper }: EditPaperModalProps) 
 
             <div className={style.field}>
               <label htmlFor="department">Department</label>
-              <Select
+              <OldSelect
                 value={departmentId ? departmentId.toString() : ""}
                 onValueChange={(v) => {
                   setDepartmentId(Number(v));
