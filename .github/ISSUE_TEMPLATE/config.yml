@@ -1,4 +1,4 @@
-blank_issues_enabled: false
+blank_issues_enabled: true
 contact_links:
   - name: System Documentation
     url: https://r4ppz.github.io/research-repo-docs/
