@@ -18,7 +18,7 @@ export default defineConfig(({ mode }) => {
     preview: {
       allowedHosts: true, // for testing
     },
-    base: isDevelopment || isDockerBuild ? "/" : "/research-repository/",
+    base: isDevelopment || isDockerBuild ? "/" : "/research-repository-frontend/",
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "src"),
