@@ -6,7 +6,39 @@ I can't keep in my head. Also for other devs if they're interested.
 
 > I'll write to this document from time to time. It is currently not complete.
 
-## Collaboration Guide
+---
+
+# Local Development Setup
+
+To run this project locally:
+
+### Prerequisites
+
+- Node.js
+- Git
+
+### Steps
+
+```bash
+# Clone the repository
+git clone https://github.com/r4ppz/research-repository.git
+cd research-repository
+
+# Install dependencies
+npm install
+
+# Build the project (for production)
+npm run build
+
+# Run locally in development mode
+npm run dev
+npm run preview
+
+```
+
+---
+
+# Collaboration Guide
 
 To maintain code quality and avoid configuration conflicts, all developers must follow this workflow.
 
@@ -53,7 +85,7 @@ git checkout -b feat/issue-number-description
 
 ---
 
-## Manual way of building and updating the docker image
+# Manual way of building and updating the docker image
 
 ### Docker Hub
 
