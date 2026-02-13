@@ -1,3 +1,4 @@
+import storybook from "eslint-plugin-storybook";
 import eslintConfigPrettier from "eslint-config-prettier";
 import prettierPlugin from "eslint-plugin-prettier";
 import reactHooks from "eslint-plugin-react-hooks";
@@ -12,9 +13,10 @@ export default [
     ignores: ["dist", "node_modules", "*.env", "*.d.ts", "stylelint.config.mjs", "*.config.mjs"],
   },
 
-  // Base TypeScript configs (these return arrays, so we spread them)
   ...tseslint.configs.strictTypeChecked,
   ...tseslint.configs.stylisticTypeChecked,
+
+  ...storybook.configs["flat/recommended"],
 
   {
     files: ["src/**/*.{ts,tsx}", "vite.config.ts", "eslint.config.js"],
@@ -60,6 +62,6 @@ export default [
       "prettier/prettier": "warn",
     },
   },
-  // Must be the last object to override previous stylistic rules
+
   eslintConfigPrettier,
 ];
