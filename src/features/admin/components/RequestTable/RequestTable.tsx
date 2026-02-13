@@ -1,12 +1,12 @@
 import type { PaginationState } from "@tanstack/react-table";
 import { useState } from "react";
-import { DataTable } from "@/components/common/DataTable/DataTable";
-import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
-import type { ResearchPaper } from "@/types";
 import { useAdminRequests } from "../../hooks/useAdminDocumentRequest";
 import { useAcceptRequest, useRejectRequest } from "../../hooks/useAdminRequestMutations";
 import { ResearchModal } from "../ResearchModal/ResearchModal";
 import { columns, columnsWithoutDepartment, type TableMeta } from "./columns";
+import { DataTable } from "@/components/common/DataTable/DataTable";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
+import type { ResearchPaper } from "@/types";
 
 interface RequestsTableProps {
   showDepartment?: boolean;

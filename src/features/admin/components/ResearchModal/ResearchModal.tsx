@@ -1,7 +1,7 @@
+import style from "./ResearchModal.module.css";
 import { Dialog, DialogContent, DialogTitle } from "@/components/common/Dialog/Dialog";
 import type { ResearchPaper } from "@/types";
 import { formatDateLong } from "@/util/formatDate";
-import style from "./ResearchModal.module.css";
 
 interface ResearchModalProps {
   isOpen: boolean;

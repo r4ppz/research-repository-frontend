@@ -1,12 +1,12 @@
 import { Archive, CircleCheck, FilePlus2 } from "lucide-react";
 import { useState } from "react";
+import { PaperFormModal } from "../../components/PaperFormModal/PaperFormModal";
+import { PapersTable } from "../../components/PapersTable/PapersTable";
+import style from "./AdminPapersPage.module.css";
 import { Button } from "@/components/common/Button/Button";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
-import { PaperFormModal } from "../../components/PaperFormModal/PaperFormModal";
-import { PapersTable } from "../../components/PapersTable/PapersTable";
 import { useAuth } from "@/features/auth/context/useAuth";
-import style from "./AdminPapersPage.module.css";
 
 export const AdminPapersPage = () => {
   const { user } = useAuth();

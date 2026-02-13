@@ -1,4 +1,6 @@
 import clsx from "clsx";
+import { usePaperRequest } from "./hook/usePaperRequest";
+import style from "./ResearchModal.module.css";
 import { Button } from "@/components/common/Button/Button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/common/Dialog/Dialog";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
@@ -6,8 +8,6 @@ import { useAuth } from "@/features/auth/context/useAuth";
 import { usePaperById } from "@/features/library/hooks/usePaperById";
 import { formatDateLong } from "@/util/formatDate";
 import { isUserStudent, isUserTeacher } from "@/util/roleBasedAccess";
-import { usePaperRequest } from "./hook/usePaperRequest";
-import style from "./ResearchModal.module.css";
 
 interface ResearchModalProps {
   isOpen: boolean;

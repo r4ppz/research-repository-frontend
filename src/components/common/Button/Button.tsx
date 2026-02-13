@@ -1,11 +1,11 @@
+import clsx from "clsx";
+import { Loader2 } from "lucide-react";
 import {
   composeRenderProps,
   Button as RACButton,
   type ButtonProps as RACButtonProps,
 } from "react-aria-components";
-import clsx from "clsx";
 import style from "./Button.module.css";
-import { Loader2 } from "lucide-react";
 
 interface ButtonProps extends RACButtonProps {
   variant?: "primary" | "secondary";

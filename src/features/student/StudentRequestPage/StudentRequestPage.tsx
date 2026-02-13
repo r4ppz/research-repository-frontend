@@ -1,7 +1,7 @@
+import style from "./StudentRequestPage.module.css";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
 import { StudentRequestTable } from "@/features/student/components/StudentRequestTable/StudentRequestTable";
-import style from "./StudentRequestPage.module.css";
 
 export const StudentRequestPage = () => {
   return (

@@ -7,8 +7,8 @@ import {
   Label as RACLabel,
   TextProps,
 } from "react-aria-components";
-import style from "./Form.module.css";
 import { Text } from "../Content/Content";
+import style from "./Form.module.css";
 
 export function Form(props: FormProps) {
   return <RACForm className={style.form} {...props} />;

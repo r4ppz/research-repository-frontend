@@ -1,5 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { SyntheticEvent, useEffect, useState } from "react";
+import { useCreatePaper } from "../../hooks/useAdminPaperActions";
+import { FileUpload } from "../FileUpload/FileUpload";
+import style from "./PaperFormModal.module.css";
 import { getDepartments } from "@/api/filter";
 import { Button } from "@/components/common/Button/Button";
 import { Dialog, DialogContent, DialogTitle } from "@/components/common/Dialog/Dialog";
@@ -7,9 +10,6 @@ import { Input } from "@/components/common/Input/Input";
 import { OldSelect } from "@/components/common/Select/OldSelect";
 import { Textarea } from "@/components/common/Textarea/Textarea";
 import { useAuth } from "@/features/auth/context/useAuth";
-import { useCreatePaper } from "../../hooks/useAdminPaperActions";
-import { FileUpload } from "../FileUpload/FileUpload";
-import style from "./PaperFormModal.module.css";
 
 interface PaperFormModalProps {
   isOpen: boolean;

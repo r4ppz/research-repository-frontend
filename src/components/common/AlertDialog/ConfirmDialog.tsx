@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Button } from "../Button/Button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -8,7 +9,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "./AlertDialog";
-import { Button } from "../Button/Button";
 import styles from "./AlertDialog.module.css";
 
 interface ConfirmDialogProps {

@@ -1,7 +1,7 @@
+import style from "./ProfileModal.module.css";
 import { Avatar } from "@/components/common/Avatar/Avatar";
 import { Dialog, DialogContent, DialogTitle } from "@/components/common/Dialog/Dialog";
 import type { Role, User } from "@/types";
-import style from "./ProfileModal.module.css";
 
 interface ProfileModalProps {
   isOpen: boolean;

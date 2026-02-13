@@ -8,8 +8,8 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import clsx from "clsx";
-import { Button } from "@/components/common/Button/Button";
 import style from "./DataTable.module.css";
+import { Button } from "@/components/common/Button/Button";
 
 interface DataTableProps<TData extends RowData> {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

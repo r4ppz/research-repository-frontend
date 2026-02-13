@@ -1,14 +1,11 @@
 import type { PaginationState } from "@tanstack/react-table";
 import { useState } from "react";
-import { DataTable } from "@/components/common/DataTable/DataTable";
-import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
-import type { ResearchPaper } from "@/types";
-import { useAdminPapers } from "../../hooks/useAdminPapers";
 import {
   useArchivePaper,
   useDeletePaper,
   useUnarchivePaper,
 } from "../../hooks/useAdminPaperActions";
+import { useAdminPapers } from "../../hooks/useAdminPapers";
 import { EditPaperModal } from "../EditPaperModal/EditPaperModal";
 import { ResearchModal } from "../ResearchModal/ResearchModal";
 import {
@@ -18,6 +15,9 @@ import {
   columnsArchivedWithoutDepartment,
   type TableMeta,
 } from "./columns";
+import { DataTable } from "@/components/common/DataTable/DataTable";
+import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
+import type { ResearchPaper } from "@/types";
 
 interface PapersTableProps {
   archived: boolean;

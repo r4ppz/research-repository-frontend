@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { extractApiError } from "@/util/errorHandler";
 import { useAuth } from "../context/useAuth";
+import { extractApiError } from "@/util/errorHandler";
 
 export function useGoogleLogin(setShowErrorModal: (v: boolean) => void) {
   const { login, setAuthError, setIsLoading } = useAuth();

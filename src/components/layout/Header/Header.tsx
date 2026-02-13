@@ -2,14 +2,14 @@ import clsx from "clsx";
 import { LogOut, Menu } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import style from "./Header.module.css";
 import schoolLogo from "@/assets/school-logo.svg";
+import { ConfirmDialog } from "@/components/common/AlertDialog/ConfirmDialog";
 import { Button } from "@/components/common/Button/Button";
 import { CNavLink } from "@/components/common/CNavLink/CNavLink";
 import { ProfileButton } from "@/components/layout/ProfileButton/ProfileButton";
 import { useAuth } from "@/features/auth/context/useAuth";
 import type { Role } from "@/types";
-import style from "./Header.module.css";
-import { ConfirmDialog } from "@/components/common/AlertDialog/ConfirmDialog";
 
 const GENERAL_ROLE_LABEL: Record<Role, string> = {
   STUDENT: "Student",
