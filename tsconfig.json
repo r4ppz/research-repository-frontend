@@ -1,29 +1,22 @@
 {
   "compilerOptions": {
-    /* Output & Module Resolution */
     "module": "ESNext",
     "target": "ESNext",
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    /* React & JSX */
     "jsx": "react-jsx",
     "allowJs": true,
-    /* Strictness */
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
-    /* Path Aliases */
-    /* Path Aliases */
     "paths": {
       "@/*": ["./src/*"]
     },
-    /* Type Checking Behavior */
     "skipLibCheck": true,
     "isolatedModules": true,
-    /* Emission */
     "noEmit": true
   },
   "include": ["src", "vite.config.ts", "eslint.config.js"],
