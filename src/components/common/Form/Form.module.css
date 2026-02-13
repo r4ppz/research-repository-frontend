@@ -1,0 +1,47 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+
+  > button {
+    align-self: start;
+  }
+}
+
+.form [role="alert"] {
+  max-width: 250px;
+  padding: var(--space-md);
+  background: var(--color-bg);
+  border: 2px solid var(--invalid-color);
+  border-radius: var(--radius-md);
+  outline: none;
+
+  &:focus {
+    outline: 2px solid var(--color-gray-500);
+    outline-offset: 2px;
+  }
+}
+
+.label {
+  display: block;
+  margin-bottom: var(--space-sm);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-text);
+}
+
+.fieldError {
+  display: block;
+  margin-bottom: var(--space-sm);
+  color: var(--color-orange-500);
+  contain: inline-size;
+}
+
+.fieldDescription {
+  display: block;
+  margin-bottom: var(--space-sm);
+  contain: inline-size;
+
+  [data-invalid] > & {
+    display: none;
+  }
+}
