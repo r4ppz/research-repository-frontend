@@ -7,6 +7,7 @@ import { createRoot } from "react-dom/client";
 import { HashRouter } from "react-router-dom";
 import { AuthProvider } from "@/features/auth/context/AuthProvider";
 import { App } from "./App";
+import { SimpleErrorBoundary } from "./components/layout/ErrorBoundary/SimpleErrorBoundary";
 
 // Add the TypeScript declaration at the top level
 declare global {
@@ -29,7 +30,9 @@ if (container) {
       <QueryClientProvider client={queryClient}>
         <HashRouter>
           <AuthProvider>
-            <App />
+            <SimpleErrorBoundary>
+              <App />
+            </SimpleErrorBoundary>
           </AuthProvider>
         </HashRouter>
       </QueryClientProvider>
