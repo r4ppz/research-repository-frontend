@@ -1,8 +1,9 @@
-import storybook from "eslint-plugin-storybook";
 import eslintConfigPrettier from "eslint-config-prettier";
+import importPlugin from "eslint-plugin-import";
 import prettierPlugin from "eslint-plugin-prettier";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
+import storybook from "eslint-plugin-storybook";
 import globals from "globals";
 import tseslint from "typescript-eslint";
 
@@ -20,23 +21,28 @@ export default [
 
   {
     files: ["src/**/*.{ts,tsx}", "vite.config.ts", "eslint.config.js"],
+
     languageOptions: {
+      parser: tseslint.parser,
       parserOptions: {
-        ecmaVersion: "latest",
-        sourceType: "module",
         project: "./tsconfig.json",
         tsconfigRootDir: import.meta.dirname,
+        ecmaVersion: "latest",
+        sourceType: "module",
       },
       globals: {
         ...globals.browser,
         ...globals.es2021,
       },
     },
+
     plugins: {
       "react-hooks": reactHooks,
       "react-refresh": reactRefresh,
       prettier: prettierPlugin,
+      import: importPlugin,
     },
+
     rules: {
       // TypeScript refinements
       "@typescript-eslint/no-unused-vars": [
@@ -55,6 +61,14 @@ export default [
         {
           ignoreCase: true,
           ignoreDeclarationSort: true,
+        },
+      ],
+
+      "import/order": [
+        "warn",
+        {
+          groups: ["builtin", "external", "internal", "parent", "sibling", "index"],
+          alphabetize: { order: "asc", caseInsensitive: true },
         },
       ],
 
