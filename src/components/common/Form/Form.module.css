@@ -24,14 +24,14 @@
 
 .label {
   display: block;
-  margin-bottom: var(--space-sm);
-  font-weight: var(--font-weight-normal);
+  font-weight: var(--font-weight-semibold);
   color: var(--color-text);
 }
 
 .fieldError {
   display: block;
   margin-bottom: var(--space-sm);
+  font-weight: var(--font-weight-light);
   color: var(--color-orange-500);
   contain: inline-size;
 }
@@ -39,6 +39,7 @@
 .fieldDescription {
   display: block;
   margin-bottom: var(--space-sm);
+  font-weight: var(--font-weight-light);
   contain: inline-size;
 
   [data-invalid] > & {
