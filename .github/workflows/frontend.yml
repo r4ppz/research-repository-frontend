@@ -29,15 +29,34 @@ jobs:
       - name: Run Quality Checks
         run: npm run check
 
-      - name: Build Project
+      # Build React SPA
+      - name: Build SPA
         run: npm run build
         env:
           VITE_GOOGLE_CLIENT_ID: 594492409648-tqrnnk9ssgvphc8cnus7k1fmp4o4emru.apps.googleusercontent.com
           VITE_BACKEND_API_BASE_URL: https://r4ppz.uaru-firefighter.ts.net/
 
-      - name: Deploy to GitHub Pages
+      - name: Build Storybook
+        run: npm run build-storybook
+
+      - name: Deploy SPA to GitHub Pages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
           branch: gh-pages
+          keep_files: true # Prevents overwriting Storybook
+
+      # Deploy Storybook to /storybook/
+      - name: Deploy Storybook
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git clone --branch gh-pages https://github.com/${{ github.repository }} gh-pages-temp
+          rm -rf gh-pages-temp/storybook
+          mv storybook-static gh-pages-temp/storybook
+          cd gh-pages-temp
+          git add .
+          git commit -m "Update Storybook"
+          git push origin gh-pages
