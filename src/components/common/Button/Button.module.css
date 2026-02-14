@@ -6,8 +6,6 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-width: 60px;
-  min-height: 30px;
   padding: var(--space-sm) var(--space-lg);
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-medium);
