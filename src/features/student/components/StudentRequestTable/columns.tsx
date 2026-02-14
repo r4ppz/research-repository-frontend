@@ -1,9 +1,9 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Download, Trash2 } from "lucide-react";
+import style from "./column.module.css";
 import { Button } from "@/components/common/Button/Button";
 import type { DocumentRequest } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
-import style from "./column.module.css";
 
 export interface TableMeta {
   onDownload: () => void;

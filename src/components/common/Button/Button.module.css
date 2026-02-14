@@ -19,35 +19,35 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-resting);
   transition: var(--transition-elevation);
-}
 
-/* Interaction States via React Aria */
+  /* Interaction States via React Aria */
 
-/* Hover: Using RAC [data-hovered] */
-.button[data-hovered] {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
-}
+  /* Hover: Using RAC [data-hovered] */
+  &[data-hovered] {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
+  }
 
-/* Pressed: Replaces :active to ensure mobile reliability */
-.button[data-pressed] {
-  box-shadow: var(--shadow-active);
-  transform: translateY(var(--translate-active)) scale(var(--scale-active));
-}
+  /* Pressed: Replaces :active to ensure mobile reliability */
+  &[data-pressed] {
+    box-shadow: var(--shadow-active);
+    transform: translateY(var(--translate-active)) scale(var(--scale-active));
+  }
 
-/* Focus: Only triggers via keyboard */
-.button[data-focus-visible] {
-  outline: 2px solid var(--color-secondary);
-  outline-offset: 1px;
-}
+  /* Focus: Only triggers via keyboard */
+  &[data-focus-visible] {
+    outline: 2px solid var(--color-secondary);
+    outline-offset: 1px;
+  }
 
-/* Disabled/Pending */
-.button[data-disabled],
-.button[data-pending] {
-  cursor: not-allowed;
-  box-shadow: none;
-  opacity: 80%;
-  transform: none;
+  /* Disabled/Pending */
+  &[data-disabled],
+  &[data-pending] {
+    cursor: not-allowed;
+    box-shadow: none;
+    opacity: 80%;
+    transform: none;
+  }
 }
 
 /* Variants */
@@ -56,49 +56,57 @@
   background-color: var(--color-button-primary-bg);
   border: 1px solid var(--color-border-default);
   box-shadow: var(--shadow-resting);
-}
 
-.primary[data-hovered] {
-  background-color: var(--color-button-primary-bg-hover);
-  border: 1px solid var(--color-border-hover);
-}
+  &[data-hovered] {
+    background-color: var(--color-button-primary-bg-hover);
+    border: 1px solid var(--color-border-hover);
+  }
 
-.primary[data-pressed] {
-  background-color: var(--color-button-primary-bg-active);
-  border: 1px solid var(--color-border-active);
-}
+  &[data-pressed] {
+    background-color: var(--color-button-primary-bg-active);
+    border: 1px solid var(--color-border-active);
+  }
 
-.primary[data-disabled],
-.primary[data-pending] {
-  color: var(--color-text-disabled);
-  background-color: var(--color-surface-disabled);
-  border-color: var(--color-border-default);
+  &[data-disabled],
+  &[data-pending] {
+    color: var(--color-text-disabled);
+    background-color: var(--color-surface-disabled);
+    border-color: var(--color-border-default);
+  }
 }
 
 .secondary {
   color: var(--color-button-secondary-text);
   background-color: var(--color-button-secondary-bg);
   border: 1px solid var(--color-border-default);
+
+  &[data-hovered] {
+    background-color: var(--color-button-secondary-bg-hover);
+    border: 1px solid var(--color-border-hover);
+  }
+
+  &[data-pressed] {
+    background-color: var(--color-button-secondary-bg-active);
+    border: 1px solid var(--color-border-active);
+  }
+
+  &[data-disabled],
+  &[data-pending] {
+    color: var(--color-text-disabled);
+    background-color: var(--color-surface-disabled);
+    border-color: var(--color-border-default);
+  }
 }
 
-.secondary[data-hovered] {
-  background-color: var(--color-button-secondary-bg-hover);
-  border: 1px solid var(--color-border-hover);
+.inner {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-sm);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-.secondary[data-pressed] {
-  background-color: var(--color-button-secondary-bg-active);
-  border: 1px solid var(--color-border-active);
-}
-
-.secondary[data-disabled],
-.secondary[data-pending] {
-  color: var(--color-text-disabled);
-  background-color: var(--color-surface-disabled);
-  border-color: var(--color-border-default);
-}
-
-/* Loading States & Icon Handling */
 .spinner {
   position: absolute;
   top: 50%;
@@ -132,13 +140,4 @@
 
 .button svg:not(.animateSpin) {
   flex-shrink: 0;
-}
-
-.inner {
-  display: flex;
-  flex-direction: row;
-  gap: var(--space-sm);
-  align-items: center;
-  justify-content: center;
-  width: 100%;
 }

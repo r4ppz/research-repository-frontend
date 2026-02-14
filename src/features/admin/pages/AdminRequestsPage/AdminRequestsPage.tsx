@@ -1,8 +1,8 @@
+import { RequestsTable } from "../../components/RequestTable/RequestTable";
+import style from "./AdminRequestsPage.module.css";
 import { Footer } from "@/components/layout/Footer/Footer";
 import { Header } from "@/components/layout/Header/Header";
-import { RequestsTable } from "../../components/RequestTable/RequestTable";
 import { useAuth } from "@/features/auth/context/useAuth";
-import style from "./AdminRequestsPage.module.css";
 
 export const AdminRequestsPage = () => {
   const { user } = useAuth();

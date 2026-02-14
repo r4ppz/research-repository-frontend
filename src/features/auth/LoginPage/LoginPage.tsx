@@ -1,4 +1,5 @@
 import { useState } from "react";
+import style from "./LoginPage.module.css";
 import schoolLogo from "@/assets/school-logo.svg";
 import {
   Dialog,
@@ -16,7 +17,6 @@ import {
   isAuthorizationError,
   isBackendNotRunning,
 } from "@/util/errorHandler";
-import style from "./LoginPage.module.css";
 
 export const LoginPage = () => {
   const { authError, setAuthError, isLoading } = useAuth();

@@ -1,8 +1,8 @@
 import * as SelectPrimitive from "@radix-ui/react-select";
 import clsx from "clsx";
 import { Check, ChevronDown } from "lucide-react";
-import style from "./Select.module.css";
 import { Button } from "../Button/Button";
+import style from "./OldSelect.module.css";
 
 interface SelectOption {
   value: string;
@@ -18,7 +18,8 @@ interface SelectProps {
   disabled?: boolean;
 }
 
-export const Select = ({
+/** @deprecated Use Select; implemented using React Aria instead. */
+export const OldSelect = ({
   value,
   onValueChange,
   options,

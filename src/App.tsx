@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import { ProtectedRoute } from "@/components/layout/ProtectedRoute/ProtectedRoute";
-import { AdminRequestsPage } from "@/features/admin/pages/AdminRequestsPage/AdminRequestsPage";
 import { AdminPapersPage } from "@/features/admin/pages/AdminPapersPage/AdminPapersPage";
+import { AdminRequestsPage } from "@/features/admin/pages/AdminRequestsPage/AdminRequestsPage";
 import { AuthRestorer } from "@/features/auth/components/AuthRestorer/AuthRestorer";
 import { LoginPage } from "@/features/auth/LoginPage/LoginPage";
 import { LibraryPage } from "@/features/library/LibraryPage/LibraryPage";

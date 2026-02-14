@@ -1,0 +1,61 @@
+.textField {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: var(--space-md) var(--space-lg);
+  margin: 0;
+  font-size: var(--font-size-md);
+  color: var(--color-input-text);
+  background-color: var(--color-input-bg);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  outline: none;
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  /* Focused state */
+  &[data-focused] {
+    border-color: var(--color-secondary);
+    box-shadow: 0 0 0 2px var(--color-secondary) / 10%;
+  }
+
+  /* Invalid state */
+  &[data-invalid] {
+    background-color: var(--color-input-bg);
+    border-color: var(--color-error);
+
+    &[data-focused] {
+      border-color: var(--color-error);
+      box-shadow: 0 0 0 2px var(--color-error) / 10%;
+    }
+  }
+
+  /* Disabled state */
+  &[data-disabled] {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+    background-color: var(--color-surface-disabled);
+    opacity: 65%;
+
+    &::placeholder {
+      color: var(--color-text-disabled);
+    }
+  }
+
+  /* Readonly state */
+  &[data-readonly] {
+    cursor: default;
+    background-color: var(--color-surface);
+  }
+}

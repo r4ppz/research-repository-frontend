@@ -1,11 +1,11 @@
 import type { PaginationState } from "@tanstack/react-table";
 import { useState } from "react";
+import { useUserRequests } from "../../hooks/useUserRequests";
+import { columns, type TableMeta } from "./columns";
 import { deleteRequest } from "@/api/request";
 import { DataTable } from "@/components/common/DataTable/DataTable";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
 import { extractApiError, getUserErrorMessage } from "@/util/errorHandler";
-import { useUserRequests } from "../../hooks/useUserRequests";
-import { columns, type TableMeta } from "./columns";
 
 export function StudentRequestTable() {
   const [removalError, setRemovalError] = useState<string | null>(null);

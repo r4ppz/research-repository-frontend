@@ -1,6 +1,6 @@
+import style from "../../LibraryPage/LibraryPage.module.css";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
 import { ResearchCard } from "@/features/library/components/ResearchCard/ResearchCard";
-import style from "../../LibraryPage/LibraryPage.module.css";
 import { ResearchPaper } from "@/types";
 
 interface LibraryResultsProps {

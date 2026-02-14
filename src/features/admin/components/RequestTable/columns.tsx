@@ -1,10 +1,10 @@
 import { createColumnHelper } from "@tanstack/react-table";
 import { Check, Eye, X } from "lucide-react";
-import { Button } from "@/components/common/Button/Button";
+import style from "./columns.module.css";
 import { ConfirmDialog } from "@/components/common/AlertDialog/ConfirmDialog";
+import { Button } from "@/components/common/Button/Button";
 import type { DocumentRequest, ResearchPaper } from "@/types";
 import { formatDateShort } from "@/util/formatDate";
-import style from "./columns.module.css";
 
 export interface TableMeta {
   onView: (paper: ResearchPaper) => void;
