@@ -1,56 +1,43 @@
-# The name of the workflow as it appears in the GitHub Actions tab
 name: Frontend CI/CD
 
-# 'on' defines the triggers.
 on:
   push:
-    branches: [main] # Runs every time you push to the main branch
+    branches: [main]
   pull_request:
-    branches: [main] # Runs every time a PR is opened against main
+    branches: [main]
 
-# A workflow is made of 'jobs'. They run in parallel by default.
 jobs:
   quality-and-deploy:
-    # The 'Runner' - the type of machine the code runs on
     runs-on: ubuntu-latest
 
-    # Permissions needed for the 'gh-pages' action to push code back to your repo
     permissions:
       contents: write
 
     steps:
-      # 1. Download your code onto the Runner
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      # 2. Install Node.js and setup caching for faster subsequent runs
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: "npm"
 
-      # 3. Install your dependencies based on package-lock.json
       - name: Install Dependencies
         run: npm ci
 
-      # 4. Run your Biome/Stylelint/TSC check.
-      # If this fails, the workflow stops and won't deploy.
       - name: Run Quality Checks
         run: npm run check
 
-      # 5. Build the production files into the /dist folder
-      # Injects the production API URL from GitHub Secrets
       - name: Build Project
         run: npm run build
         env:
-          VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
-          VITE_BACKEND_API_BASE_URL: ${{ secrets.VITE_BACKEND_API_BASE_URL }}
+          VITE_GOOGLE_CLIENT_ID: 594492409648-tqrnnk9ssgvphc8cnus7k1fmp4o4emru.apps.googleusercontent.com
+          VITE_BACKEND_API_BASE_URL: https://r4ppz.uaru-firefighter.ts.net/
 
-      # 6. Only deploy if we are on the 'main' branch (not on a Pull Request)
       - name: Deploy to GitHub Pages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist # The folder Vite created
-          branch: gh-pages # The branch GitHub Pages serves from
+          folder: dist
+          branch: gh-pages
