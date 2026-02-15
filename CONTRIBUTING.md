@@ -104,7 +104,6 @@ docker push r4ppzf/research-repo-frontend:latest
 You cant really push without a PAT
 
 ```bash
-docker build --build-arg VITE_DOCKER_BUILD=true -t research-repo-frontend:latest .
-docker tag research-repo-frontend:latest ghcr.io/r4ppz/research-repository-frontend:latest
+docker build --build-arg VITE_DOCKER_BUILD=true -t ghcr.io/r4ppz/research-repository-frontend:latest .
 docker push ghcr.io/r4ppz/research-repository-frontend:latest
 ```
