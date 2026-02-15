@@ -1,2 +1,2 @@
-npm run check
-npm run build
+pnpm check
+pnpm build

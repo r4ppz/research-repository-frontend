@@ -17,26 +17,32 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Enable Corepack
+        run: corepack enable
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: "npm"
+          cache: "pnpm"
+
+      - name: Install pnpm
+        run: corepack prepare pnpm@latest --activate
 
       - name: Install Dependencies
-        run: npm ci
+        run: pnpm install --frozen-lockfile
 
       - name: Run Quality Checks
-        run: npm run check
+        run: pnpm check
 
       - name: Build SPA
-        run: npm run build
+        run: pnpm build
         env:
           VITE_GOOGLE_CLIENT_ID: 594492409648-tqrnnk9ssgvphc8cnus7k1fmp4o4emru.apps.googleusercontent.com
           VITE_BACKEND_API_BASE_URL: https://r4ppz.uaru-firefighter.ts.net/
 
       - name: Build Storybook
-        run: npm run build-storybook
+        run: pnpm build-storybook
 
       - name: Deploy SPA to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4

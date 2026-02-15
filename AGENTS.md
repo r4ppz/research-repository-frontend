@@ -17,5 +17,5 @@
 - Post-change, you **must** run:
 
 ```bash
-npm run lint:fix && npm run check && npm run lint:css:fix
+pnpm lint:fix && pnpm check && pnpm lint:css:fix
 ```
