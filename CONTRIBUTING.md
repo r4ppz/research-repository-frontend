@@ -14,8 +14,9 @@ To run this project locally:
 
 ### Prerequisites
 
-- Node.js
+- Node.js (v16+ with Corepack support)
 - Git
+- pnpm (managed via Corepack)
 
 ### Steps
 
@@ -25,14 +26,14 @@ git clone https://github.com/r4ppz/research-repository.git
 cd research-repository
 
 # Install dependencies
-npm install
+pnpm install
 
 # Build the project (for production)
-npm run build
+pnpm build
 
 # Run locally in development mode
-npm run dev
-npm run preview
+pnpm dev
+pnpm preview
 
 ```
 
