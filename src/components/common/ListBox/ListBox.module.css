@@ -1,0 +1,110 @@
+.listBox {
+  box-sizing: border-box;
+  max-height: 300px;
+  overflow: auto;
+  font-family: system-ui;
+  font-size: 14px;
+  color: #111;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+}
+
+.listBox[data-focus-visible] {
+  outline: 2px solid #005a9e;
+  outline-offset: -1px;
+}
+
+.listBox[data-empty] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-style: italic;
+}
+
+.listBoxSection {
+  padding: 4px 0;
+}
+
+.listBoxHeader {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: default;
+  user-select: none;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+}
+
+.listBoxItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 8px 12px;
+  cursor: default;
+  border-radius: 6px;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.listBoxItem[data-selected] {
+  color: #fff;
+  background-color: #0078d4;
+}
+
+.listBoxItem[data-focus-visible] {
+  outline: 2px solid #005a9e;
+  outline-offset: -2px;
+}
+
+.listBoxItem[data-pressed] {
+  background-color: #005a9e;
+}
+
+.listBoxItem[data-disabled] {
+  color: #999;
+  cursor: not-allowed;
+}
+
+.listBoxItem [slot="label"] {
+  font-weight: 500;
+}
+
+.listBoxItem [slot="description"] {
+  font-size: 12px;
+}
+
+.dropdownListBox {
+  display: block;
+  max-height: 300px;
+  overflow: auto;
+  font-family: system-ui;
+  font-size: 14px;
+  color: #111;
+  border-radius: 6px;
+}
+
+.dropdownItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 8px 12px;
+  cursor: default;
+}
+
+.dropdownItem[data-selected] .checkIcon {
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  width: 16px;
+  height: 16px;
+  stroke-width: 2;
+  transform: translateY(-50%);
+}
