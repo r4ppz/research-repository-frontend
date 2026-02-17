@@ -6,11 +6,11 @@
   ---------------------------------- */
   --color-brand-300: #4a3a9c;
   --color-brand-400: #2b1f6f;
-  --color-brand-500: #1b1551;
+  --color-brand-500: #1b1551; /* primary */
   --color-brand-600: #120f3d;
 
-  --color-accent-500: #2ea8e4;
   --color-accent-400: #4fc0f5;
+  --color-accent-500: #2ea8e4; /* secondary */
   --color-accent-600: #2187c9;
 
   --color-gray-50: #f9fafb;
