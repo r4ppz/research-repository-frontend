@@ -62,12 +62,9 @@
   --color-border-outline: var(--color-accent-500);
   --color-border-disabled: var(--color-gray-500);
 
-  /* ---------------------------------- */
-
-  /* Elements */
-
-  /* ---------------------------------- */
-
+  /* ----------------------------------
+  * Elements
+   ---------------------------------- */
   --color-button-primary-bg: var(--color-primary);
   --color-button-primary-bg-hover: var(--color-primary-hover);
   --color-button-primary-bg-active: var(--color-primary-active);
