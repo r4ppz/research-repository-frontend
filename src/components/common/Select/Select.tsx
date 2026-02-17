@@ -33,13 +33,17 @@ export function Select<T extends object>({
   return (
     <AriaSelect {...props} className={styles.select}>
       {label && <Label>{label}</Label>}
+
       <Button className={styles.button}>
         <SelectValue className={styles.selectValue} />
         <ChevronDown className={styles.chevron} />
       </Button>
+
       {description && <Description>{description}</Description>}
+
       <FieldError>{errorMessage}</FieldError>
-      <Popover hideArrow className={styles.popover}>
+
+      <Popover hideArrow className={styles.selectPopover}>
         <SelectListBox items={items}>{children}</SelectListBox>
       </Popover>
     </AriaSelect>

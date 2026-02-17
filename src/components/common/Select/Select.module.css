@@ -5,16 +5,11 @@
 }
 
 .button {
-  display: flex;
-  align-items: center;
   width: 100%;
-  min-width: 0;
-  padding: 0 8px 0 12px;
-  color: #666;
-}
 
-.button[data-pressed="true"] {
-  transform: scale(1);
+  &[data-pressed] {
+    transform: scale(1);
+  }
 }
 
 .selectValue {
@@ -23,23 +18,24 @@
   text-align: start;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  &[data-placeholder] {
+    font-weight: normal;
+    color: #999;
+  }
+
+  .chevron {
+    width: var(--icon-size-xs);
+  }
+
+  .selectValue {
+    [slot="description"] {
+      display: none;
+    }
+  }
 }
 
-.selectValue[data-placeholder="true"] {
-  font-weight: normal;
-  color: #999;
-}
-
-.chevron {
-  margin-left: 8px;
-}
-
-.popover {
-  width: 200px;
+.selectPopover[data-trigger="Select"] {
+  width: 100px;
   padding: 0;
-}
-
-/* Hide the description inside select value slot */
-.selectValue [slot="description"] {
-  display: none;
 }
