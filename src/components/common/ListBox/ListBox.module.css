@@ -1,43 +1,43 @@
 .listBox {
-  box-sizing: border-box;
   max-height: 300px;
   overflow: auto;
-  font-family: system-ui;
-  font-size: 14px;
-  color: #111;
-  background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
   outline: none;
-}
 
-.listBox[data-focus-visible] {
-  outline: 2px solid #005a9e;
-  outline-offset: -1px;
-}
+  &[data-focus-visible] {
+    outline: 1px solid var(--color-border-outline);
+    outline-offset: -1px;
+  }
 
-.listBox[data-empty] {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-style: italic;
+  &[data-empty] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
 }
 
 .listBoxSection {
-  padding: 4px 0;
+  padding: var(--space-sm) 0;
 }
 
 .listBoxHeader {
   position: sticky;
   top: 0;
   z-index: 2;
-  padding: 4px 12px;
-  font-size: 12px;
-  font-weight: 600;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
   cursor: default;
   user-select: none;
-  background-color: #f0f0f0;
-  border-bottom: 1px solid #ccc;
+  background-color: var(--color-surface-hover);
+  border-bottom: 1px solid var(--color-border-default);
 }
 
 .listBoxItem {
@@ -45,49 +45,54 @@
   display: flex;
   align-items: center;
   min-height: 32px;
-  padding: 8px 12px;
+  padding: var(--space-sm) var(--space-lg);
+  color: var(--color-text);
   cursor: default;
-  border-radius: 6px;
+  border-radius: var(--radius-md);
   transition:
-    background 0.2s,
-    color 0.2s;
-}
+    background var(--transition-fast),
+    color var(--transition-fast);
 
-.listBoxItem[data-selected] {
-  color: #fff;
-  background-color: #0078d4;
-}
+  &[data-selected] {
+    color: var(--color-text-inverted);
+    background-color: var(--color-primary);
+  }
 
-.listBoxItem[data-focus-visible] {
-  outline: 2px solid #005a9e;
-  outline-offset: -2px;
-}
+  &[data-focus-visible] {
+    outline: 1px solid var(--color-border-outline);
+    outline-offset: -1px;
+  }
 
-.listBoxItem[data-pressed] {
-  background-color: #005a9e;
-}
+  &[data-pressed] {
+    background-color: var(--color-primary-hover);
+  }
 
-.listBoxItem[data-disabled] {
-  color: #999;
-  cursor: not-allowed;
-}
+  &[data-disabled] {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
 
-.listBoxItem [slot="label"] {
-  font-weight: 500;
-}
+  & [slot="label"] {
+    font-weight: var(--font-weight-medium);
+  }
 
-.listBoxItem [slot="description"] {
-  font-size: 12px;
+  & [slot="description"] {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
 }
 
 .dropdownListBox {
   display: block;
   max-height: 300px;
   overflow: auto;
-  font-family: system-ui;
-  font-size: 14px;
-  color: #111;
-  border-radius: 6px;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  outline: none;
 }
 
 .dropdownItem {
@@ -95,16 +100,49 @@
   display: flex;
   align-items: center;
   min-height: 32px;
-  padding: 8px 12px;
+  padding: var(--space-sm) var(--space-lg);
+  color: var(--color-text);
   cursor: default;
-}
+  border-radius: var(--radius-md);
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
 
-.dropdownItem[data-selected] .checkIcon {
-  position: absolute;
-  top: 50%;
-  left: 8px;
-  width: 16px;
-  height: 16px;
-  stroke-width: 2;
-  transform: translateY(-50%);
+  &[data-selected] {
+    color: var(--color-text-inverted);
+    background-color: var(--color-primary);
+  }
+
+  &[data-focus-visible] {
+    outline: 1px solid var(--color-border-outline);
+    outline-offset: -1px;
+  }
+
+  &[data-pressed] {
+    background-color: var(--color-primary-hover);
+  }
+
+  &[data-disabled] {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  &[data-selected] .checkIcon {
+    position: absolute;
+    top: 50%;
+    left: var(--space-lg);
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
+    stroke-width: 1;
+    transform: translateY(-50%);
+  }
+
+  & [slot="label"] {
+    font-weight: var(--font-weight-medium);
+  }
+
+  & [slot="description"] {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
 }
