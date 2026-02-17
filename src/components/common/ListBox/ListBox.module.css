@@ -48,13 +48,15 @@
   padding: var(--space-sm) var(--space-lg);
   color: var(--color-text);
   cursor: default;
-  border-radius: var(--radius-md);
   transition:
     background var(--transition-fast),
     color var(--transition-fast);
 
-  &[data-selected] {
+  &[data-selected] .label {
     color: var(--color-text-inverted);
+  }
+
+  &[data-selected] {
     background-color: var(--color-primary);
   }
 

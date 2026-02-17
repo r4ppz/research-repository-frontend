@@ -35,7 +35,13 @@ export function ListBoxItem(props: ListBoxItemProps) {
   return (
     <AriaListBoxItem {...props} textValue={textValue} className={styles.listBoxItem}>
       {composeRenderProps(props.children, (children) =>
-        typeof children === "string" ? <Text slot="label">{children}</Text> : children,
+        typeof children === "string" ? (
+          <Text className={styles.label} slot="label">
+            {children}
+          </Text>
+        ) : (
+          children
+        ),
       )}
     </AriaListBoxItem>
   );

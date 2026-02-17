@@ -160,12 +160,14 @@
   /* Interaction Transforms */
   --translate-hover: -2px;
   --translate-active: -1px;
+
   --scale-hover: 1;
   --scale-active: 1;
 
   /* Transitions */
   --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   --transition-normal: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
   --transition-elevation: transform var(--transition-fast), box-shadow var(--transition-fast);
 
   /* ---------------------------------
