@@ -5,7 +5,6 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } 
 
 const meta = {
   component: Dialog,
-  title: "Common/Dialog",
   parameters: {
     layout: "centered",
   },

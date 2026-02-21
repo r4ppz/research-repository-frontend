@@ -6,7 +6,6 @@ import { ListBox, ListBoxItem } from "./ListBox";
 
 const meta = {
   component: ListBox,
-  title: "Common/ListBox",
   parameters: {
     layout: "centered",
   },

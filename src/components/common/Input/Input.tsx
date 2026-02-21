@@ -2,6 +2,8 @@ import clsx from "clsx";
 import type { ComponentType, InputHTMLAttributes, Ref } from "react";
 import style from "./Input.module.css";
 
+// TODO: Switch to React Aria
+
 type InputType =
   | "text"
   | "password"

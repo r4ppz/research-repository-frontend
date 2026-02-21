@@ -3,7 +3,6 @@ import { Avatar } from "./Avatar";
 
 const meta = {
   component: Avatar,
-  title: "Common/Avatar",
   parameters: {
     layout: "centered",
   },

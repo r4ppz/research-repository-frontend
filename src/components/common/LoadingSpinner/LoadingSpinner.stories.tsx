@@ -3,7 +3,6 @@ import { LoadingSpinner } from "./LoadingSpinner";
 
 const meta = {
   component: LoadingSpinner,
-  title: "Common/LoadingSpinner",
   parameters: {
     layout: "centered",
   },

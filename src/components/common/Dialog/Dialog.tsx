@@ -4,6 +4,8 @@ import clsx from "clsx";
 import type { ComponentPropsWithoutRef, Ref } from "react";
 import styles from "./Dialog.module.css";
 
+// TODO: switch to React Aria
+
 const { Root, Trigger, Portal, Overlay, Content, Title, Description, Close } = DialogPrimitive;
 
 type OverlayProps = ComponentPropsWithoutRef<typeof Overlay> & { ref?: Ref<HTMLDivElement> };
