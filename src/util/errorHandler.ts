@@ -21,7 +21,7 @@ export function extractApiError(error: unknown): TypedApiError | ApiError {
   // Non-Axios Errors
   if (!axios.isAxiosError(error)) {
     const message = error instanceof Error ? error.message : "An unexpected error occurred";
-    return new ApiError("INTERNAL_ERROR", message || "An unexpected error occurred");
+    return new ApiError("INTERNAL_ERROR", message);
   }
 
   // Handle Axios Errors (Flattened)
