@@ -6,7 +6,7 @@ import style from "./Header.module.css";
 import schoolLogo from "@/assets/school-logo.svg";
 import { ConfirmDialog } from "@/components/common/AlertDialog/ConfirmDialog";
 import { Button } from "@/components/common/Button/Button";
-import { CNavLink } from "@/components/common/CNavLink/CNavLink";
+import { NavLink } from "@/components/common/NavLink/NavLink";
 import { ProfileButton } from "@/components/layout/ProfileButton/ProfileButton";
 import { useAuth } from "@/features/auth/context/useAuth";
 import type { Role } from "@/types";
@@ -73,9 +73,9 @@ export const Header = ({ className, ...props }: ComponentProps) => {
 
           <div className={style.rightWrapper}>
             <nav className={style.desktopNavigation}>
-              <CNavLink to="/">Library</CNavLink>
-              <CNavLink to={requestPath}>Request</CNavLink>
-              {researchPath && <CNavLink to={researchPath}>Research</CNavLink>}
+              <NavLink to="/">Library</NavLink>
+              <NavLink to={requestPath}>Request</NavLink>
+              {researchPath && <NavLink to={researchPath}>Research</NavLink>}
             </nav>
 
             <div className={style.profileNLogoutWrapper}>
@@ -111,10 +111,10 @@ export const Header = ({ className, ...props }: ComponentProps) => {
       {isMenuOpen && (
         <div className={style.dropDownMenu}>
           <nav className={style.mobileNavigation}>
-            <CNavLink to="/">Library</CNavLink>
-            <CNavLink to={requestPath}>Request</CNavLink>
-            {researchPath && <CNavLink to={researchPath}>Research</CNavLink>}
-            <CNavLink to="/login">Logout</CNavLink>
+            <NavLink to="/">Library</NavLink>
+            <NavLink to={requestPath}>Request</NavLink>
+            {researchPath && <NavLink to={researchPath}>Research</NavLink>}
+            <NavLink to="/login">Logout</NavLink>
           </nav>
 
           {/* NOTE: theres no profile button on mobile since I dont know how to style it lol */}
