@@ -66,7 +66,14 @@ export const LoginPage = () => {
   return (
     <div className={style.page}>
       <div className={style.loginCard}>
-        <img alt="school-logo" className={style.schoolLogo} src={schoolLogo} />
+        <img
+          alt="school-logo"
+          className={style.schoolLogo}
+          src={schoolLogo}
+          width={130}
+          height={130}
+          fetchPriority="high"
+        />
 
         <div className={style.headerContainer}>
           <h1 className={style.headerSchool}>Assumption College of Davao</h1>
