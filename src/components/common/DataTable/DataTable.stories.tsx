@@ -5,9 +5,6 @@ import { DataTable } from "./DataTable";
 
 const meta = {
   component: DataTable,
-  parameters: {
-    layout: "centered",
-  },
 } satisfies Meta<typeof DataTable>;
 
 export default meta;

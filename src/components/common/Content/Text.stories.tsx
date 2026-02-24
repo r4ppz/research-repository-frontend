@@ -3,9 +3,6 @@ import { Text } from "./Content";
 
 const meta = {
   component: Text,
-  parameters: {
-    layout: "centered",
-  },
 } satisfies Meta<typeof Text>;
 
 export default meta;

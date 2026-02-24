@@ -4,9 +4,6 @@ import { Button } from "./Button";
 
 const meta = {
   component: Button,
-  parameters: {
-    layout: "centered",
-  },
   argTypes: {
     variant: {
       control: { type: "select" },

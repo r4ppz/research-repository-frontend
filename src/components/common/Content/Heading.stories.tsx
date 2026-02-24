@@ -3,9 +3,6 @@ import { Heading } from "./Content";
 
 const meta = {
   component: Heading,
-  parameters: {
-    layout: "centered",
-  },
   argTypes: {
     level: {
       control: { type: "select" },

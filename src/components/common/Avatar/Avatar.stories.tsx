@@ -3,9 +3,6 @@ import { Avatar } from "./Avatar";
 
 const meta = {
   component: Avatar,
-  parameters: {
-    layout: "centered",
-  },
   argTypes: {
     src: {
       control: "text",
