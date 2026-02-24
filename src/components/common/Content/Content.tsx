@@ -8,16 +8,16 @@ import {
 
 import style from "./Content.module.css";
 
-export function Heading({ level = 3, ...props }: HeadingProps) {
+export function Heading({ level = 3, className, ...props }: HeadingProps) {
   return (
     <AriaHeading
       level={level}
-      className={clsx(style.heading, style[`h${String(level)}`])}
+      className={clsx(style.heading, style[`h${String(level)}`], className)}
       {...props}
     />
   );
 }
 
-export function Text(props: TextProps) {
-  return <AriaText className={style.text} {...props} />;
+export function Text({ className, ...props }: TextProps) {
+  return <AriaText className={clsx(style.text, className)} {...props} />;
 }
