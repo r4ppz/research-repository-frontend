@@ -30,6 +30,9 @@ export const Primary: Story = {
     variant: "primary",
     children: "Button",
   },
+  render: (args) => {
+    return <Button variant={args.variant}>{args.children}</Button>;
+  },
 };
 
 export const Secondary: Story = {
