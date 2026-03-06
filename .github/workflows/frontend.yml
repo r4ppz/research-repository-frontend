@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   quality-and-deploy:
@@ -44,21 +45,15 @@ jobs:
       - name: Build Storybook
         run: pnpm build-storybook
 
-      - name: Deploy SPA to GitHub Pages
+      - name: Prepare Integrated Deployment
+        run: |
+          touch dist/.nojekyll
+          mkdir -p dist/storybook
+          cp -r storybook-static/* dist/storybook/
+
+      - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist
           branch: gh-pages
-          clean: false
-
-      - name: Deploy Storybook to /storybook
-        run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "github-actions@github.com"
-          git clone --branch gh-pages https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} gh-pages-temp
-          rm -rf gh-pages-temp/storybook
-          mv storybook-static gh-pages-temp/storybook
-          cd gh-pages-temp
-          git add .
-          git commit -m "Update Storybook"
-          git push origin gh-pages
+          clean: true
