@@ -9,8 +9,8 @@ import {
   ValidationResult,
 } from "react-aria-components";
 import { Button } from "../Button/Button";
+import { DropdownItem, DropdownListBox } from "../DropdownList/DropdownList";
 import { Description, FieldError, Label } from "../Form/Form";
-import { DropdownItem, DropdownListBox } from "../ListBox/ListBox";
 import { Popover } from "../Popover/Popover";
 import styles from "./Select.module.css";
 
