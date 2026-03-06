@@ -4,7 +4,7 @@
 conventions, patterns, workflow, why things are done a certain way, building/pushing Docker images, and other details
 I can't keep in my head. Also for other devs if they're interested.
 
-> I'll write to this document from time to time. It is currently not complete.
+> I'll write to this document from time to time. It is currently not complete (probably never will).
 
 ---
 
@@ -14,16 +14,16 @@ To run this project locally:
 
 ### Prerequisites
 
-- Node.js (v16+ with Corepack support)
+- Node.js
 - Git
-- pnpm (managed via Corepack)
+- pnpm
 
 ### Steps
 
 ```bash
 # Clone the repository
-git clone https://github.com/r4ppz/research-repository.git
-cd research-repository
+git clone https://github.com/r4ppz/research-repository-frontend.git
+cd research-repository-frontend
 
 # Install dependencies
 pnpm install
@@ -83,27 +83,3 @@ git checkout -b feat/issue-number-description
 - Optional: **1 approval** from the other dev before merging.
 
 6. **Release**: Once `dev` is stable and verified, the **Repo Owner** will merge `dev` into `main` for the final release.
-
----
-
-# Manual way of building and updating the docker image
-
-### Docker Hub
-
-The var VITE_DOCKER_BUILD=true is needed to activate prod env and not mess up Vite way of doing things (idk).
-
-```bash
-docker build --build-arg VITE_DOCKER_BUILD=true -t r4ppzf/research-repo-frontend:latest .
-docker push r4ppzf/research-repo-frontend:latest
-```
-
----
-
-### Github Registry
-
-You cant really push without a PAT
-
-```bash
-docker build --build-arg VITE_DOCKER_BUILD=true -t ghcr.io/r4ppz/research-repository-frontend:latest .
-docker push ghcr.io/r4ppz/research-repository-frontend:latest
-```
