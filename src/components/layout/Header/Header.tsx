@@ -7,7 +7,7 @@ import schoolLogo from "@/assets/school-logo.svg";
 import { ConfirmDialog } from "@/components/common/AlertDialog/ConfirmDialog";
 import { Button } from "@/components/common/Button/Button";
 import { NavLink } from "@/components/common/NavLink/NavLink";
-import { ProfileButton } from "@/components/layout/ProfileButton/ProfileButton";
+import { ProfileButton } from "@/components/common/ProfileButton/ProfileButton";
 import { useAuth } from "@/features/auth/context/useAuth";
 import type { Role } from "@/types";
 
@@ -82,7 +82,7 @@ export const Header = ({ className, ...props }: ComponentProps) => {
               <ProfileButton user={user} />
               <ConfirmDialog
                 title="Log out of your account?"
-                description="You will need to enter your credentials to access the portal again."
+                description="You will need to sign in with your Google account to access the portal again."
                 confirmText="Log out"
                 cancelText="Stay logged in"
                 onConfirm={handleLogout}

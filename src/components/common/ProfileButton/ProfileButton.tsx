@@ -3,7 +3,7 @@ import { User as UserIcon } from "lucide-react";
 import { useState } from "react";
 import style from "./ProfileButton.module.css";
 import { Button } from "@/components/common/Button/Button";
-import { ProfileModal } from "@/components/layout/ProfileModal/ProfileModal";
+import { ProfileModal } from "@/components/common/ProfileModal/ProfileModal";
 import type { Role, User } from "@/types";
 
 interface ProfileButtonProps {
