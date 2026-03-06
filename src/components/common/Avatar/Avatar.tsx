@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import { useState } from "react";
 import style from "./Avatar.module.css";
 
 type AvatarSize = "sm" | "md" | "lg";
@@ -24,25 +23,12 @@ function getInitials(name: string): string {
 }
 
 export function Avatar({ src, alt, fallbackName, size = "md", className }: AvatarProps) {
-  const [hasError, setHasError] = useState(false);
-
-  const showImage = src && !hasError;
   const initials = getInitials(fallbackName);
-
-  const handleError = () => {
-    setHasError(true);
-  };
 
   return (
     <div className={clsx(style.avatar, style[size], className)}>
-      {showImage ? (
-        <img
-          src={src}
-          alt={alt}
-          className={style.image}
-          onError={handleError}
-          referrerPolicy="no-referrer"
-        />
+      {src ? (
+        <img src={src} alt={alt} className={style.image} referrerPolicy="no-referrer" />
       ) : (
         <span className={style.initials}>{initials}</span>
       )}

@@ -23,81 +23,83 @@
   border: 0.1px solid var(--color-border-default);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-resting);
-  transition: var(--transition-elevation);
-}
 
-.loginCard:hover {
-  box-shadow: var(--shadow-hover);
-  transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
+  .schoolLogo {
+    width: var(--size-logo-lg);
+    height: auto;
+  }
+
+  .headerContainer {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .headerSchool {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+  }
+
+  .subHeaderTitle {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-secondary);
+  }
+
+  .textInstruction {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-normal);
+    color: var(--color-text-muted);
+  }
+
+  .googleButtonContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0 var(--space-2xl);
+    margin: var(--space-md) 0;
+  }
+
+  .textNotice {
+    font-size: var(--font-size-xs);
+    font-weight: var(--font-weight-light);
+    color: var(--color-text-muted);
+  }
 }
 
 @media (width >= 768px) {
   .loginCard {
     max-width: 450px;
+    max-height: 90%;
     padding: var(--space-2xl) var(--space-xl);
     box-shadow: var(--shadow-lg);
+    transition: var(--transition-elevation);
   }
-}
 
-.schoolLogo {
-  width: var(--size-logo-lg);
-  height: auto;
-}
-
-.headerContainer {
-  display: flex;
-  flex-direction: column;
-}
-
-.headerSchool {
-  font-size: var(--font-size-2xl);
-  font-weight: var(--font-weight-bold);
-}
-
-.subHeaderTitle {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-secondary);
-}
-
-.textInstruction {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-normal);
-  color: var(--color-text-muted);
-}
-
-.googleButtonContainer {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  padding: 0 var(--space-2xl);
-  margin: var(--space-md) 0;
-}
-
-.textNotice {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-light);
-  color: var(--color-text-muted);
+  .loginCard:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
+  }
 }
 
 .errorModal {
   display: flex;
   flex-direction: column;
+  margin: var(--space-md);
   text-align: center;
-}
 
-.modalTitle {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-}
+  .modalTitle {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+  }
 
-.descriptionContainer {
-  display: flex;
-  flex-direction: column;
-  margin-top: var(--space-xl);
-}
+  .descriptionContainer {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--space-xl);
+  }
 
-.modalDescription {
-  margin: 0 0 var(--space-xl) 0;
-  font-size: var(--font-size-md);
+  .modalDescription {
+    margin: 0 0 var(--space-xl) 0;
+    font-size: var(--font-size-md);
+  }
 }

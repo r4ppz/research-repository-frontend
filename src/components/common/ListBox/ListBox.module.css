@@ -1,0 +1,89 @@
+.listBox {
+  max-height: 300px;
+  overflow: auto;
+  font-size: var(--font-size-md);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  outline: none;
+
+  &[data-focus-visible] {
+    outline: 1px solid var(--color-border-outline);
+    outline-offset: -1px;
+  }
+
+  &[data-empty] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-style: italic;
+    color: var(--color-text-muted);
+  }
+}
+
+.listBoxSection {
+  padding: var(--space-sm) 0;
+}
+
+.listBoxHeader {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-muted);
+  cursor: default;
+  user-select: none;
+  background-color: var(--color-surface-hover);
+  border-bottom: 1px solid var(--color-border-default);
+}
+
+.listBoxItem {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+  padding: var(--space-sm) var(--space-lg);
+  color: var(--color-text);
+  cursor: default;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+
+  &[data-hover] {
+    color: var(--color-text-inverted);
+  }
+
+  &[data-selected] .label {
+    color: var(--color-text-inverted);
+  }
+
+  &[data-selected] {
+    background-color: var(--color-primary);
+  }
+
+  &[data-focus-visible] {
+    outline: 1px solid var(--color-border-outline);
+    outline-offset: -1px;
+  }
+
+  &[data-pressed] {
+    background-color: var(--color-primary-hover);
+  }
+
+  &[data-disabled] {
+    color: var(--color-text-disabled);
+    cursor: not-allowed;
+  }
+
+  & [slot="label"] {
+    font-weight: var(--font-weight-medium);
+  }
+
+  & [slot="description"] {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+  }
+}

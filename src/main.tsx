@@ -6,7 +6,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { HashRouter } from "react-router-dom";
 import { App } from "./App";
-import { SimpleErrorBoundary } from "./components/layout/ErrorBoundary/SimpleErrorBoundary";
+import { ErrorBoundary } from "./components/layout/ErrorBoundary/ErrorBoundary";
 import { AuthProvider } from "@/features/auth/context/AuthProvider";
 
 // Add the TypeScript declaration at the top level
@@ -30,9 +30,9 @@ if (container) {
       <QueryClientProvider client={queryClient}>
         <HashRouter>
           <AuthProvider>
-            <SimpleErrorBoundary>
+            <ErrorBoundary>
               <App />
-            </SimpleErrorBoundary>
+            </ErrorBoundary>
           </AuthProvider>
         </HashRouter>
       </QueryClientProvider>

@@ -2,11 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Heading } from "./Content";
 
 const meta = {
-  title: "Common/Heading",
   component: Heading,
-  parameters: {
-    layout: "centered",
-  },
   argTypes: {
     level: {
       control: { type: "select" },

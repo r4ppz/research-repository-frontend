@@ -5,7 +5,6 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } 
 
 const meta = {
   component: Dialog,
-  title: "Common/Dialog",
   parameters: {
     layout: "centered",
   },
@@ -21,24 +20,34 @@ function DialogDemo() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="primary">Open Dialog</Button>
+        <Button
+          style={{
+            fontSize: "13px",
+            borderRadius: "5px",
+          }}
+          variant="primary"
+        >
+          Open Dialog
+        </Button>
       </DialogTrigger>
-      <DialogContent>
-        <DialogTitle>Dialog Title</DialogTitle>
+      <DialogContent
+        style={{
+          maxWidth: "400px",
+        }}
+      >
+        <DialogTitle
+          style={{
+            textAlign: "center",
+            marginBottom: "20px",
+          }}
+        >
+          Dialog Title
+        </DialogTitle>
         <DialogDescription>
-          This is a dialog component that displays information or requests user action. It includes
-          a close button and supports custom content.
+          This is a dialog component that displays information or requests user action. I am
+          currently using Radix primitive for this. We are planning on trasitioning to React Aria
+          for consistency.{" "}
         </DialogDescription>
-        <div style={{ marginTop: "16px" }}>
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setOpen(false);
-            }}
-          >
-            Close
-          </Button>
-        </div>
       </DialogContent>
     </Dialog>
   );

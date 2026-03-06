@@ -13,10 +13,6 @@ import {
 
 const meta = {
   component: AlertDialog,
-  title: "Common/AlertDialog",
-  parameters: {
-    layout: "centered",
-  },
 } satisfies Meta<typeof AlertDialog>;
 
 export default meta;

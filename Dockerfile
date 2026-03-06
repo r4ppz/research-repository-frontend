@@ -1,10 +1,9 @@
 # Use a specific minor version for reproducibility
-FROM node:20.18-alpine AS builder
+FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Install pnpm via Corepack
-# We enable it and immediately fetch the binaries
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Install pnpm globally via npm
+RUN npm install -g pnpm@10.29.3
 
 # Copy only dependency files first to leverage Docker cache
 # If these don't change, Docker skips the expensive 'pnpm install' step

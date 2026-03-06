@@ -1,0 +1,41 @@
+.select {
+  position: relative;
+  width: 200px;
+  color: #333;
+}
+
+.button {
+  width: 100%;
+
+  &[data-pressed] {
+    transform: scale(1);
+  }
+}
+
+.selectValue {
+  flex: 1;
+  overflow: hidden;
+  text-align: start;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &[data-placeholder] {
+    font-weight: normal;
+    color: #999;
+  }
+
+  .chevron {
+    width: var(--icon-size-xs);
+  }
+
+  .selectValue {
+    [slot="description"] {
+      display: none;
+    }
+  }
+}
+
+.selectPopover[data-trigger="Select"] {
+  width: 100px;
+  padding: 0;
+}

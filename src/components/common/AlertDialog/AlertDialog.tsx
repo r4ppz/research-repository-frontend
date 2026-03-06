@@ -3,6 +3,8 @@ import clsx from "clsx";
 import type { ComponentPropsWithoutRef, Ref } from "react";
 import styles from "./AlertDialog.module.css";
 
+// TODO: Switch to React Aria
+
 const { Root, Trigger, Portal, Overlay, Content, Title, Description, Action, Cancel } =
   AlertDialogPrimitive;
 

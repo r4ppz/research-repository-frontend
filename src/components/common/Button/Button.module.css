@@ -69,9 +69,9 @@
 
   &[data-disabled],
   &[data-pending] {
-    color: var(--color-text-disabled);
-    background-color: var(--color-surface-disabled);
-    border-color: var(--color-border-default);
+    color: var(--color-text-inverted);
+    background-color: var(--color-primary-disabled);
+    border-color: var(--color-border-disabled);
   }
 }
 
@@ -94,7 +94,7 @@
   &[data-pending] {
     color: var(--color-text-disabled);
     background-color: var(--color-surface-disabled);
-    border-color: var(--color-border-default);
+    border-color: var(--color-border-disabled);
   }
 }
 
@@ -118,8 +118,8 @@
 }
 
 .animateSpin {
-  width: 1.25rem;
-  height: 1.25rem;
+  width: var(--icon-size-md);
+  height: var(--icon-size-md);
   animation: spin 0.8s linear infinite;
 }
 

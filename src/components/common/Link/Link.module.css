@@ -2,6 +2,17 @@
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-normal);
   color: var(--color-secondary);
+  background-color: transparent;
+}
+
+.link:focus-visible {
+  border-radius: var(--radius-md);
+  outline: 2px solid var(--color-secondary);
+  outline-offset: 1px;
+}
+
+.link:active {
+  color: var(--color-secondary-active);
 }
 
 @media (width >= 768px) {
@@ -19,14 +30,4 @@
     box-shadow: var(--shadow-active);
     transform: translateY(var(--translate-active)) scale(var(--scale-active));
   }
-}
-
-.link:focus-visible {
-  border-radius: var(--radius-md);
-  outline: 2px solid var(--color-secondary);
-  outline-offset: 1px;
-}
-
-.link:active {
-  color: var(--color-secondary-active);
 }

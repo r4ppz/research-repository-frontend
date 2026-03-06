@@ -1,17 +1,21 @@
 import type { Meta, StoryObj } from "@storybook/react-vite";
-import { LoadingSpinner } from "./LoadingSpinner";
+
+import { Link } from "./Link";
 
 const meta = {
-  component: LoadingSpinner,
+  component: Link,
   parameters: {
     layout: "centered",
   },
   argTypes: {
-    message: {
+    href: {
+      control: "text",
+    },
+    children: {
       control: "text",
     },
   },
-} satisfies Meta<typeof LoadingSpinner>;
+} satisfies Meta<typeof Link>;
 
 export default meta;
 
@@ -19,12 +23,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    message: undefined,
-  },
-};
-
-export const WithMessage: Story = {
-  args: {
-    message: "Loading data...",
+    href: "https://r4ppz.github.io/research-repo-docs/",
+    children: "This is a link",
   },
 };

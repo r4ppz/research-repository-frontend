@@ -4,10 +4,6 @@ import { Button } from "./Button";
 
 const meta = {
   component: Button,
-  title: "Common/Button",
-  parameters: {
-    layout: "centered",
-  },
   argTypes: {
     variant: {
       control: { type: "select" },
@@ -32,13 +28,16 @@ type Story = StoryObj<typeof meta>;
 export const Primary: Story = {
   args: {
     variant: "primary",
-    children: "Primary",
+    children: "Button",
+  },
+  render: (args) => {
+    return <Button variant={args.variant}>{args.children}</Button>;
   },
 };
 
 export const Secondary: Story = {
   args: {
     variant: "secondary",
-    children: "Secondary",
+    children: "Button",
   },
 };
