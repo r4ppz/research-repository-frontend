@@ -1,4 +1,3 @@
-import { Check } from "lucide-react";
 import {
   ListBox as AriaListBox,
   ListBoxItem as AriaListBoxItem,
@@ -59,28 +58,5 @@ export function ListBoxLoadMoreItem(props: ListBoxLoadMoreItemProps) {
     <AriaListBoxLoadMoreItem {...props}>
       <ProgressCircle isIndeterminate aria-label="Loading more..." />
     </AriaListBoxLoadMoreItem>
-  );
-}
-
-/*
- *  A listbox displays a list of options and allows a user to select one or more of them.
- */
-export function DropdownListBox<T extends object>(props: ListBoxProps<T>) {
-  return <AriaListBox {...props} className={styles.dropdownListBox} />;
-}
-
-export function DropdownItem(props: ListBoxItemProps) {
-  const textValue =
-    props.textValue ?? (typeof props.children === "string" ? props.children : undefined);
-
-  return (
-    <ListBoxItem {...props} textValue={textValue} className={styles.dropdownItem}>
-      {composeRenderProps(props.children, (children, { isSelected }) => (
-        <>
-          {isSelected && <Check className="checkIcon" />}
-          {typeof children === "string" ? <Text slot="label">{children}</Text> : children}
-        </>
-      ))}
-    </ListBoxItem>
   );
 }

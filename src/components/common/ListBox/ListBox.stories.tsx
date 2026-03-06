@@ -13,15 +13,12 @@ const meta = {
     selectionMode: {
       control: { type: "select" },
       options: ["none", "single", "multiple"],
-      description: "Determines how many items can be selected",
     },
     autoFocus: {
       control: "boolean",
-      description: "Whether to auto-focus the first item",
     },
     disallowEmptySelection: {
       control: "boolean",
-      description: "Whether the collection allows empty selection",
     },
   },
 } satisfies Meta<typeof ListBox>;
@@ -38,7 +35,6 @@ const animals = [
   { id: "snake", name: "Snake" },
 ];
 
-// Basic story with static items and props controls
 export const Basic: Story = {
   args: {
     "aria-label": "Favorite animal",
@@ -57,7 +53,6 @@ export const Basic: Story = {
   ),
 };
 
-// Story demonstrating controlled selection state
 export const Controlled: Story = {
   args: {
     "aria-label": "Select an animal",
@@ -68,7 +63,11 @@ export const Controlled: Story = {
     const [selected, setSelected] = useState<Selection>(new Set(["cat"]));
 
     return (
-      <div>
+      <div
+        style={{
+          minWidth: "200px",
+        }}
+      >
         <ListBox {...args} selectedKeys={selected} onSelectionChange={setSelected}>
           {animals.map((item) => (
             <ListBoxItem key={item.id} id={item.id}>
@@ -76,7 +75,13 @@ export const Controlled: Story = {
             </ListBoxItem>
           ))}
         </ListBox>
-        <p style={{ marginTop: "1rem", fontSize: "14px" }}>
+        <p
+          style={{
+            marginTop: "20px",
+            fontSize: "15px",
+            alignItems: "center",
+          }}
+        >
           Selected: {selected === "all" ? "all" : [...selected].join(", ") || "none"}
         </p>
       </div>
@@ -84,24 +89,6 @@ export const Controlled: Story = {
   },
 };
 
-// Story demonstrating multiple selection
-export const Multiple: Story = {
-  args: {
-    "aria-label": "Select favorite animals",
-    selectionMode: "multiple",
-  },
-  render: (args) => (
-    <ListBox {...args}>
-      {animals.map((item) => (
-        <ListBoxItem key={item.id} id={item.id}>
-          {item.name}
-        </ListBoxItem>
-      ))}
-    </ListBox>
-  ),
-};
-
-// Story demonstrating disabled items
 export const WithDisabledItems: Story = {
   args: {
     "aria-label": "Select an animal",
