@@ -1,8 +1,8 @@
 import { SearchIcon } from "lucide-react";
 import style from "./SearchNFilter.module.css";
-import { FilterDepartmentButton } from "@/components/common/FilterDepartmentsButton/FilterDepartmentsButton";
-import { FilterYearsButton } from "@/components/common/FilterYearsButton/FilterYearsButton";
 import { Input } from "@/components/common/Input/Input";
+import { FilterDepartmentButton } from "@/components/layout/FilterDepartmentsButton/FilterDepartmentsButton";
+import { FilterYearsButton } from "@/components/layout/FilterYearsButton/FilterYearsButton";
 
 interface SearchNFilterProps {
   searchQuery: string;
