@@ -4,6 +4,9 @@
   "private": true,
   "version": "0.2.0",
   "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -19,7 +22,8 @@
     "deploy": "gh-pages -d dist",
     "prepare": "husky",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "preinstall": "npx only-allow pnpm"
   },
   "lint-staged": {
     "src/**/*.{js,ts,jsx,tsx}": [
@@ -53,8 +57,11 @@
     "react-router-dom": "^7.13.1"
   },
   "devDependencies": {
+    "@semantic-release/commit-analyzer": "^13.0.1",
     "@semantic-release/git": "^10.0.1",
     "@semantic-release/github": "^12.0.6",
+    "@semantic-release/npm": "^13.1.5",
+    "@semantic-release/release-notes-generator": "^14.1.0",
     "@storybook/addon-a11y": "^10.2.12",
     "@storybook/addon-docs": "^10.2.12",
     "@storybook/addon-onboarding": "^10.2.12",
