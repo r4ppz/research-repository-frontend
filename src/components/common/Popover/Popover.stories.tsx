@@ -14,6 +14,9 @@ const meta = {
     hideArrow: {
       control: "boolean",
     },
+    offset: {
+      control: "number",
+    },
   },
 } satisfies Meta<typeof Popover>;
 
@@ -30,9 +33,9 @@ const PopoverContent = () => (
       padding: "20px",
     }}
   >
-    <Heading level={4}>This is Popover component</Heading>
+    <Heading level={4}>What is the meaning of life?</Heading>
     <div style={{ fontSize: "14px" }}>
-      <Text>This really hard ngl.</Text>
+      <Text>bla bla bla bla bla bla bla bla nothing bla bla testing bla bla</Text>
     </div>
   </div>
 );
@@ -40,7 +43,8 @@ const PopoverContent = () => (
 export const Default: Story = {
   args: {
     placement: "bottom",
-    hideArrow: false,
+    hideArrow: true,
+    offset: 20,
     children: <PopoverContent />,
   },
 
