@@ -2,7 +2,7 @@
   "name": "research-repository-frontend",
   "description": "Just a school project",
   "private": true,
-  "version": "0.2.0",
+  "version": "0.4.0",
   "type": "module",
   "publishConfig": {
     "access": "public"
