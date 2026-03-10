@@ -13,15 +13,7 @@ interface LibraryResultsProps {
   onViewPaper: (id: number) => void;
 }
 
-export const LibraryResults = ({
-  loading,
-  error,
-  papers,
-  searchQuery,
-  selectedDepartment,
-  selectedYear,
-  onViewPaper,
-}: LibraryResultsProps) => {
+export const LibraryResults = ({ loading, error, papers, onViewPaper }: LibraryResultsProps) => {
   if (error) {
     return <p className={style.errorMessage}>Error: {error}</p>;
   }
@@ -35,14 +27,9 @@ export const LibraryResults = ({
   }
 
   if (papers.length === 0) {
-    const isFiltering = searchQuery.trim().length > 0 || !!selectedDepartment || !!selectedYear;
     return (
       <div className={style.emptyState}>
-        <p>
-          {isFiltering
-            ? "No papers found matching your search :("
-            : "No research papers available at the moment."}
-        </p>
+        <p> This silence is the most accurate answer we can provide.</p>
       </div>
     );
   }

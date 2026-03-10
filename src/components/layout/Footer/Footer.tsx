@@ -1,8 +1,15 @@
 import clsx from "clsx";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import style from "./Footer.module.css";
 import schoolLogo from "@/assets/school-logo.svg";
 import { Button } from "@/components/common/Button/Button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTrigger,
+} from "@/components/common/Dialog/Dialog";
 import { Link } from "@/components/common/Link/Link";
 
 interface ComponentProps {
@@ -10,6 +17,9 @@ interface ComponentProps {
 }
 
 export const Footer = ({ className, ...props }: ComponentProps) => {
+  const [openEmail, setOpenEmail] = useState(false);
+  const [openPhone, setOpenPhone] = useState(false);
+
   const navigate = useNavigate();
 
   return (
@@ -54,20 +64,38 @@ export const Footer = ({ className, ...props }: ComponentProps) => {
 
             <div className={style.contactContainer}>
               <h3 className={style.contactText}>Contact</h3>
-              <Link
-                onClick={() => {
-                  alert(`idk what to put in here...`);
-                }}
-              >
-                research@acd.edu.ph
-              </Link>
-              <Link
-                onClick={() => {
-                  alert(":P");
-                }}
-              >
-                +63 82 123 4567
-              </Link>
+
+              {/* WARN: Temporary modal */}
+              <Dialog open={openEmail} onOpenChange={setOpenEmail}>
+                <DialogTrigger asChild>
+                  <Link>research@acd.edu.ph</Link>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogDescription
+                    style={{
+                      padding: "20px",
+                    }}
+                  >
+                    You found a link to nowhere. Sometimes, that's progress.
+                  </DialogDescription>
+                </DialogContent>
+              </Dialog>
+
+              <Dialog open={openPhone} onOpenChange={setOpenPhone}>
+                <DialogTrigger asChild>
+                  <Link>+63 82 123 4567</Link>
+                </DialogTrigger>
+                <DialogContent>
+                  <DialogDescription
+                    style={{
+                      padding: "20px",
+                    }}
+                  >
+                    This link is waiting for purpose. Are you?
+                  </DialogDescription>
+                </DialogContent>
+              </Dialog>
+
               <Link href={"https://maps.app.goo.gl/3UeRN9nsPBYVUYyLA"}>
                 Cabaguio Avenue, Davao City
               </Link>

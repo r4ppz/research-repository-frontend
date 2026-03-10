@@ -66,6 +66,8 @@ export const LoginPage = () => {
     }
   }
 
+  const docsLink = "https://r4ppz.github.io/research-repo-docs/testing/";
+
   return (
     <div className={style.page}>
       <div className={style.loginCard}>
@@ -109,10 +111,7 @@ export const LoginPage = () => {
               {isNetworkError && (
                 <p className={style.errorNote}>
                   Please read our{" "}
-                  <Link
-                    className={style.errorNoteLink}
-                    href="https://r4ppz.github.io/research-repo-docs/testing/"
-                  >
+                  <Link className={style.errorNoteLink} href={docsLink}>
                     docs
                   </Link>{" "}
                   for more info.
