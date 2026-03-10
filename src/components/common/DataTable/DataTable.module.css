@@ -20,7 +20,7 @@
 
 .tableCaption {
   padding: var(--space-md);
-  font-size: var(--font-size-lg);
+  font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   text-align: left;
   caption-side: top;
