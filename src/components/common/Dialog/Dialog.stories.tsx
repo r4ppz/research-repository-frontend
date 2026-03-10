@@ -41,12 +41,11 @@ function DialogDemo() {
             marginBottom: "20px",
           }}
         >
-          Dialog Title
+          The Replay
         </DialogTitle>
         <DialogDescription>
-          This is a dialog component that displays information or requests user action. I am
-          currently using Radix primitive for this. We are planning on trasitioning to React Aria
-          for consistency.{" "}
+          This moment is already a memory. You are just watching the playback. You are currently the
+          oldest you have ever been and the youngest you will ever be again.
         </DialogDescription>
       </DialogContent>
     </Dialog>

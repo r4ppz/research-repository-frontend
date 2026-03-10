@@ -8,6 +8,9 @@ const meta = {
       control: { type: "select" },
       options: [1, 2, 3, 4, 5, 6],
     },
+    children: {
+      control: { type: "text" },
+    },
   },
 } satisfies Meta<typeof Heading>;
 
@@ -17,6 +20,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    children: "Welcome to Content",
+    children: "You just spent three seconds reading this. They will not be refunded.",
+    level: 4,
   },
 };
