@@ -7,7 +7,7 @@ import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinne
 import { useAuth } from "@/features/auth/context/useAuth";
 import { usePaperById } from "@/features/library/hooks/usePaperById";
 import { formatDateLong } from "@/util/formatDate";
-import { isUserStudent, isUserTeacher } from "@/util/roleBasedAccess";
+import { isUserFaculty, isUserStudent } from "@/util/roleBasedAccess";
 
 interface ResearchModalProps {
   isOpen: boolean;
@@ -84,7 +84,7 @@ export const ResearchModal = ({ isOpen, paperId, onClose }: ResearchModalProps) 
           <p className={style.abstractText}>{paper.abstractText}</p>
         </div>
 
-        {(isUserStudent(user) || isUserTeacher(user)) && !paper.archived && (
+        {(isUserStudent(user) || isUserFaculty(user)) && !paper.archived && (
           <Button
             onPress={requestDocument}
             isDisabled={requestExists}

@@ -23,7 +23,7 @@ body:
       label: Who are you? (Optional)
       options:
         - Student
-        - Teacher
+        - Faculty
         - Developer
         - Just curious
     validations:

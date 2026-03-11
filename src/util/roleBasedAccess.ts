@@ -7,8 +7,8 @@ function hasRole(user: User | null | undefined, ...roles: Role[]): boolean {
   return roles.includes(user.role);
 }
 
-export function isUserStudentOrTeacher(user: User | null | undefined): boolean {
-  return hasRole(user, "STUDENT", "TEACHER");
+export function isUserStudentOrFaculty(user: User | null | undefined): boolean {
+  return hasRole(user, "STUDENT", "FACULTY");
 }
 
 export function isUserAdmin(user: User | null | undefined): boolean {
@@ -19,8 +19,8 @@ export function isUserStudent(user: User | null | undefined): boolean {
   return hasRole(user, "STUDENT");
 }
 
-export function isUserTeacher(user: User | null | undefined): boolean {
-  return hasRole(user, "TEACHER");
+export function isUserFaculty(user: User | null | undefined): boolean {
+  return hasRole(user, "FACULTY");
 }
 
 export function isUserDepartmentAdmin(user: User | null | undefined): boolean {

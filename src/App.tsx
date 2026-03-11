@@ -4,9 +4,9 @@ import { AdminPapersPage } from "@/features/admin/pages/AdminPapersPage/AdminPap
 import { AdminRequestsPage } from "@/features/admin/pages/AdminRequestsPage/AdminRequestsPage";
 import { AuthRestorer } from "@/features/auth/components/AuthRestorer/AuthRestorer";
 import { LoginPage } from "@/features/auth/LoginPage/LoginPage";
+import { FacultyRequestPage } from "@/features/faculty/FacultyRequestPage/FacultyRequestPage";
 import { LibraryPage } from "@/features/library/LibraryPage/LibraryPage";
 import { StudentRequestPage } from "@/features/student/StudentRequestPage/StudentRequestPage";
-import { TeacherRequestPage } from "@/features/teacher/TeacherRequestPage/TeacherRequestPage";
 
 export const App = () => {
   return (
@@ -19,7 +19,7 @@ export const App = () => {
           path="/"
           element={
             <ProtectedRoute
-              allowedRoles={["STUDENT", "TEACHER", "DEPARTMENT_ADMIN", "SUPER_ADMIN"]}
+              allowedRoles={["STUDENT", "FACULTY", "DEPARTMENT_ADMIN", "SUPER_ADMIN"]}
             >
               <LibraryPage />
             </ProtectedRoute>
@@ -42,10 +42,10 @@ export const App = () => {
           }
         />
         <Route
-          path="/teacher/requests"
+          path="/faculty/requests"
           element={
-            <ProtectedRoute allowedRoles={["TEACHER"]}>
-              <TeacherRequestPage />
+            <ProtectedRoute allowedRoles={["FACULTY"]}>
+              <FacultyRequestPage />
             </ProtectedRoute>
           }
         />
