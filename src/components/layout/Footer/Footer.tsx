@@ -103,6 +103,7 @@ export const Footer = ({ className, ...props }: ComponentProps) => {
           </div>
         </div>
         <h4 className={style.copyrightNotice}>
+          {/* The meaning of life isnt here, I checked. */}
           &copy; {new Date().getFullYear()} Assumption College of Davao. All rights reserved.
         </h4>
       </div>

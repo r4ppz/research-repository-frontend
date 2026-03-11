@@ -16,9 +16,11 @@
 }
 
 .message {
+  max-width: 300px;
   margin: 0;
   font-size: var(--font-size-sm);
   color: var(--color-gray-600);
+  text-align: center;
 }
 
 @keyframes spin {

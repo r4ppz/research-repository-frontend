@@ -13,14 +13,14 @@ import type { Role } from "@/types";
 
 const GENERAL_ROLE_LABEL: Record<Role, string> = {
   STUDENT: "Student",
-  TEACHER: "Teacher",
+  FACULTY: "Faculty",
   DEPARTMENT_ADMIN: "Admin",
   SUPER_ADMIN: "Admin",
 };
 
 const REQUEST_PATH: Record<Role, string> = {
   STUDENT: "/student/requests",
-  TEACHER: "/teacher/requests",
+  FACULTY: "/faculty/requests",
   DEPARTMENT_ADMIN: "/department-admin/requests",
   SUPER_ADMIN: "/super-admin/requests",
 };

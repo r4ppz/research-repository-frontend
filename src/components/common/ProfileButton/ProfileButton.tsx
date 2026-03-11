@@ -14,7 +14,7 @@ interface ProfileButtonProps {
 
 const ROLE_LABEL: Record<Role, string> = {
   STUDENT: "Student",
-  TEACHER: "Teacher",
+  FACULTY: "Faculty",
   DEPARTMENT_ADMIN: "D Admin",
   SUPER_ADMIN: "S Admin",
 };

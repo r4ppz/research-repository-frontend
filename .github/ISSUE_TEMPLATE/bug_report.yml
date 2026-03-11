@@ -35,7 +35,7 @@ body:
       label: Your Role
       options:
         - STUDENT
-        - TEACHER
+        - FACULTY
         - DEPARTMENT_ADMIN
         - SUPER_ADMIN
         - DEVELOPER

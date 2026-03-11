@@ -12,7 +12,7 @@ interface ProfileModalProps {
 
 const FULL_ROLE_LABEL: Record<Role, string> = {
   STUDENT: "Student",
-  TEACHER: "Teacher",
+  FACULTY: "Faculty",
   DEPARTMENT_ADMIN: "Department Admin",
   SUPER_ADMIN: "Super Admin",
 };
