@@ -7,6 +7,7 @@ import {
   DialogDescription,
   DialogTitle,
 } from "@/components/common/Dialog/Dialog";
+import { Link } from "@/components/common/Link/Link";
 import { LoadingSpinner } from "@/components/common/LoadingSpinner/LoadingSpinner";
 import { GoogleButton } from "@/features/auth/components/GoogleButton/GoogleButton";
 import { useAuth } from "@/features/auth/context/useAuth";
@@ -52,6 +53,7 @@ export const LoginPage = () => {
   // Logic to determine modal content
   let modalTitle = "Login Error";
   let errorMessage = "An unexpected error occurred.";
+  let isNetworkError = false;
 
   if (authError) {
     errorMessage = getUserErrorMessage(authError);
@@ -60,8 +62,11 @@ export const LoginPage = () => {
       modalTitle = "Access Denied";
     } else if (isBackendNotRunning(authError)) {
       modalTitle = "Service Unavailable";
+      isNetworkError = true;
     }
   }
+
+  const docsLink = "https://r4ppz.github.io/research-repo-docs/testing/";
 
   return (
     <div className={style.page}>
@@ -100,7 +105,19 @@ export const LoginPage = () => {
           <DialogTitle className={style.modalTitle}>{modalTitle}</DialogTitle>
 
           <div className={style.descriptionContainer}>
-            <DialogDescription className={style.modalDescription}>{errorMessage}</DialogDescription>
+            <DialogDescription className={style.modalDescription}>
+              <p>{errorMessage}</p>
+
+              {isNetworkError && (
+                <p className={style.errorNote}>
+                  Please read our{" "}
+                  <Link className={style.errorNoteLink} href={docsLink}>
+                    docs
+                  </Link>{" "}
+                  for more info.
+                </p>
+              )}
+            </DialogDescription>
           </div>
         </DialogContent>
       </Dialog>

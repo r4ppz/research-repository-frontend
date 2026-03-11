@@ -6,5 +6,4 @@
 
 You can try it out: [https://researchrepo.r4ppz.dev/](https://researchrepo.r4ppz.dev/)
 
-> Spoiler alert, it will not work. This is because the server is not running. Run it using docker or pull the whole
-> codebase. Read our documentation for more info: [Testing page](https://r4ppz.github.io/research-repo-docs/testing/)
+See all UI components (not yet complete): [https://researchrepo.r4ppz.dev/storybook](https://researchrepo.r4ppz.dev/storybook)

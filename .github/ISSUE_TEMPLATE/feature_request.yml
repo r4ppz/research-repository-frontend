@@ -22,7 +22,7 @@ body:
       label: What is your role?
       options:
         - STUDENT
-        - TEACHER
+        - FACULTY
         - DEPARTMENT_ADMIN
         - SUPER_ADMIN
         - DEVELOPER
@@ -44,7 +44,7 @@ body:
       label: Who does this benefit?
       options:
         - label: Students
-        - label: Teachers
+        - label: Faculty
         - label: Admins
         - label: Developers
         - label: No one

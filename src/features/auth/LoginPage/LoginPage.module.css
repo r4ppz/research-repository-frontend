@@ -101,5 +101,24 @@
   .modalDescription {
     margin: 0 0 var(--space-xl) 0;
     font-size: var(--font-size-md);
+
+    .errorNote {
+      padding-top: var(--space-md);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-light);
+      color: var(--color-text-muted);
+
+      .errorNoteLink {
+        margin-top: var(--space-md);
+        font-size: var(--font-size-xs);
+        font-weight: var(--font-weight-light);
+        color: var(--color-secondary);
+      }
+
+      .errorNoteLink:focus-visible {
+        outline: 1px solid var(--color-secondary);
+        outline-offset: 1px;
+      }
+    }
   }
 }

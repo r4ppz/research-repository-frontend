@@ -25,6 +25,6 @@ export const Default: Story = {
 
 export const WithMessage: Story = {
   args: {
-    message: "Loading data...",
+    message: "Everything you have ever done has led you to this spinning circle. Was it worth it?",
   },
 };

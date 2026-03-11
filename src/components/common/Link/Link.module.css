@@ -15,19 +15,20 @@
   color: var(--color-secondary-active);
 }
 
+/* text-shadow is working? who fucking knows  */
 @media (width >= 768px) {
   .link {
-    box-shadow: var(--shadow-resting);
+    text-shadow: var(--shadow-resting);
     transition: var(--transition-elevation);
   }
 
   .link:hover {
-    box-shadow: var(--shadow-hover);
+    text-shadow: var(--shadow-hover);
     transform: translateY(var(--translate-hover)) scale(var(--scale-hover));
   }
 
   .link:active {
-    box-shadow: var(--shadow-active);
+    text-shadow: var(--shadow-active);
     transform: translateY(var(--translate-active)) scale(var(--scale-active));
   }
 }
