@@ -40,7 +40,7 @@ jobs:
         run: pnpm build
         env:
           VITE_GOOGLE_CLIENT_ID: 594492409648-tqrnnk9ssgvphc8cnus7k1fmp4o4emru.apps.googleusercontent.com
-          VITE_BACKEND_API_BASE_URL: https://api.r4ppz.dev
+          VITE_BACKEND_API_BASE_URL: https://researchrepobackend.r4ppz.dev
 
       - name: Build Storybook
         run: pnpm build-storybook
