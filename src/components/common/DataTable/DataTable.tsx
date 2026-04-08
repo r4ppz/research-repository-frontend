@@ -73,7 +73,7 @@ export function DataTable<TData extends RowData>({
                 className={clsx(style.tableData, style.tableBodyData, style.emptyStateCell)}
                 colSpan={table.getAllLeafColumns().length}
               >
-                No data found. Maybe you’re searching for something that doesn’t exist.
+                This silence is the most accurate answer we can provide.
               </td>
             </tr>
           ) : (

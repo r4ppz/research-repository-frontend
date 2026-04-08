@@ -29,7 +29,7 @@ export const LibraryResults = ({ loading, error, papers, onViewPaper }: LibraryR
   if (papers.length === 0) {
     return (
       <div className={style.emptyState}>
-        <p> This silence is the most accurate answer we can provide.</p>
+        <p> Maybe you’re searching for something that doesn’t exist.</p>
       </div>
     );
   }
